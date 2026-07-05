@@ -446,6 +446,24 @@ export default function DigitalMenu({ urlname }) {
   const backgroundColor = config.background_color || "#FAF7F0";
   const fontColor = config.font_color || "#26241F";
 
+  useEffect(() => {
+    if (!menu) return;
+
+    const owner = menu.menu_owner || {};
+    const title = owner.menu_owner_name ? `${owner.menu_owner_name} — Menu` : 'Menu';
+    const description = owner.menu_owner_slogan || `View the menu for ${owner.menu_owner_name || 'this restaurant'}`;
+    const keywords = [owner.menu_owner_name, 'menu', 'restaurant', ...(menu.menu_items || []).map(i => i.category)]
+      .filter(Boolean)
+      .join(', ');
+
+    document.title = title;
+    setMeta('description', description);
+    setMeta('keywords', keywords);
+    setMeta('og:title', title, true);
+    setMeta('og:description', description, true);
+    if (owner.menu_owner_logo_url) setMeta('og:image', owner.menu_owner_logo_url, true);
+  }, [menu]);
+
   // Sync the real page background (html/body) to the menu's configured
   // background color so there's no mismatched-color frame around the
   // component on any viewport, and lock horizontal overflow at the
