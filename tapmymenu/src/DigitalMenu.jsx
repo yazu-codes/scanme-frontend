@@ -11,6 +11,17 @@ function setMeta(name, content, isProperty = false) {
   tag.setAttribute('content', content || '');
 }
 
+function setFavicon(url) {
+  if (!url) return;
+  let link = document.querySelector("link[rel~='icon']");
+  if (!link) {
+    link = document.createElement('link');
+    link.rel = 'icon';
+    document.head.appendChild(link);
+  }
+  link.href = url;
+}
+
 // ---- Config ---------------------------------------------------------
 
 const API_BASE = process.env.REACT_APP_API_BASE;
@@ -472,6 +483,7 @@ export default function DigitalMenu({ urlname }) {
     setMeta('keywords', keywords);
     setMeta('og:title', title, true);
     setMeta('og:description', description, true);
+    setFavicon(owner.menu_owner_logo_url);
     if (owner.menu_owner_logo_url) setMeta('og:image', owner.menu_owner_logo_url, true);
   }, [menu]);
 
