@@ -8,7 +8,8 @@ function MenuRoute() {
   return <DigitalMenu urlname={urlname} />;
 }
 
-function CodeRoute({ code }) {
+function CodeRoute() {
+  const { code } = useParams();
   const [urlname, setUrlname] = useState(null);
 
   console.log(code)
