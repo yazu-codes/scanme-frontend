@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
+import { useNavigate, BrowserRouter, Routes, Route, useParams } from "react-router-dom";
 import DigitalMenu from "./DigitalMenu";
 
 function MenuRoute() {
