@@ -14,7 +14,7 @@ function CodeRoute() {
   // TODO: Make a call to the backend to get the urlname from the code.
   let urlname = "";
 
-  console.log(process.env.API_BASE)
+  console.log(`API_BASE: ${process.env.API_BASE}`);
 
   fetch(`http://${process.env.API_BASE}/c/${code}`)
     .then((response) => response.json())
