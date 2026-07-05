@@ -4,6 +4,7 @@ import DigitalMenu from "./DigitalMenu";
 
 function MenuRoute() {
   const { urlname } = useParams();
+  console.log(`MenuRoute: urlname=${urlname}`);
   return <DigitalMenu urlname={urlname} />;
 }
 function CodeRoute() {
