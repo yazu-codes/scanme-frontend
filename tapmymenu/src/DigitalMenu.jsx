@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 
 // ---- Config ---------------------------------------------------------
 
-const API_BASE = "scanme.railway.internal";
+const API_BASE = process.env.API_BASE;
 const FALLBACK_FONT = "Roboto";
 
 // A small, safe allow-list of fonts we know how to load from Google
