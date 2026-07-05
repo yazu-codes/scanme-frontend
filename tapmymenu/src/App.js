@@ -7,38 +7,21 @@ function MenuRoute() {
   console.log(`MenuRoute: urlname=${urlname}`);
   return <DigitalMenu urlname={urlname} />;
 }
+
 function CodeRoute({ code }) {
   const [urlname, setUrlname] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
-    let cancelled = false;
-
-    console.log(`API_BASE: ${process.env.REACT_APP_API_BASE}`);
-
-    fetch(`https://${process.env.REACT_APP_API_BASE}/c/${code}`)
-      .then((response) => {
-        if (!response.ok) throw new Error(`Request failed (${response.status})`);
-        return response.json();
-      })
-      .then((data) => {
-        if (cancelled) return;
-        console.log(`CodeRoute: code=${code}, urlname=${data.menuName}`);
-        setUrlname(data.menuName);
-        setLoading(false);
-      })
-      .catch((err) => {
-        if (cancelled) return;
-        setError(err.message);
-        setLoading(false);
-      });
-
-    return () => { cancelled = true; };
+    async function run() {
+      const response = await fetch(`https://${process.env.REACT_APP_API_BASE}/c/${code}`);
+      const data = await response.json();
+      console.log(`CodeRoute: code=${code}, urlname=${data.menuName}`);
+      setUrlname(data.menuName);
+    }
+    run();
   }, [code]);
 
-  if (loading) return <div>Loading…</div>;
-  if (error) return <div>Couldn't load menu — {error}</div>;
+  if (urlname === null) return null; // nothing rendered until the fetch resolves
 
   return <DigitalMenu urlname={urlname} />;
 }
