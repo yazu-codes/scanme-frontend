@@ -21,6 +21,7 @@ function CodeRoute() {
     .then((response) => response.json())
     .then((data) => {
       urlname = data.menuName;
+      console.log(`CodeRoute: code=${code}, urlname=${urlname}`);
     });
 
   return <DigitalMenu urlname={urlname} />;
