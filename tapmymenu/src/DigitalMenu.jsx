@@ -415,7 +415,7 @@ export default function DigitalMenu({ urlname }) {
     async function fetchMenu() {
       setStatus("loading");
       try {
-        let urlToFetch = `${API_BASE}/${urlname}`
+        let urlToFetch = `https://${API_BASE}/${urlname}`;
         const res = await fetch(urlToFetch);
         console.log(urlToFetch);
         if (!res.ok) throw new Error(`Request failed: ${res.status}`);
