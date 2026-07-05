@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * TapMyMenu landing page — drop-in, multi-locale component.
+ * TapMyMenu landing page - drop-in, multi-locale component.
  *
  * INTEGRATION:
  * 1. Save this file as src/LandingPage.jsx
@@ -19,7 +19,7 @@ import React from 'react';
  *        <Route path="/:urlname" element={<MenuRoute />} />
  *      </Routes>
  *
- *    Order matters — the locale routes and "/" must be matched before the
+ *    Order matters - the locale routes and "/" must be matched before the
  *    `/:urlname` wildcard, otherwise they get swallowed by the menu route.
  *
  * 3. Fonts: for best performance, add these to the <head> of public/index.html
@@ -30,12 +30,12 @@ import React from 'react';
  *
  *    Inter and IBM Plex Mono cover Cyrillic and Greek. Bitter (the display serif)
  *    only ships Latin glyphs, so Cyrillic/Greek headings automatically fall back
- *    to Georgia (set in the font stack below) — that's expected, not a bug.
+ *    to Georgia (set in the font stack below) - that's expected, not a bug.
  *
  * 4. Unsupported `locale` values fall back to English.
  *
  * 5. The CTA buttons currently point at `#get-started`, which scrolls to the
- *    final section. Point them at your real signup flow once it exists —
+ *    final section. Point them at your real signup flow once it exists -
  *    search for `href="#get-started"`.
  */
 
@@ -47,19 +47,19 @@ const TRANSLATIONS = {
       headlinePre: 'Your menu. ',
       headlineEm: 'Always fresh.',
       headlinePost: ' Never reprinted.',
-      sub: "Share one link and guests always see your real menu — the one you just updated, not the one from three price changes ago. No app, no waiting on a print shop.",
+      sub: "Share one link and guests always see your real menu - the one you just updated, not the one from three price changes ago. No app, no waiting on a print shop.",
       ctaPrimary: 'Get your digital menu',
       ctaSecondary: 'See how it works',
       note: 'NO APP · NO INSTALL · SHARE ANYWHERE',
     },
     how: {
       eyebrow: 'How it works',
-      title: "Three steps, in order — then you're done",
+      title: "Three steps, in order - then you're done",
       sub: 'This is the one place order actually matters: set up once, share the link, edit forever.',
       steps: [
         { no: 'STEP 1', title: 'Add your menu', body: 'Enter your dishes, prices, and photos once. Organize them into categories however you like.' },
-        { no: 'STEP 2', title: 'Share your link', body: 'Put it on a table card, your socials, or your website — guests open it straight in their browser.' },
-        { no: 'STEP 3', title: 'Edit anytime', body: 'Change a price, add a special, mark something sold out — every guest sees it the moment you save.' },
+        { no: 'STEP 2', title: 'Share your link', body: 'Put it on a table card, your socials, or your website - guests open it straight in their browser.' },
+        { no: 'STEP 3', title: 'Edit anytime', body: 'Change a price, add a special, mark something sold out - every guest sees it the moment you save.' },
       ],
     },
     compare: {
@@ -77,23 +77,23 @@ const TRANSLATIONS = {
         "Edit a price and it's live everywhere in seconds",
         'Mark something sold out the moment it runs out',
         'Add a photo, a description, or an allergen note freely',
-        'Lives on your domain — nothing to reprint, ever',
+        'Lives on your domain - nothing to reprint, ever',
       ],
     },
     features: {
       eyebrow: "What's on the menu",
       title: 'Everything included, nothing extra',
       rows: [
-        { name: 'Real-time editing', desc: 'Change anything and guests see it the next time they open the link — no rebuild, no wait.', val: 'Included' },
+        { name: 'Real-time editing', desc: 'Change anything and guests see it the next time they open the link - no rebuild, no wait.', val: 'Included' },
         { name: 'Works on any phone', desc: 'Opens directly in the browser. Nothing for guests to download or sign into.', val: 'No app' },
-        { name: 'Photos & descriptions', desc: 'Show a dish, not just its name — as much detail as you want, for every item.', val: '$0 extra' },
-        { name: 'Sold-out toggling', desc: "Flip one switch when the kitchen runs out — it disappears from every guest's screen.", val: 'Instant' },
+        { name: 'Photos & descriptions', desc: 'Show a dish, not just its name - as much detail as you want, for every item.', val: '$0 extra' },
+        { name: 'Sold-out toggling', desc: "Flip one switch when the kitchen runs out - it disappears from every guest's screen.", val: 'Instant' },
         { name: 'Your own domain', desc: 'Your menu lives at your address, not a generic subdomain buried in a URL.', val: 'Included' },
       ],
     },
     final: {
       title: 'Ready to stop reprinting?',
-      sub: "Set up your first digital menu today — it's live the moment you save it.",
+      sub: "Set up your first digital menu today - it's live the moment you save it.",
       cta: 'Get your digital menu',
     },
     footer: {
@@ -109,24 +109,24 @@ const TRANSLATIONS = {
       headlinePre: 'Твоето меню. ',
       headlineEm: 'Винаги свежо.',
       headlinePost: ' Никога препечатано.',
-      sub: 'Сподели един линк и гостите винаги виждат истинското меню — това, което току-що обнови, а не онова от три промени на цените назад. Без приложение, без чакане на печатница.',
+      sub: 'Сподели един линк и гостите винаги виждат истинското меню - това, което току-що обнови, а не онова от три промени на цените назад. Без приложение, без чакане на печатница.',
       ctaPrimary: 'Вземи своето дигитално меню',
       ctaSecondary: 'Виж как работи',
       note: 'БЕЗ ПРИЛОЖЕНИЕ · БЕЗ ИНСТАЛАЦИЯ · СПОДЕЛИ НАВСЯКЪДЕ',
     },
     how: {
       eyebrow: 'Как работи',
-      title: 'Три стъпки, по ред — и готово',
+      title: 'Три стъпки, по ред - и готово',
       sub: 'Това е единственото място, където редът наистина има значение: настрой веднъж, сподели линка, редактирай завинаги.',
       steps: [
         { no: 'СТЪПКА 1', title: 'Добави своето меню', body: 'Въведи ястията, цените и снимките веднъж. Организирай ги в категории както искаш.' },
-        { no: 'СТЪПКА 2', title: 'Сподели своя линк', body: 'Постави го на масата, в социалните мрежи или на сайта си — гостите го отварят направо в браузъра.' },
-        { no: 'СТЪПКА 3', title: 'Редактирай по всяко време', body: 'Промени цена, добави специалитет, отбележи нещо като изчерпано — всеки гост го вижда веднага след запис.' },
+        { no: 'СТЪПКА 2', title: 'Сподели своя линк', body: 'Постави го на масата, в социалните мрежи или на сайта си - гостите го отварят направо в браузъра.' },
+        { no: 'СТЪПКА 3', title: 'Редактирай по всяко време', body: 'Промени цена, добави специалитет, отбележи нещо като изчерпано - всеки гост го вижда веднага след запис.' },
       ],
     },
     compare: {
       eyebrow: 'Старият начин срещу дигиталния начин',
-      title: 'Хартиените менюта ти пречат. Това — не.',
+      title: 'Хартиените менюта ти пречат. Това - не.',
       oldLabel: 'Печатно меню',
       newLabel: 'TapMyMenu',
       oldItems: [
@@ -139,23 +139,23 @@ const TRANSLATIONS = {
         'Редактираш цена и тя е активна навсякъде за секунди',
         'Отбелязваш нещо като изчерпано веднага щом свърши',
         'Добавяш снимка, описание или бележка за алергени свободно',
-        'Живее на твоя домейн — нищо за препечатване, никога',
+        'Живее на твоя домейн - нищо за препечатване, никога',
       ],
     },
     features: {
       eyebrow: 'Какво има в менюто',
       title: 'Всичко включено, нищо допълнително',
       rows: [
-        { name: 'Редактиране в реално време', desc: 'Промени каквото искаш и гостите го виждат при следващото отваряне на линка — без преизграждане, без чакане.', val: 'Включено' },
+        { name: 'Редактиране в реално време', desc: 'Промени каквото искаш и гостите го виждат при следващото отваряне на линка - без преизграждане, без чакане.', val: 'Включено' },
         { name: 'Работи на всеки телефон', desc: 'Отваря се директно в браузъра. Гостите нямат нужда да свалят или да влизат в нищо.', val: 'Без приложение' },
-        { name: 'Снимки и описания', desc: 'Покажи ястието, не само името му — толкова детайли, колкото искаш, за всеки продукт.', val: 'Без доплащане' },
-        { name: 'Маркиране на изчерпани', desc: 'Превключи един бутон, когато кухнята свърши нещо — то изчезва от екрана на всеки гост.', val: 'Веднага' },
+        { name: 'Снимки и описания', desc: 'Покажи ястието, не само името му - толкова детайли, колкото искаш, за всеки продукт.', val: 'Без доплащане' },
+        { name: 'Маркиране на изчерпани', desc: 'Превключи един бутон, когато кухнята свърши нещо - то изчезва от екрана на всеки гост.', val: 'Веднага' },
         { name: 'Твой собствен домейн', desc: 'Менюто ти живее на твоя адрес, а не на общ поддомейн, скрит в дълъг линк.', val: 'Включено' },
       ],
     },
     final: {
       title: 'Готов да спреш препечатването?',
-      sub: 'Настрой първото си дигитално меню още днес — то е активно в мига, в който го запазиш.',
+      sub: 'Настрой първото си дигитално меню още днес - то е активно в мига, в който го запазиш.',
       cta: 'Вземи своето дигитално меню',
     },
     footer: {
@@ -171,53 +171,53 @@ const TRANSLATIONS = {
       headlinePre: 'Ваше меню. ',
       headlineEm: 'Всегда свежее.',
       headlinePost: ' Больше никаких перепечаток.',
-      sub: 'Поделитесь одной ссылкой — и гости всегда видят настоящее меню: то, которое вы только что обновили, а не то, что было три изменения цен назад. Никаких приложений, никакого ожидания типографии.',
+      sub: 'Поделитесь одной ссылкой - и гости всегда видят настоящее меню: то, которое вы только что обновили, а не то, что было три изменения цен назад. Никаких приложений, никакого ожидания типографии.',
       ctaPrimary: 'Создать цифровое меню',
       ctaSecondary: 'Как это работает',
       note: 'БЕЗ ПРИЛОЖЕНИЯ · БЕЗ УСТАНОВКИ · ДЕЛИТЕСЬ ГДЕ УГОДНО',
     },
     how: {
       eyebrow: 'Как это работает',
-      title: 'Три шага по порядку — и готово',
+      title: 'Три шага по порядку - и готово',
       sub: 'Это единственное место, где порядок действительно важен: настройте один раз, поделитесь ссылкой, редактируйте всегда.',
       steps: [
         { no: 'ШАГ 1', title: 'Добавьте меню', body: 'Введите блюда, цены и фото один раз. Организуйте их по категориям как удобно.' },
-        { no: 'ШАГ 2', title: 'Поделитесь ссылкой', body: 'Разместите её на карточке на столе, в соцсетях или на сайте — гости открывают её прямо в браузере.' },
-        { no: 'ШАГ 3', title: 'Редактируйте в любое время', body: 'Измените цену, добавьте специальное предложение, отметьте блюдо закончившимся — каждый гость увидит это сразу после сохранения.' },
+        { no: 'ШАГ 2', title: 'Поделитесь ссылкой', body: 'Разместите её на карточке на столе, в соцсетях или на сайте - гости открывают её прямо в браузере.' },
+        { no: 'ШАГ 3', title: 'Редактируйте в любое время', body: 'Измените цену, добавьте специальное предложение, отметьте блюдо закончившимся - каждый гость увидит это сразу после сохранения.' },
       ],
     },
     compare: {
       eyebrow: 'Старый способ против цифрового',
-      title: 'Бумажное меню усложняет жизнь. А это — нет.',
+      title: 'Бумажное меню усложняет жизнь. А это - нет.',
       oldLabel: 'Печатное меню',
       newLabel: 'TapMyMenu',
       oldItems: [
-        'Любое изменение цены — новая печать',
+        'Любое изменение цены - новая печать',
         'Закончившиеся блюда остаются в меню, пока кто-то их не вычеркнет',
         'Фото и информация об аллергенах не влезают на страницу',
         'Порвано, испачкано или потеряно к вечернему наплыву гостей',
       ],
       newItems: [
-        'Меняете цену — и она мгновенно обновляется везде',
+        'Меняете цену - и она мгновенно обновляется везде',
         'Отмечаете блюдо закончившимся сразу, как оно закончилось',
         'Добавляете фото, описание или заметку об аллергенах без ограничений',
-        'Работает на вашем домене — печатать больше не нужно, никогда',
+        'Работает на вашем домене - печатать больше не нужно, никогда',
       ],
     },
     features: {
       eyebrow: 'Что в меню',
       title: 'Всё включено, ничего лишнего',
       rows: [
-        { name: 'Редактирование в реальном времени', desc: 'Меняйте что угодно — гости увидят это при следующем открытии ссылки, без пересборки и ожидания.', val: 'Включено' },
+        { name: 'Редактирование в реальном времени', desc: 'Меняйте что угодно - гости увидят это при следующем открытии ссылки, без пересборки и ожидания.', val: 'Включено' },
         { name: 'Работает на любом телефоне', desc: 'Открывается прямо в браузере. Гостям не нужно ничего скачивать или входить в аккаунт.', val: 'Без приложения' },
-        { name: 'Фото и описания', desc: 'Покажите блюдо, а не только его название — сколько угодно деталей для каждой позиции.', val: 'Без доплаты' },
-        { name: 'Отметка «нет в наличии»', desc: 'Один переключатель, когда на кухне что-то закончилось — блюдо исчезает с экрана каждого гостя.', val: 'Мгновенно' },
+        { name: 'Фото и описания', desc: 'Покажите блюдо, а не только его название - сколько угодно деталей для каждой позиции.', val: 'Без доплаты' },
+        { name: 'Отметка «нет в наличии»', desc: 'Один переключатель, когда на кухне что-то закончилось - блюдо исчезает с экрана каждого гостя.', val: 'Мгновенно' },
         { name: 'Собственный домен', desc: 'Ваше меню живёт на вашем адресе, а не на общем поддомене, зарытом в длинной ссылке.', val: 'Включено' },
       ],
     },
     final: {
       title: 'Готовы перестать печатать заново?',
-      sub: 'Настройте своё первое цифровое меню уже сегодня — оно станет доступным сразу после сохранения.',
+      sub: 'Настройте своё первое цифровое меню уже сегодня - оно станет доступным сразу после сохранения.',
       cta: 'Создать цифровое меню',
     },
     footer: {
@@ -233,19 +233,19 @@ const TRANSLATIONS = {
       headlinePre: 'Το μενού σου. ',
       headlineEm: 'Πάντα φρέσκο.',
       headlinePost: ' Ποτέ ξανά τυπωμένο.',
-      sub: 'Μοιράσου έναν σύνδεσμο και οι πελάτες βλέπουν πάντα το πραγματικό μενού σου — αυτό που μόλις ενημέρωσες, όχι εκείνο από τρεις αλλαγές τιμών πριν. Χωρίς εφαρμογή, χωρίς αναμονή για τυπογραφείο.',
+      sub: 'Μοιράσου έναν σύνδεσμο και οι πελάτες βλέπουν πάντα το πραγματικό μενού σου - αυτό που μόλις ενημέρωσες, όχι εκείνο από τρεις αλλαγές τιμών πριν. Χωρίς εφαρμογή, χωρίς αναμονή για τυπογραφείο.',
       ctaPrimary: 'Απόκτησε το ψηφιακό σου μενού',
       ctaSecondary: 'Δες πώς λειτουργεί',
       note: 'ΧΩΡΙΣ ΕΦΑΡΜΟΓΗ · ΧΩΡΙΣ ΕΓΚΑΤΑΣΤΑΣΗ · ΜΟΙΡΑΣΟΥ ΠΑΝΤΟΥ',
     },
     how: {
       eyebrow: 'Πώς λειτουργεί',
-      title: 'Τρία βήματα, με τη σειρά — και έτοιμο',
+      title: 'Τρία βήματα, με τη σειρά - και έτοιμο',
       sub: 'Εδώ η σειρά έχει πραγματικά σημασία: ρύθμισέ το μία φορά, μοιράσου τον σύνδεσμο, επεξεργάζεσαι για πάντα.',
       steps: [
         { no: 'ΒΗΜΑ 1', title: 'Πρόσθεσε το μενού σου', body: 'Καταχώρισε τα πιάτα, τις τιμές και τις φωτογραφίες μία φορά. Οργάνωσέ τα σε κατηγορίες όπως θέλεις.' },
-        { no: 'ΒΗΜΑ 2', title: 'Μοιράσου τον σύνδεσμο', body: 'Βάλτον σε καρτελάκι τραπεζιού, στα social media ή στην ιστοσελίδα σου — οι πελάτες τον ανοίγουν απευθείας στον browser.' },
-        { no: 'ΒΗΜΑ 3', title: 'Επεξεργασία οποτεδήποτε', body: 'Άλλαξε μια τιμή, πρόσθεσε ένα special, σημείωσε κάτι ως εξαντλημένο — κάθε πελάτης το βλέπει μόλις αποθηκεύσεις.' },
+        { no: 'ΒΗΜΑ 2', title: 'Μοιράσου τον σύνδεσμο', body: 'Βάλτον σε καρτελάκι τραπεζιού, στα social media ή στην ιστοσελίδα σου - οι πελάτες τον ανοίγουν απευθείας στον browser.' },
+        { no: 'ΒΗΜΑ 3', title: 'Επεξεργασία οποτεδήποτε', body: 'Άλλαξε μια τιμή, πρόσθεσε ένα special, σημείωσε κάτι ως εξαντλημένο - κάθε πελάτης το βλέπει μόλις αποθηκεύσεις.' },
       ],
     },
     compare: {
@@ -263,23 +263,23 @@ const TRANSLATIONS = {
         'Αλλάζεις μια τιμή και είναι live παντού σε δευτερόλεπτα',
         'Σημειώνεις κάτι ως εξαντλημένο τη στιγμή που τελειώνει',
         'Προσθέτεις φωτογραφία, περιγραφή ή σημείωση αλλεργιογόνων ελεύθερα',
-        'Ζει στο δικό σου domain — τίποτα για επανεκτύπωση, ποτέ',
+        'Ζει στο δικό σου domain - τίποτα για επανεκτύπωση, ποτέ',
       ],
     },
     features: {
       eyebrow: 'Τι περιλαμβάνει το μενού',
       title: 'Όλα περιλαμβάνονται, τίποτα παραπάνω',
       rows: [
-        { name: 'Επεξεργασία σε πραγματικό χρόνο', desc: 'Άλλαξε ό,τι θέλεις και οι πελάτες το βλέπουν την επόμενη φορά που ανοίγουν τον σύνδεσμο — χωρίς αναδημιουργία, χωρίς αναμονή.', val: 'Περιλαμβάνεται' },
+        { name: 'Επεξεργασία σε πραγματικό χρόνο', desc: 'Άλλαξε ό,τι θέλεις και οι πελάτες το βλέπουν την επόμενη φορά που ανοίγουν τον σύνδεσμο - χωρίς αναδημιουργία, χωρίς αναμονή.', val: 'Περιλαμβάνεται' },
         { name: 'Λειτουργεί σε κάθε κινητό', desc: 'Ανοίγει απευθείας στον browser. Οι πελάτες δεν χρειάζεται να κατεβάσουν ή να συνδεθούν πουθενά.', val: 'Χωρίς εφαρμογή' },
-        { name: 'Φωτογραφίες & περιγραφές', desc: 'Δείξε το πιάτο, όχι μόνο το όνομά του — όσες λεπτομέρειες θέλεις, για κάθε προϊόν.', val: 'Χωρίς επιπλέον χρέωση' },
-        { name: 'Σήμανση εξαντλημένων', desc: 'Ένας διακόπτης όταν η κουζίνα εξαντλήσει κάτι — εξαφανίζεται από την οθόνη κάθε πελάτη.', val: 'Άμεσα' },
+        { name: 'Φωτογραφίες & περιγραφές', desc: 'Δείξε το πιάτο, όχι μόνο το όνομά του - όσες λεπτομέρειες θέλεις, για κάθε προϊόν.', val: 'Χωρίς επιπλέον χρέωση' },
+        { name: 'Σήμανση εξαντλημένων', desc: 'Ένας διακόπτης όταν η κουζίνα εξαντλήσει κάτι - εξαφανίζεται από την οθόνη κάθε πελάτη.', val: 'Άμεσα' },
         { name: 'Το δικό σου domain', desc: 'Το μενού σου ζει στη δική σου διεύθυνση, όχι σε ένα γενικό subdomain χαμένο μέσα σε ένα URL.', val: 'Περιλαμβάνεται' },
       ],
     },
     final: {
       title: 'Έτοιμος να σταματήσεις τις επανεκτυπώσεις;',
-      sub: 'Ρύθμισε το πρώτο σου ψηφιακό μενού σήμερα — γίνεται live τη στιγμή που το αποθηκεύεις.',
+      sub: 'Ρύθμισε το πρώτο σου ψηφιακό μενού σήμερα - γίνεται live τη στιγμή που το αποθηκεύεις.',
       cta: 'Απόκτησε το ψηφιακό σου μενού',
     },
     footer: {
