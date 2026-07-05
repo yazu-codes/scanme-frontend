@@ -35,9 +35,9 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<LandingPage />} />
         <Route path="/c/:code" element={<CodeRoute />} />
         <Route path="/:urlname" element={<MenuRoute />} />
-        <Route path="/" element={<LandingPage />} />
       </Routes>
     </BrowserRouter>
   );
