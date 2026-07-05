@@ -14,9 +14,9 @@ function CodeRoute() {
   // TODO: Make a call to the backend to get the urlname from the code.
   let urlname = "";
 
-  console.log(`API_BASE: ${process.env.shared.API_BASE}`);
+  console.log(`API_BASE: ${process.env.REACT_APP_API_BASE}`);
 
-  fetch(`http://${process.env.API_BASE}/c/${code}`)
+  fetch(`http://${process.env.REACT_APP_API_BASE}/c/${code}`)
     .then((response) => response.json())
     .then((data) => {
       urlname = data.menuName;
