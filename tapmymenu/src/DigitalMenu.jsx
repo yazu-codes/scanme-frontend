@@ -418,6 +418,7 @@ export default function DigitalMenu({ urlname }) {
         const res = await fetch(`${API_BASE}/${urlname}`);
         console.log(`${API_BASE}/${urlname}`)
         if (!res.ok) throw new Error(`Request failed: ${res.status}`);
+        console.log(res)
         const data = await res.json();
         console.log(data)
         if (!cancelled) {
