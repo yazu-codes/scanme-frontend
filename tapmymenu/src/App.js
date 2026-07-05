@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, BrowserRouter, Routes, Route, useParams } from "react-router-dom";
 import DigitalMenu from "./DigitalMenu";
+import LandingPage from "./LandingPage";
 
 function MenuRoute() {
   const { urlname } = useParams();
