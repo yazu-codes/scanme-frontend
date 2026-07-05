@@ -11,6 +11,8 @@ function MenuRoute() {
 function CodeRoute({ code }) {
   const [urlname, setUrlname] = useState(null);
 
+  console.log(code)
+  
   useEffect(() => {
     async function run() {
       const response = await fetch(`https://${process.env.REACT_APP_API_BASE}/c/${code}`);
