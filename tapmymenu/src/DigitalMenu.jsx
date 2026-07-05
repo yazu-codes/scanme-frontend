@@ -1,5 +1,16 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
+function setMeta(name, content, isProperty = false) {
+  const attr = isProperty ? 'property' : 'name';
+  let tag = document.querySelector(`meta[${attr}="${name}"]`);
+  if (!tag) {
+    tag = document.createElement('meta');
+    tag.setAttribute(attr, name);
+    document.head.appendChild(tag);
+  }
+  tag.setAttribute('content', content || '');
+}
+
 // ---- Config ---------------------------------------------------------
 
 const API_BASE = process.env.REACT_APP_API_BASE;
