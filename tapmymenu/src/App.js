@@ -16,7 +16,7 @@ function CodeRoute() {
 
   console.log(`API_BASE: ${process.env.REACT_APP_API_BASE}`);
 
-  fetch(`http://${process.env.REACT_APP_API_BASE}/c/${code}`)
+  fetch(`https://${process.env.REACT_APP_API_BASE}/c/${code}`)
     .then((response) => response.json())
     .then((data) => {
       urlname = data.menuName;
