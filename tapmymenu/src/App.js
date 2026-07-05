@@ -17,7 +17,7 @@ function CodeRoute() {
   fetch(`http://localhost:8080/c/${code}`)
     .then((response) => response.json())
     .then((data) => {
-      urlname = data.urlname;
+      urlname = data.menuName;
     });
 
   return <DigitalMenu urlname={urlname} />;
