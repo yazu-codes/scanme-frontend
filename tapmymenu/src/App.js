@@ -20,6 +20,7 @@ function CodeRoute() {
       const data = await response.json();
       console.log(`CodeRoute: code=${code}, urlname=${data.menuName}`);
       setUrlname(data.menuName);
+      navigate(`/${data.menuName}`, { replace: true });
     }
     run();
   }, [code]);
