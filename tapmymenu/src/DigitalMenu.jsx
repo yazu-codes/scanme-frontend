@@ -415,10 +415,11 @@ export default function DigitalMenu({ urlname }) {
     async function fetchMenu() {
       setStatus("loading");
       try {
-        const res = await fetch(`${API_BASE}/${urlname}`);
-        console.log(`${API_BASE}/${urlname}`)
+        let urlToFetch = `${API_BASE}/${urlname}`
+        const res = await fetch(urlToFetch);
+        console.log(urlToFetch);
         if (!res.ok) throw new Error(`Request failed: ${res.status}`);
-        console.log(res)
+        console.log(res);
         const data = await res.json();
         console.log(data)
         if (!cancelled) {
