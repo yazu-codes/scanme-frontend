@@ -59,7 +59,7 @@ const TRANSLATIONS = {
       steps: [
         { no: 'STEP 1', title: 'Add your menu', body: 'Enter your dishes, prices, and photos once. Organize them into categories however you like.' },
         { no: 'STEP 2', title: 'Share your link', body: 'Put it on a table card, your socials, or your website - guests open it straight in their browser.' },
-        { no: 'STEP 3', title: 'Edit anytime', body: 'Change a price, add a special, mark something sold out - every guest sees it the moment you save.' },
+        { no: 'STEP 3', title: 'Edit anytime', body: 'Change a price, add a special, mark something sold out - every guest sees it immediately.' },
       ],
     },
     compare: {
@@ -121,7 +121,7 @@ const TRANSLATIONS = {
       steps: [
         { no: 'СТЪПКА 1', title: 'Добави своето меню', body: 'Въведи ястията, цените и снимките веднъж. Организирай ги в категории както искаш.' },
         { no: 'СТЪПКА 2', title: 'Сподели своя линк', body: 'Постави го на масата, в социалните мрежи или на сайта си - гостите го отварят направо в браузъра.' },
-        { no: 'СТЪПКА 3', title: 'Редактирай по всяко време', body: 'Промени цена, добави специалитет, отбележи нещо като изчерпано - всеки гост го вижда веднага след запис.' },
+        { no: 'СТЪПКА 3', title: 'Редактирай по всяко време', body: 'Промени цена, добави специалитет, отбележи нещо като изчерпано - всеки гост го вижда веднага.' },
       ],
     },
     compare: {
