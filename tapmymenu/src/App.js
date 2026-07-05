@@ -12,8 +12,13 @@ function CodeRoute() {
   // Also change the url to /:urlname so that the user can bookmark it and share it with others. The code should be removed from the url.
 
   // TODO: Make a call to the backend to get the urlname from the code.
-  
   let urlname = "";
+
+  fetch(`http://localhost:8080/c/${code}`)
+    .then((response) => response.json())
+    .then((data) => {
+      urlname = data.urlname;
+    });
 
   return <DigitalMenu urlname={urlname} />;
 }
