@@ -7,22 +7,38 @@ function MenuRoute() {
   console.log(`MenuRoute: urlname=${urlname}`);
   return <DigitalMenu urlname={urlname} />;
 }
-function CodeRoute() {
-  const { code } = useParams();
-  // do a call to localhost:8080/c/:code to get the urlname and then pass it to DigitalMenu.
-  // Also change the url to /:urlname so that the user can bookmark it and share it with others. The code should be removed from the url.
+function CodeRoute({ code }) {
+  const [urlname, setUrlname] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // TODO: Make a call to the backend to get the urlname from the code.
-  let urlname = "";
+  useEffect(() => {
+    let cancelled = false;
 
-  console.log(`API_BASE: ${process.env.REACT_APP_API_BASE}`);
+    console.log(`API_BASE: ${process.env.REACT_APP_API_BASE}`);
 
-  fetch(`https://${process.env.REACT_APP_API_BASE}/c/${code}`)
-    .then((response) => response.json())
-    .then((data) => {
-      urlname = data.menuName;
-      console.log(`CodeRoute: code=${code}, urlname=${urlname}`);
-    });
+    fetch(`https://${process.env.REACT_APP_API_BASE}/c/${code}`)
+      .then((response) => {
+        if (!response.ok) throw new Error(`Request failed (${response.status})`);
+        return response.json();
+      })
+      .then((data) => {
+        if (cancelled) return;
+        console.log(`CodeRoute: code=${code}, urlname=${data.menuName}`);
+        setUrlname(data.menuName);
+        setLoading(false);
+      })
+      .catch((err) => {
+        if (cancelled) return;
+        setError(err.message);
+        setLoading(false);
+      });
+
+    return () => { cancelled = true; };
+  }, [code]);
+
+  if (loading) return <div>Loading…</div>;
+  if (error) return <div>Couldn't load menu — {error}</div>;
 
   return <DigitalMenu urlname={urlname} />;
 }
