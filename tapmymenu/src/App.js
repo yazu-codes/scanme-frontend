@@ -37,6 +37,7 @@ export default function App() {
       <Routes>
         <Route path="/c/:code" element={<CodeRoute />} />
         <Route path="/:urlname" element={<MenuRoute />} />
+        <Route path="/" element={<LandingPage />} />
       </Routes>
     </BrowserRouter>
   );
