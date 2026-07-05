@@ -419,6 +419,7 @@ export default function DigitalMenu({ urlname }) {
         console.log(`${API_BASE}/${urlname}`)
         if (!res.ok) throw new Error(`Request failed: ${res.status}`);
         const data = await res.json();
+        console.log(data)
         if (!cancelled) {
           setMenu(data.menu);
           setStatus("ready");
