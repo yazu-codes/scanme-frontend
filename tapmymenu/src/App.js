@@ -11,6 +11,7 @@ function MenuRoute() {
 function CodeRoute() {
   const { code } = useParams();
   const [urlname, setUrlname] = useState(null);
+  const navigate = useNavigate();
 
   console.log(code)
   
@@ -23,9 +24,9 @@ function CodeRoute() {
       navigate(`/${data.menuName}`, { replace: true });
     }
     run();
-  }, [code]);
+  }, [code, navigate]);
 
-  if (urlname === null) return null; // nothing rendered until the fetch resolves
+  if (urlname === null) return null;
 
   return <DigitalMenu urlname={urlname} />;
 }
