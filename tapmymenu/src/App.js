@@ -13,6 +13,8 @@ function CodeRoute() {
 
   // TODO: Make a call to the backend to get the urlname from the code.
   
+  let urlname = "";
+
   return <DigitalMenu urlname={urlname} />;
 }
 
