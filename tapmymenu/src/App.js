@@ -36,7 +36,10 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<LandingPage />} />
+        <Route path="/" element={<LandingPage locale="en" />} />
+        <Route path="/bg" element={<LandingPage locale="bg" />} />
+        <Route path="/ru" element={<LandingPage locale="ru" />} />
+        <Route path="/el" element={<LandingPage locale="el" />} />
         <Route path="/c/:code" element={<CodeRoute />} />
         <Route path="/:urlname" element={<MenuRoute />} />
       </Routes>
