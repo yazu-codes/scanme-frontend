@@ -472,7 +472,7 @@ export default function DigitalMenu({ urlname }) {
     if (!menu) return;
 
     const owner = menu.menu_owner || {};
-    const title = owner.menu_owner_name ? `${owner.menu_owner_name} — Menu` : 'Menu';
+    const title = owner.menu_owner_name ? `${owner.menu_owner_name} | Menu` : 'Menu';
     const description = owner.menu_owner_slogan || `View the menu for ${owner.menu_owner_name || 'this restaurant'}`;
     const keywords = [owner.menu_owner_name, 'menu', 'restaurant', ...(menu.menu_items || []).map(i => i.category)]
       .filter(Boolean)
