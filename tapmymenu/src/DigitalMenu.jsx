@@ -106,7 +106,7 @@ export default function DigitalMenu({ urlname }) {
 
   const owner = menu?.menu_owner || {};
   const config = menu?.menu_configuration || {};
-  const items = menu?.menu_items || [];
+  const items = useMemo(() => menu?.menu_items || [], [menu]);
 
   // No category_order field is guaranteed on every payload: derive category
   // order from first appearance in menu_items instead of a fixed list, so
