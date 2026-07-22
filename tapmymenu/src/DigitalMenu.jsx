@@ -445,6 +445,7 @@ export default function DigitalMenu({ urlname }) {
         const data = await res.json();
         console.log(data)
         if (!cancelled) {
+          console.log(data.menu)
           setMenu(data.menu);
           setStatus("ready");
         }
