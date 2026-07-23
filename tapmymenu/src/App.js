@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, BrowserRouter, Routes, Route, useParams } from "react-router-dom";
-import DigitalMenu from "./DigitalMenu";
+import DigitalMenu from "./DigitalMenu/";
 import LandingPage from "./LandingPage";
 
 function MenuRoute() {
   const { urlname } = useParams();
   console.log(`MenuRoute: urlname=${urlname}`);
-  return <DigitalMenu urlname={urlname} />;
+  return <DigitalMenu urlname={urlname} theme="luxury" />;
 }
 
 function CodeRoute() {
