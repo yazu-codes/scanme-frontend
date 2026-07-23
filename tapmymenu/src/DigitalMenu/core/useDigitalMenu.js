@@ -20,9 +20,9 @@ import useDocumentMeta from "./hooks/useDocumentMeta";
 export default function useDigitalMenu(urlname) {
   const { menu, status } = useMenuData(urlname);
   useDocumentMeta(menu);
-  const { categories, itemsByCategory, category_order } = useGroupedMenuItems(menu);
+  const { categories, itemsByCategory } = useGroupedMenuItems(menu);
 
-  const config = menu?.menu_configuration || {};
+  const config = menu?.menu_configuration || {}; //
   const owner = menu?.menu_owner || {};
 
   return { status, menu, owner, config, categories, itemsByCategory };
