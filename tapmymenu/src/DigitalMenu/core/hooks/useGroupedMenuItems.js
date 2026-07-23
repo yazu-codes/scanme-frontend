@@ -26,6 +26,6 @@ export default function useGroupedMenuItems(menu) {
       );
     }
 
-    return { categories: order, itemsByCategory: grouped, category_order: category_order };
+    return { categories: order, itemsByCategory: grouped };
   }, [menu]);
 }
