@@ -24,7 +24,7 @@ function toRoman(num) {
 
 export default function CategorySection({ category, items, index, sectionRef, onSelectItem }) {
   let categoryLabel = ""
-  if (category.label == undefined) {
+  if (category.label === undefined) {
     categoryLabel = category
   } else {
     categoryLabel = category.label

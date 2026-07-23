@@ -6,7 +6,7 @@ import { useMemo } from "react";
 // same no matter which theme renders the result.
 export default function useGroupedMenuItems(menu) {
   return useMemo(() => {
-    const category_order = menu?.category_order || ""
+    // const category_order = menu?.category_order || ""
     const items = menu?.menu_items || [];
     const order = [];
     const grouped = {};
@@ -26,6 +26,6 @@ export default function useGroupedMenuItems(menu) {
       );
     }
 
-    return { categories: order, itemsByCategory: grouped };
+    return { categories: order, itemsByCategory: grouped, category_order: category_order };
   }, [menu]);
 }
