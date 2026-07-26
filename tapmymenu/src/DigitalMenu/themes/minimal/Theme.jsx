@@ -17,7 +17,7 @@ import { LoadingScreen, ErrorScreen } from "./components/StatusScreen";
 // just apply it.
 //
 // Same props as every other theme, straight from core/useDigitalMenu.
-export default function MinimalTheme({ status, owner, categories, itemsByCategory }) {
+export default function MinimalTheme({ urlName, status, owner, categories, itemsByCategory }) {
   useBodyBackgroundSync("#fdfcf9");
   useGoogleFont("Fraunces");
 

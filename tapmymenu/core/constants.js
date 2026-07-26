@@ -5,6 +5,7 @@
 // ---------------------------------------------------------------------
 
 export const API_BASE = process.env.REACT_APP_API_BASE;
+export const AI_API_BASE = process.env.REACT_AI_API_BASE;
 export const FALLBACK_FONT = "Roboto";
 
 // A small, safe allow-list of fonts we know how to load from Google

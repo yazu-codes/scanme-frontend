@@ -19,7 +19,7 @@ import { LoadingScreen, ErrorScreen } from "./components/StatusScreen";
 //
 // Every prop here comes straight from core/useDigitalMenu — this
 // component is purely presentational.
-export default function ClassicTheme({ status, owner, config, categories, itemsByCategory }) {
+export default function ClassicTheme({ urlName, status, owner, config, categories, itemsByCategory }) {
   const [selectedItem, setSelectedItem] = useState(null);
   const [panelOpen, setPanelOpen] = useState(false);
 

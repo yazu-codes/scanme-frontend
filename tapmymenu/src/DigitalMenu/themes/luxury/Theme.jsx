@@ -13,6 +13,7 @@ import CategorySection from "./components/CategorySection";
 import Footer from "./components/Footer";
 import ItemDetailPanel from "./components/ItemDetailPanel";
 import { LoadingScreen, ErrorScreen } from "./components/StatusScreen";
+import MenuChatWidget from "../../core/MenuChatWidget";
 
 const parseMenuTree = (value) => {
   if (!value) return null;
@@ -37,7 +38,8 @@ const parseMenuTree = (value) => {
 //
 // Every prop here comes straight from core/useDigitalMenu — this
 // component is purely presentational.
-export default function LuxuryTheme({ status, owner, config, categories, itemsByCategory }) {
+export default function LuxuryTheme({ urlname, status, owner, config, categories, itemsByCategory }) {
+  console.log("RESTAURANT NAME:", urlname)
   const tree = parseMenuTree(config.category_order);
 
   const [selectedItem, setSelectedItem] = useState(null);
@@ -107,6 +109,11 @@ export default function LuxuryTheme({ status, owner, config, categories, itemsBy
           />
         ))}
       </main>
+
+      <MenuChatWidget
+        restaurantName={urlname}
+        accentColor={config.background_color}
+      />
 
       <Footer owner={owner} />
 
