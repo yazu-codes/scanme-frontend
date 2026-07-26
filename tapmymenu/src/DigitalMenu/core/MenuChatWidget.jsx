@@ -11,7 +11,7 @@ const AI_API_BASE = process.env.REACT_APP_AI_API_BASE;
 async function sendToAgent(payload) {
   console.log(payload)
   // Example real implementation:
-  const res = await fetch(`http://${AI_API_BASE}/chat`, {
+  const res = await fetch(`${AI_API_BASE}/chat`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
@@ -25,7 +25,7 @@ async function sendToAgent(payload) {
 async function healthCheckAgent() {
   // Example real implementation:
   console.log(AI_API_BASE)
-  const res = await fetch(`http://${AI_API_BASE}/`, {
+  const res = await fetch(`${AI_API_BASE}/`, {
     method: "GET",
   });
   if (!res.ok) return false;
