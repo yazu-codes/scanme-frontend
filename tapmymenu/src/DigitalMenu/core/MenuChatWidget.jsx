@@ -29,7 +29,6 @@ async function healthCheckAgent() {
     method: "GET",
   });
   if (!res.ok) return false;
-  const data = await res.json();
   if (res.status != 200) {
     return false
   }
