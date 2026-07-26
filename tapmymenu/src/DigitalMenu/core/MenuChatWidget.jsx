@@ -29,7 +29,7 @@ async function healthCheckAgent() {
     method: "GET",
   });
   if (!res.ok) return false;
-  if (res.status != 200) {
+  if (res.status !== 200) {
     return false
   }
   return true
@@ -381,14 +381,14 @@ export default function MenuChatWidget({
 
   const buildPayload = useCallback(
     (updatedMessages) => ({
-      ["3fc0469d66b2e72d3a7185687df9d459"]: restaurantName,
+      "3fc0469d66b2e72d3a7185687df9d459": restaurantName,
       messages: updatedMessages.map((m) => ({
         type: m.type,
         content: m.content,
       })),
       temperature: TEMPERATURE,
     }),
-    ["3fc0469d66b2e72d3a7185687df9d459", restaurantName]
+    [restaurantName]
   );
 
   const handleSend = async () => {
