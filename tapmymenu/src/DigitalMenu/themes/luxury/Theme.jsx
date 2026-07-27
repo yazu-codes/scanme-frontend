@@ -113,6 +113,7 @@ export default function LuxuryTheme({ urlname, status, owner, config, categories
       <MenuChatWidget
         restaurantName={urlname}
         accentColor={config.background_color}
+        itemSelect={handleSelectItem}
       />
 
       <Footer owner={owner} />

@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { MessageCircle, X, Send, Sparkles } from "lucide-react";
+import HighlightedMessage from "./HighlightedMessage"
 
 // ---------------------------------------------------------------------------
 // Config
@@ -345,6 +346,7 @@ const scopedCss = `
 export default function MenuChatWidget({
   restaurantName,
   accentColor = "#B23A48",
+  itemSelect
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([]);
@@ -573,7 +575,11 @@ export default function MenuChatWidget({
                           }
                     }
                   >
-                    {m.content}
+                    {m.type === "assistant" ? (
+                      <HighlightedMessage content={m.content} onSelectItem={itemSelect} palette={palette} />
+                    ) : (
+                      m.content
+                    )}
                   </div>
                 </div>
               ))}
