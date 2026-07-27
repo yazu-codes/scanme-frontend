@@ -611,7 +611,7 @@
   background: var(--dml-bg);
   color: var(--dml-fg);
   font-family: var(--dml-font);
-  z-index: 41;
+  z-index: 401;
   transform: translateX(100%);
   transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   overflow-y: auto;
