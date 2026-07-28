@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, BrowserRouter, Routes, Route, useParams } from "react-router-dom";
 import DigitalMenu from "./DigitalMenu/";
-import LandingPage from "./LandingPage";
+import LandingPage from "./LandingPage.world";
 
 function MenuRoute() {
   const { urlname } = useParams();
@@ -37,9 +37,6 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage locale="en" />} />
-        <Route path="/bg" element={<LandingPage locale="bg" />} />
-        <Route path="/ru" element={<LandingPage locale="ru" />} />
-        <Route path="/el" element={<LandingPage locale="el" />} />
         <Route path="/c/:code" element={<CodeRoute />} />
         <Route path="/:urlname" element={<MenuRoute />} />
       </Routes>
