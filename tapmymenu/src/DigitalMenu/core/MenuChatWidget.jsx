@@ -359,6 +359,30 @@ export default function MenuChatWidget({
 
   const [isAvailable, setIsAvailable] = useState(false);
 
+  // Track the *visual* viewport, not the layout viewport: on Android Chrome
+  // (and older WebViews that don't honor the `interactive-widget` viewport
+  // meta) the on-screen keyboard shrinks the visual viewport only, leaving
+  // `position: fixed` / `vh` sizing unchanged — which pins this bottom sheet
+  // to the full screen height and hides the input row behind the keyboard.
+  const [viewportHeight, setViewportHeight] = useState(() =>
+    typeof window !== "undefined"
+      ? (window.visualViewport ? window.visualViewport.height : window.innerHeight)
+      : 0
+  );
+
+  useEffect(() => {
+    const vv = window.visualViewport;
+    if (!vv) return;
+    const update = () => setViewportHeight(vv.height);
+    update();
+    vv.addEventListener("resize", update);
+    vv.addEventListener("scroll", update);
+    return () => {
+      vv.removeEventListener("resize", update);
+      vv.removeEventListener("scroll", update);
+    };
+  }, []);
+
   useEffect(() => {
     let cancelled = false;
     healthCheckAgent().then((ok) => {
@@ -480,13 +504,13 @@ export default function MenuChatWidget({
       {isOpen && (
         <div
           className="menuchat-overlay"
-          style={styles.overlay}
+          style={{ ...styles.overlay, top: "auto", bottom: 0, height: viewportHeight }}
           onClick={() => setIsOpen(false)}
         >
           <div
             className="menuchat-panel"
             onClick={(e) => e.stopPropagation()}
-            style={styles.panel}
+            style={{ ...styles.panel, height: Math.min(viewportHeight * 0.88, 660) }}
           >
             {/* Header */}
             <div
