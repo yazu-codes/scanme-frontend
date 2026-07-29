@@ -405,6 +405,23 @@ export default function MenuChatWidget({
     }
   }, [isOpen]);
 
+  // TEMPORARY debug aid — remove once the Android typing bug is diagnosed.
+  const [debugInfo, setDebugInfo] = useState("");
+  useEffect(() => {
+    const onErr = (e) => {
+      setDebugInfo(`JS error: ${e.message} @ ${e.filename}:${e.lineno}`);
+    };
+    const onRej = (e) => {
+      setDebugInfo(`Unhandled rejection: ${e.reason && e.reason.message ? e.reason.message : e.reason}`);
+    };
+    window.addEventListener("error", onErr);
+    window.addEventListener("unhandledrejection", onRej);
+    return () => {
+      window.removeEventListener("error", onErr);
+      window.removeEventListener("unhandledrejection", onRej);
+    };
+  }, []);
+
   const buildPayload = useCallback(
     (updatedMessages) => ({
       "3fc0469d66b2e72d3a7185687df9d459": restaurantName,
@@ -631,6 +648,11 @@ export default function MenuChatWidget({
                   </div>
                 </div>
               )}
+            </div>
+
+            {/* TEMPORARY debug strip — remove once the Android typing bug is diagnosed */}
+            <div style={{ fontSize: "10px", color: "#B23A48", padding: "2px 10px", fontFamily: "monospace", wordBreak: "break-all" }}>
+              debug: len={input.length} vh={viewportHeight} ua={navigator.userAgent.slice(0, 40)} {debugInfo}
             </div>
 
             {/* Input */}
