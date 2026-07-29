@@ -354,6 +354,8 @@ export default function MenuChatWidget({
   const [isSending, setIsSending] = useState(false);
   const scrollRef = useRef(null);
   const inputRef = useRef(null);
+  const overlayRef = useRef(null);
+  const panelRef = useRef(null);
 
   const palette = usePalette(accentColor);
 
@@ -364,16 +366,20 @@ export default function MenuChatWidget({
   // meta) the on-screen keyboard shrinks the visual viewport only, leaving
   // `position: fixed` / `vh` sizing unchanged — which pins this bottom sheet
   // to the full screen height and hides the input row behind the keyboard.
-  const [viewportHeight, setViewportHeight] = useState(() =>
-    typeof window !== "undefined"
-      ? (window.visualViewport ? window.visualViewport.height : window.innerHeight)
-      : 0
-  );
-
+  //
+  // This writes directly to the DOM via refs instead of React state: driving
+  // it through setState re-renders the whole widget on every keyboard-open
+  // resize event, and on older Android WebViews those resize events fire
+  // repeatedly during the keyboard animation — a re-render mid-keystroke
+  // reconciles the controlled <textarea> back to its last committed value,
+  // silently discarding whatever the IME was mid-composing.
   useEffect(() => {
     const vv = window.visualViewport;
     if (!vv) return;
-    const update = () => setViewportHeight(vv.height);
+    const update = () => {
+      if (overlayRef.current) overlayRef.current.style.height = `${vv.height}px`;
+      if (panelRef.current) panelRef.current.style.height = `${Math.min(vv.height * 0.88, 660)}px`;
+    };
     update();
     vv.addEventListener("resize", update);
     vv.addEventListener("scroll", update);
@@ -381,7 +387,7 @@ export default function MenuChatWidget({
       vv.removeEventListener("resize", update);
       vv.removeEventListener("scroll", update);
     };
-  }, []);
+  }, [isOpen]);
 
   useEffect(() => {
     let cancelled = false;
@@ -520,14 +526,21 @@ export default function MenuChatWidget({
 
       {isOpen && (
         <div
+          ref={overlayRef}
           className="menuchat-overlay"
-          style={{ ...styles.overlay, top: "auto", bottom: 0, height: viewportHeight }}
+          style={{
+            ...styles.overlay,
+            top: "auto",
+            bottom: 0,
+            height: window.visualViewport ? window.visualViewport.height : window.innerHeight,
+          }}
           onClick={() => setIsOpen(false)}
         >
           <div
+            ref={panelRef}
             className="menuchat-panel"
             onClick={(e) => e.stopPropagation()}
-            style={{ ...styles.panel, height: Math.min(viewportHeight * 0.88, 660) }}
+            style={styles.panel}
           >
             {/* Header */}
             <div
@@ -652,7 +665,7 @@ export default function MenuChatWidget({
 
             {/* TEMPORARY debug strip — remove once the Android typing bug is diagnosed */}
             <div style={{ fontSize: "10px", color: "#B23A48", padding: "2px 10px", fontFamily: "monospace", wordBreak: "break-all" }}>
-              debug: len={input.length} vh={viewportHeight} ua={navigator.userAgent.slice(0, 40)} {debugInfo}
+              debug: len={input.length} ua={navigator.userAgent.slice(0, 40)} {debugInfo}
             </div>
 
             {/* Input */}
