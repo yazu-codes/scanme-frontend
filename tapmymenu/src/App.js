@@ -9,6 +9,18 @@ function MenuRoute() {
   return <DigitalMenu urlname={urlname} theme="luxury" />;
 }
 
+function QrRoute() {
+  const { urlname } = useParams();
+  const navigate = useNavigate();
+
+  console.log(`QrRoute: urlname=${urlname}`);
+  // TODO: Implement a fetch call to analytics component to know how many shares via QR we get.
+  useEffect(() => {
+    navigate(`/${urlname}`, { replace: true });
+  })
+  return <DigitalMenu urlname={urlname} theme="luxury" />;
+}
+
 function CodeRoute() {
   const { code } = useParams();
   const [urlname, setUrlname] = useState(null);
@@ -29,14 +41,16 @@ function CodeRoute() {
 
   if (urlname === null) return null;
 
-  return <DigitalMenu urlname={urlname} />;
+  return <DigitalMenu code={code} urlname={urlname} />;
 }
+
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage locale="en" />} />
+        <Route path="/qr/:urlname" element={<QrRoute />} />
         <Route path="/c/:code" element={<CodeRoute />} />
         <Route path="/:urlname" element={<MenuRoute />} />
       </Routes>

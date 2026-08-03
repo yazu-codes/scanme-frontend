@@ -15,7 +15,9 @@ export default function useCategoryScrollSpy(categories) {
 
   // Default to the first category once categories are known
   useEffect(() => {
-    if (categories.length && !activeCategory) {
+    console.log("HERE")
+    if (!activeCategory) {
+      console.log("FIRST CATEGORY:", categories)
       setActiveCategory(categories[0]);
     }
   }, [categories, activeCategory]);
