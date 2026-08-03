@@ -405,7 +405,7 @@ export default function QRCodeWidget({
 
           <button
             onClick={() => setIsOpen(true)}
-            aria-label={`Отвори чат с асистента на ${restaurantName}, задвижван от изкуствен интелект`}
+            aria-label={`Сподели менюто на ${restaurantName}, чрез QR код`}
             className="menuchat-trigger"
             style={{
               ...styles.triggerBtn,
@@ -450,8 +450,10 @@ export default function QRCodeWidget({
               style={{
                 ...styles.header,
                 background: `linear-gradient(120deg, ${palette.accent}, ${palette.accentDark} 70%)`,
+                color: palette.onAccent,
               }}
             >
+              <span className="menuchat-header-title">Share QR Code!</span>
               <div
                 style={{backgroundColor: palette.onAccent }}
               />
