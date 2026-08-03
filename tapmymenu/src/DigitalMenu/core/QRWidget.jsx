@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
-import { MessageCircle, QrCode, X, Send, Sparkles } from "lucide-react";
-import HighlightedMessage from "./HighlightedMessage"
+import { QrCode, X } from "lucide-react";
 import QRCodeCard from "./QRCodeCard";
 
 // ---------------------------------------------------------------------------
@@ -449,13 +448,6 @@ export default function QRCodeWidget({
       );
     } finally {
       setIsSending(false);
-    }
-  };
-
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      handleSend();
     }
   };
   

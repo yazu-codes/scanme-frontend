@@ -1,5 +1,4 @@
 import QRCode from "react-qr-code";
-import { QrCode } from "lucide-react";
 
 export default function QRCodeCard({
   url,
