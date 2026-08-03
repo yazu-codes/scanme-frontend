@@ -453,7 +453,7 @@ export default function QRCodeWidget({
                 color: palette.onAccent,
               }}
             >
-              <span className="menuchat-header-title">Share QR Code!</span>
+              <span className="menuchat-header-title">Share menu via QR Code!</span>
               <div
                 style={{backgroundColor: palette.onAccent }}
               />
