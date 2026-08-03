@@ -72,16 +72,11 @@ export default function ItemDetailPanel({ item, open, onClose }) {
         onClick={onClose}
         aria-hidden="true"
       />
-      <motion.aside
+      <aside
         className={"dml-panel" + (open ? " dml-panel-open" : "")}
-        drag="x"
-        dragConstraints={{ left: 0, right: 0 }}
-        dragElastic={0.15}
-        onDragEnd={(event, info) => {
-          if (info.offset.x < -100) {
-            onClose();
-          }
-        }}
+        role="dialog"
+        aria-modal="true"
+        aria-label={item ? item.name : "Item details"}
       >
         {item ? (
           <>
@@ -137,7 +132,7 @@ export default function ItemDetailPanel({ item, open, onClose }) {
             </div>
           </>
         ) : null}
-        </motion.aside>
+        </aside>
     </>
   );
 }
