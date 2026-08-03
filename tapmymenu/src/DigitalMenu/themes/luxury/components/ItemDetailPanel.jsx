@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { motion } from "framer-motion";
 import { formatPrice, parseAllergens } from "../../../core";
 import AllergenTag from "./AllergenTag";
 
@@ -71,11 +72,16 @@ export default function ItemDetailPanel({ item, open, onClose }) {
         onClick={onClose}
         aria-hidden="true"
       />
-      <aside
+      <motion.aside
         className={"dml-panel" + (open ? " dml-panel-open" : "")}
-        role="dialog"
-        aria-modal="true"
-        aria-label={item ? item.name : "Item details"}
+        drag="x"
+        dragConstraints={{ left: 0, right: 0 }}
+        dragElastic={0.15}
+        onDragEnd={(event, info) => {
+          if (info.offset.x < -100) {
+            onClose();
+          }
+        }}
       >
         {item ? (
           <>
@@ -131,7 +137,7 @@ export default function ItemDetailPanel({ item, open, onClose }) {
             </div>
           </>
         ) : null}
-      </aside>
+        </motion.aside>
     </>
   );
 }
