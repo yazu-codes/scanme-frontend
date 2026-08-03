@@ -82,11 +82,21 @@ export default function LuxuryTheme({ urlname, status, owner, config, categories
     <div className="dml-root" style={cssVars}>
       <Header owner={owner} />
 
-      <CategoryNav
-        categories={categories}
-        activeCategory={activeCategory}
-        onSelect={handleCategorySelect}
-      />
+      {tree != null ? (
+          <CategoryNav
+            categories={tree}
+            activeCategory={activeCategory}
+            onSelect={handleCategorySelect}
+          />
+        ) : (
+          <CategoryNav
+            categories={categories}
+            activeCategory={activeCategory}
+            onSelect={handleCategorySelect}
+          />
+        )}
+
+      
 
       <main className="dml-main">
         {tree != null ? tree.map((category, idx) => (
