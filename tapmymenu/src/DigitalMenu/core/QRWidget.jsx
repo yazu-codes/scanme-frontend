@@ -423,33 +423,6 @@ export default function QRCodeWidget({
     }),
     [restaurantName]
   );
-
-  const handleSend = async () => {
-    const trimmed = input.trim();
-    if (!trimmed || isSending) return;
-
-    const userMessage = { type: "user", content: trimmed };
-    const withUser = pushFIFO(messages, userMessage);
-
-    setMessages(withUser);
-    setInput("");
-    setIsSending(true);
-
-    try {
-      const payload = buildPayload(withUser);
-      const { content } = await sendToAgent(payload);
-      setMessages((prev) => pushFIFO(prev, { type: "assistant", content }));
-    } catch (err) {
-      setMessages((prev) =>
-        pushFIFO(prev, {
-          type: "assistant",
-          content: "Възникна грешка. Опитай отново след малко.",
-        })
-      );
-    } finally {
-      setIsSending(false);
-    }
-  };
   
   if (!isAvailable) {
     console.log("not available")
