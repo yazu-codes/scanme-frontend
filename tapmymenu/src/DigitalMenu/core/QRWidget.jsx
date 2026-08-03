@@ -1,27 +1,11 @@
-import { useState, useRef, useEffect, useCallback, useMemo } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import { QrCode, X } from "lucide-react";
 import QRCodeCard from "./QRCodeCard";
 
 // ---------------------------------------------------------------------------
 // Config
 // ---------------------------------------------------------------------------
-const MAX_MESSAGES = 10;
-const TEMPERATURE = 0.1;
 const AI_API_BASE = process.env.REACT_APP_AI_API_BASE;
-
-async function sendToAgent(payload) {
-  console.log(payload)
-  // Example real implementation:
-  const res = await fetch(`${AI_API_BASE}/chat`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
-  });
-  if (!res.ok) throw new Error("Agent request failed");
-  const data = await res.json();
-  console.log(data.Content)
-  return { content: data.Content };
-}
 
 async function healthCheckAgent() {
   // Example real implementation:
@@ -34,14 +18,6 @@ async function healthCheckAgent() {
     return false
   }
   return true
-}
-
-function pushFIFO(list, item) {
-  const next = [...list, item];
-  if (next.length > MAX_MESSAGES) {
-    return next.slice(next.length - MAX_MESSAGES);
-  }
-  return next;
 }
 
 // ---------------------------------------------------------------------------
@@ -350,9 +326,6 @@ export default function QRCodeWidget({
   itemSelect
 }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState("");
-  const [isSending, setIsSending] = useState(false);
   const scrollRef = useRef(null);
   const inputRef = useRef(null);
   const overlayRef = useRef(null);
@@ -404,25 +377,13 @@ export default function QRCodeWidget({
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
-  }, [messages, isOpen, isSending]);
+  }, [isOpen]);
 
   useEffect(() => {
     if (isOpen && inputRef.current) {
       inputRef.current.focus();
     }
   }, [isOpen]);
-
-  const buildPayload = useCallback(
-    (updatedMessages) => ({
-      "3fc0469d66b2e72d3a7185687df9d459": restaurantName,
-      messages: updatedMessages.map((m) => ({
-        type: m.type,
-        content: m.content,
-      })),
-      temperature: TEMPERATURE,
-    }),
-    [restaurantName]
-  );
   
   if (!isAvailable) {
     console.log("not available")
