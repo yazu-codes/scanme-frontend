@@ -69,7 +69,8 @@ export default function MenuItemCard({ item, onSelect }) {
         ) : null}
 
         <div className="dml-item-allergens">
-          <span className="dml-allergen-label">Allergens</span>
+          {allergens.length > 0 ? (<span className="dml-allergen-label">Allergens</span>) : ""}
+          
           {allergens.length > 0 ? (
             <div className="dml-allergen-list">
               {allergens.map((a) => (
@@ -77,7 +78,7 @@ export default function MenuItemCard({ item, onSelect }) {
               ))}
             </div>
           ) : (
-            <span className="dml-allergen-empty">None listed</span>
+            ""// <span className="dml-allergen-empty">None listed</span>
           )}
         </div>
       </div>
