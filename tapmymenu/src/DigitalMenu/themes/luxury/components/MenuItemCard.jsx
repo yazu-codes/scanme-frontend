@@ -68,19 +68,21 @@ export default function MenuItemCard({ item, onSelect }) {
           <p className="dml-item-description">{item.description}</p>
         ) : null}
 
-        <div className="dml-item-allergens">
-          {allergens.length > 0 ? (<span className="dml-allergen-label">Allergens</span>) : ""}
+        {allergens.length > 0 ? (
+          <div className="dml-item-allergens">
           
-          {allergens.length > 0 ? (
-            <div className="dml-allergen-list">
-              {allergens.map((a) => (
-                <AllergenTag key={a} allergen={a} />
-              ))}
-            </div>
+            <span className="dml-allergen-label">Allergens</span>
+
+              <div className="dml-allergen-list">
+                {allergens.map((a) => (
+                  <AllergenTag key={a} allergen={a} />
+                ))}
+              </div>
+          
+          </div>
           ) : (
-            ""// <span className="dml-allergen-empty">None listed</span>
-          )}
-        </div>
+              ""// <span className="dml-allergen-empty">None listed</span>
+            )}
       </div>
     </article>
   );
