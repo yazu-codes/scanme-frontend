@@ -5,7 +5,7 @@ import LandingPage from "./LandingPage.world";
 
 function MenuRoute() {
   const { urlname } = useParams();
-  console.log(`MenuRoute: urlname=${urlname}`);
+  // console.log(`MenuRoute: urlname=${urlname}`);
   return <DigitalMenu urlname={urlname} theme="luxury" />;
 }
 
@@ -13,7 +13,7 @@ function QrRoute() {
   const { urlname } = useParams();
   const navigate = useNavigate();
 
-  console.log(`QrRoute: urlname=${urlname}`);
+  // console.log(`QrRoute: urlname=${urlname}`);
   // TODO: Implement a fetch call to analytics component to know how many shares via QR we get.
   useEffect(() => {
     navigate(`/${urlname}`, { replace: true });
@@ -26,13 +26,13 @@ function CodeRoute() {
   const [urlname, setUrlname] = useState(null);
   const navigate = useNavigate();
 
-  console.log(code)
+  // console.log(code)
   
   useEffect(() => {
     async function run() {
       const response = await fetch(`https://${process.env.REACT_APP_API_BASE}/c/${code}`);
       const data = await response.json();
-      console.log(`CodeRoute: code=${code}, urlname=${data.menuName}`);
+      // console.log(`CodeRoute: code=${code}, urlname=${data.menuName}`);
       setUrlname(data.menuName);
       navigate(`/${data.menuName}`, { replace: true });
     }

@@ -439,13 +439,13 @@ export default function DigitalMenu({ urlname }) {
       try {
         let urlToFetch = `https://${API_BASE}/${urlname}`;
         const res = await fetch(urlToFetch);
-        console.log(urlToFetch);
+        // console.log(urlToFetch);
         if (!res.ok) throw new Error(`Request failed: ${res.status}`);
-        console.log(res);
+        // console.log(res);
         const data = await res.json();
-        console.log(data)
+        // console.log(data)
         if (!cancelled) {
-          console.log(data.menu)
+          // console.log(data.menu)
           setMenu(data.menu);
           setStatus("ready");
         }

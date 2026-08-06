@@ -18,7 +18,7 @@ import useDocumentMeta from "./hooks/useDocumentMeta";
 //   itemsByCategory { [category]: item[] }, sorted by display order
 // ---------------------------------------------------------------------
 export default function useDigitalMenu(urlname) {
-  console.log("URLNAME", urlname)
+  // console.log("URLNAME", urlname)
   const { menu, status } = useMenuData(urlname);
   useDocumentMeta(menu);
   const { categories, itemsByCategory } = useGroupedMenuItems(menu);
