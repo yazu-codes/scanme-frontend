@@ -10,7 +10,7 @@ const TEMPERATURE = 0.1;
 const AI_API_BASE = process.env.REACT_APP_AI_API_BASE;
 
 async function sendToAgent(payload) {
-  console.log(payload)
+  // console.log(payload)
   // Example real implementation:
   const res = await fetch(`${AI_API_BASE}/chat`, {
     method: "POST",
@@ -19,13 +19,13 @@ async function sendToAgent(payload) {
   });
   if (!res.ok) throw new Error("Agent request failed");
   const data = await res.json();
-  console.log(data.Content)
+  // console.log(data.Content)
   return { content: data.Content };
 }
 
 async function healthCheckAgent() {
   // Example real implementation:
-  console.log(AI_API_BASE)
+  // console.log(AI_API_BASE)
   const res = await fetch(`${AI_API_BASE}/`, {
     method: "GET",
   });
@@ -458,7 +458,7 @@ export default function MenuChatWidget({
   };
   
   if (!isAvailable) {
-    console.log("not available")
+    // console.log("not available")
     return null;
   }
 

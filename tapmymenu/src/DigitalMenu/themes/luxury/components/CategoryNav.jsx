@@ -2,7 +2,7 @@ import React from "react";
 
 export default function CategoryNav({ categories, activeCategory, onSelect }) {
   if (categories[0].label !== undefined) {
-    console.log("Printing with Tree")
+    // console.log("Printing with Tree")
     return (
       <nav className="dml-category-nav" aria-label="Menu categories">
         <div className="dml-category-scroll">

@@ -21,7 +21,7 @@ const parseMenuTree = (value) => {
 
   try {
     let parsed = JSON.parse(value)
-    console.log(parsed) 
+    // console.log(parsed) 
     return parsed
   } catch (err) {
     console.error("Invalid menu tree JSON", err);
@@ -40,7 +40,7 @@ const parseMenuTree = (value) => {
 // Every prop here comes straight from core/useDigitalMenu — this
 // component is purely presentational.
 export default function LuxuryTheme({ urlname, status, owner, config, categories, itemsByCategory, code }) {
-  console.log("RESTAURANT NAME:", urlname)
+  // console.log("RESTAURANT NAME:", urlname)
   // console.log("CODE:", code)
   const tree = parseMenuTree(config.category_order);
 

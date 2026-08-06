@@ -9,7 +9,7 @@ const AI_API_BASE = process.env.REACT_APP_AI_API_BASE;
 
 async function healthCheckAgent() {
   // Example real implementation:
-  console.log(AI_API_BASE)
+  // console.log(AI_API_BASE)
   const res = await fetch(`${AI_API_BASE}/`, {
     method: "GET",
   });
@@ -386,7 +386,7 @@ export default function QRCodeWidget({
   }, [isOpen]);
   
   if (!isAvailable) {
-    console.log("not available")
+    // console.log("not available")
     return null;
   }
 
