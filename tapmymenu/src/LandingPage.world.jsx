@@ -120,7 +120,7 @@ const TRANSLATIONS = {
       { title: 'Коснитесь стола - откройте меню', desc: 'Мы разработаем и установим умные наклейки или чипы на столах - гости просто прикладывают телефон. Без сканирования, без приложения.' },
       { title: 'Больше довольных гостей - больше отзывов', desc: 'Наша система делает оставление отзыва лёгким. Рестораны с ней получают до 95% больше отзывов за 3 месяца.' },
     ],
-    stat: { value: '95%', title: 'Больше отзывов. Доказано.', sub: 'Рестораны на TapMyMenu получают до 95% больше отзывов гостей за первые 3 месяца.' },
+    stat: { value: '95%', title: 'Больше отзывов. Доказано.', sub: 'Рестораны на TapMyMenu получают до 95% больше отзывов гостей за первые 3 месеца.' },
     yumm: {
       eyebrow: 'Бесплатное присоединение',
       title: 'Вступите в сеть YummGPT.',
@@ -624,7 +624,7 @@ function buildStations(t) {
         eyebrow: t.yumm.eyebrow,
         titleParts: [t.yumm.title + ' ', { em: t.yumm.titleEm }],
         sub: t.yumm.sub,
-        actions: [{ label: t.yumm.cta, target: null, primary: true }],
+        actions: [{ label: t.yumm.cta, target: 'https://yummgpt.com', primary: true }],
         note: t.yumm.note,
         footer: `${t.footer.copyright.replace('{year}', year)} · ${t.footer.tagline}`,
       },
@@ -649,6 +649,10 @@ function renderTitleParts(parts) {
 
 function clamp(v, min, max) {
   return Math.min(max, Math.max(min, v));
+}
+
+function isExternalUrl(target) {
+  return typeof target === 'string' && (target.startsWith('http') || target.startsWith('//'));
 }
 
 /* ---------------------------------------------------------------------- */
@@ -833,7 +837,13 @@ function FallbackStacked({ stations, onNavigate }) {
               {s.content.actions.map((a, ai) => (
                 <button
                   key={ai}
-                  onClick={() => a.target != null && onNavigate(a.target)}
+                  onClick={() => {
+                    if (isExternalUrl(a.target)) {
+                      window.location.href = a.target;
+                    } else if (a.target != null) {
+                      onNavigate(a.target);
+                    }
+                  }}
                   className={
                     a.primary
                       ? 'inline-flex items-center justify-center gap-x-2 rounded-lg bg-primary-500 px-4 py-3 text-sm font-semibold text-cream-50 shadow-sm transition-all duration-200 hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-300 focus:ring-offset-2 focus:ring-offset-cream-200'
@@ -1008,7 +1018,13 @@ export default function LandingPage() {
                       {s.content.actions.map((a, ai) => (
                         <MagneticButton
                           key={ai}
-                          onClick={() => a.target != null && scrollToStation(a.target)}
+                          onClick={() => {
+                            if (isExternalUrl(a.target)) {
+                              window.location.href = a.target;
+                            } else if (a.target != null) {
+                              scrollToStation(a.target);
+                            }
+                          }}
                           className={
                             a.primary
                               ? 'inline-flex items-center justify-center gap-x-2 rounded-lg bg-primary-500 px-4 py-3 text-sm font-semibold text-cream-50 shadow-sm transition-all duration-200 hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-300 focus:ring-offset-2 focus:ring-offset-cream-200'
@@ -1063,7 +1079,7 @@ export default function LandingPage() {
               ))}
             </div>
           </nav>
-          <FallbackStacked stations={stations} onNavigate={() => {}} />
+          <FallbackStacked stations={stations} onNavigate={scrollToStation} />
         </>
       )}
     </div>
