@@ -4,8 +4,14 @@ import { formatPrice, parseAllergens } from "../../../core";
 // No slide-in panel here — details expand inline. Local, per-row state
 // only; nothing shared, nothing to plumb up to the theme root.
 export default function MenuItemRow({ item }) {
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(true);
+  
   const allergens = parseAllergens(item.allergens);
+  
+  if (allergens.length > 0) {
+    console.log("ALLERGENS", allergens)
+  }
+  
   const hasDetails = Boolean(item.description) || allergens.length > 0;
 
   return (
@@ -28,7 +34,7 @@ export default function MenuItemRow({ item }) {
             <p className="dmm-item-description">{item.description}</p>
           ) : null}
           {allergens.length > 0 ? (
-            <p className="dmm-item-allergens">Contains: {allergens.join(", ")}</p>
+            <p className="dmm-item-allergens">Алергени: {allergens.join(", ")}</p>
           ) : null}
         </div>
       ) : null}

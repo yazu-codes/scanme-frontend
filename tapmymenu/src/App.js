@@ -41,7 +41,7 @@ function CodeRoute() {
 
   if (urlname === null) return null;
 
-  return <DigitalMenu code={code} urlname={urlname} />;
+  return <DigitalMenu code={code} urlname={urlname} theme="luxury" />;
 }
 
 

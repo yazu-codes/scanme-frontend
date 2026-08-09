@@ -12,6 +12,7 @@ export const FALLBACK_FONT = "Roboto";
 // A theme is free to request any of these; themes never introduce new
 // fonts here directly (that would make font-loading a per-theme concern).
 export const GOOGLE_FONT_WHITELIST = new Set([
+  "Times New Roman",
   "Inter",
   "Roboto",
   "Poppins",
