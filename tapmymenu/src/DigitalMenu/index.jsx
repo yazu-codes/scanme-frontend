@@ -7,6 +7,10 @@ import themes from "./themes";
 // theme   -> which visual style to render it with (themes concern)
 export default function DigitalMenu({ urlname, theme = "classic" }) {
   const menuData = useDigitalMenu(urlname);
+
+  // TODO: get locale cookie from browser, use google translate to translate anything that is not explicitly translated straight from database.
+  
+
   // console.log("AAAA",code);
   const Theme = themes[theme] || themes.classic;
   // console.log("TUKSUSHTO:",menuData.urlname)
