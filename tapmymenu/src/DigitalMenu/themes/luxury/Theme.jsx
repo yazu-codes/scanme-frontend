@@ -15,7 +15,7 @@ import ItemDetailPanel from "./components/ItemDetailPanel";
 import { LoadingScreen, ErrorScreen } from "./components/StatusScreen";
 import MenuChatWidget from "../../core/MenuChatWidget";
 import QRCodeWidget from "../../core/QRWidget";
-import LocaleWidget from "../../core/LocaleWidget";
+// import LocaleWidget from "../../core/LocaleWidget";
 
 const parseMenuTree = (value) => {
   if (!value) return null;
@@ -134,9 +134,10 @@ export default function LuxuryTheme({ urlname, status, owner, config, categories
         accentColor={config.background_color}
       />
       
-      <LocaleWidget
+      {/* <LocaleWidget
+        style={{ display:"hidden"}}
         accentColor={config.background_color}
-      />
+      /> */}
 
       <Footer owner={owner} />
 
