@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^13.5.0",
     "framer-motion": "^12.43.0",
     "google-translate-api-x": "^10.7.3",
+    "js-cookie": "^3.0.8",
     "lucide-react": "^1.25.0",
     "preline": "^2.7.0",
     "react": "^19.2.7",

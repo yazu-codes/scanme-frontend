@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { API_BASE } from "../constants";
+import Cookies from 'js-cookie';
 
 // Fetches the menu for `urlname` and exposes { menu, status }.
 // status is one of "loading" | "error" | "ready".
@@ -14,7 +15,14 @@ export default function useMenuData(urlname) {
     async function fetchMenu() {
       setStatus("loading");
       try {
-        const res = await fetch(`https://${API_BASE}/${urlname}`);
+        // Get language from cookie (default to "en")
+        const language = Cookies.get('app_locale') || 'bg';
+
+        let menuUrl = `https://${API_BASE}/${urlname}?lang=${language}`
+
+        console.log("MENU URL:", menuUrl)
+
+        const res = await fetch(menuUrl);
         if (!res.ok) throw new Error(`Request failed: ${res.status}`);
         const data = await res.json();
         if (!cancelled) {

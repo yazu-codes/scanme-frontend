@@ -363,7 +363,7 @@ export default function LocaleWidget({
             className="menuchat-label"
             style={{ ...styles.triggerLabel, color: palette.accentDark }}
           >
-            Choose Your Language BETA!
+            Choose Your Language!
           </div>
 
           <button

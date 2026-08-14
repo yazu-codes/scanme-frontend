@@ -1,9 +1,4 @@
 import { useEffect, useState } from "react";
-import {
-  translateItemsWithBatching,
-  getTranslationsFromCache,
-  saveTranslationsToCache,
-} from "../translationService"; // Use translationService-WITH-CACHE.js
 import { getLocaleCookie } from "../cookieUtils";
 
 /**
@@ -48,51 +43,13 @@ export default function useGroupedMenuItems(menu) {
         }
 
         // If Bulgarian, no translation needed
-        if (currentLocale === 'bg') {
-          const grouped = groupByCategory(items);
-          if (!cancelled) {
-            setGroupedData(grouped);
-            setIsTranslating(false);
-          }
-          return;
-        }
-
-        // Step 1: Show Bulgarian immediately
         const grouped = groupByCategory(items);
         if (!cancelled) {
           setGroupedData(grouped);
-          setIsTranslating(true);
+          setIsTranslating(false);
         }
+        return;
 
-        // Step 2: Check cache for this locale
-        let translatedItems = getTranslationsFromCache(currentLocale);
-
-        // Step 3: If not cached, translate
-        if (!translatedItems) {
-          console.log(`\n🌐 Translating for new visitor (${currentLocale})`);
-          translatedItems = await translateItemsWithBatching(
-            items,
-            currentLocale,
-            'bg',
-            ['name', 'description']
-          );
-
-          // Step 4: Save to cache for future visits
-          if (!cancelled) {
-            saveTranslationsToCache(translatedItems, currentLocale);
-          }
-        } else {
-          console.log(`\n⚡ Loaded from cache (${currentLocale})`);
-        }
-
-        // Step 5: Group translated items
-        const groupedTranslated = groupByCategory(translatedItems);
-
-        // Step 6: Update UI smoothly
-        if (!cancelled) {
-          setGroupedData(groupedTranslated);
-          setError(null);
-        }
       } catch (err) {
         console.error('Error in menu hook:', err);
         if (!cancelled) {

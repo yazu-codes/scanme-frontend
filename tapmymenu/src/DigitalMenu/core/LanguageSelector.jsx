@@ -10,7 +10,7 @@ function LanguageSelector({ languages = [
   { code: 'bg', label: 'Български', flag: '🇧🇬' },
   { code: 'en', label: 'English', flag: '🇬🇧' },
   { code: 'ro', label: 'Română', flag: '🇷🇴' },
-  { code: 'je', label: 'Jewish', flag: 'je' },
+  { code: 'he', label: 'Jewish', flag: 'he' },
 ] }) {
   const [currentLocale, setCurrentLocale] = React.useState(() => getLocaleCookie());
 
