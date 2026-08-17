@@ -10,7 +10,10 @@ function LanguageSelector({ languages = [
   { code: 'bg', label: 'Български', flag: '🇧🇬' },
   { code: 'en', label: 'English', flag: '🇬🇧' },
   { code: 'ro', label: 'Română', flag: '🇷🇴' },
-  { code: 'he', label: 'Jewish', flag: 'he' },
+  { code: 'he', label: 'Jewish', flag: '🇮🇱' },
+  { code: 'uk', label: 'Українська', flag: '🇺🇦' },
+  { code: 'ru', label: 'Русский', flag: '🇷🇺' },
+  { code: 'cs', label: 'Čeština', flag: '🇨🇿' }
 ] }) {
   const [currentLocale, setCurrentLocale] = React.useState(() => getLocaleCookie());
 
