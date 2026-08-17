@@ -48,14 +48,16 @@ function LanguageSelector({ languages = [
         }
 
         .language-buttons {
-          display: flex;
+          display: block;
           gap: 8px;
           background: #f5f5f5;
           padding: 8px;
           border-radius: 8px;
+          width:100%;
         }
 
         .lang-btn {
+          width:100%;
           display: flex;
           align-items: center;
           gap: 6px;
