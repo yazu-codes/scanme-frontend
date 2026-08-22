@@ -69,10 +69,10 @@ function LanguageSelector({ languages = [
         }
 
         .lang-btn {
-          width:100%;
-          display: flex;
+          display: inline-block;
           align-items: center;
           gap: 6px;
+          margin:6px;
           padding: 8px 14px;
           border: 1px solid transparent;
           background: transparent;
