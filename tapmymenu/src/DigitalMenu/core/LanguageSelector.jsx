@@ -13,7 +13,19 @@ function LanguageSelector({ languages = [
   { code: 'he', label: 'Jewish', flag: '🇮🇱' },
   { code: 'uk', label: 'Українська', flag: '🇺🇦' },
   { code: 'ru', label: 'Русский', flag: '🇷🇺' },
-  { code: 'cs', label: 'Čeština', flag: '🇨🇿' }
+  { code: 'cs', label: 'Čeština', flag: '🇨🇿' },
+  { code: 'tr', label: 'Türkçe', flag: '🇹🇷' },
+  { code: 'es', label: 'Español', flag: '🇪🇸' },
+  { code: 'fr', label: 'Français', flag: '🇫🇷' },
+  { code: 'de', label: 'Deutsch', flag: '🇩🇪' },
+  { code: 'it', label: 'Italiano', flag: '🇮🇹' },
+  { code: 'pl', label: 'Polski', flag: '🇵🇱' },
+  { code: 'pt', label: 'Português', flag: '🇵🇹' },
+  { code: 'nl', label: 'Nederlands', flag: '🇳🇱' },
+  { code: 'sv', label: 'Svenska', flag: '🇸🇪' },
+  { code: 'el', label: 'Ελληνικά', flag: '🇬🇷' },
+  { code: 'ja', label: '日本語', flag: '🇯🇵' },
+  { code: 'zh', label: '中文', flag: '🇨🇳' }
 ] }) {
   const [currentLocale, setCurrentLocale] = React.useState(() => getLocaleCookie());
 
