@@ -1,14 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
 
-.dml-root.dml-theme-modern,
-.dml-root.dml-theme-modern *,
-.dml-root.dml-theme-modern *::before,
-.dml-root.dml-theme-modern *::after {
+.dml-root.dml-theme-modern, .dml-root.dml-theme-modern *, .dml-root.dml-theme-modern *::before, .dml-root.dml-theme-modern *::after {
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
 }
 
 .dml-root.dml-theme-modern {
+  /* Fixed layout constants — set here (not as inline React style vars)
+     so the media queries below can actually override them; an inline
+     style on the root element would otherwise always win the cascade. */
   --dml-header-h: 60px;
   --dml-nav-h: 50px;
 
@@ -16,20 +16,22 @@
   color: var(--dml-fg);
   font-family: var(--dml-font);
   font-size: var(--dml-font-size);
-
+  /* Fallback chain: vh first, then the two mobile-safe units. Browsers
+     that don't understand dvh/svh simply ignore those declarations, so
+     this always ends on the most accurate unit available — critical on
+     iOS Safari, where 100vh includes space the collapsing address bar
+     will cover. */
   min-height: 100vh;
   min-height: 100svh;
   min-height: 100dvh;
-
   width: 100%;
   max-width: 100%;
-  overflow-x: hidden;
-  overscroll-behavior-y: contain;
-
+  overflow-x: clip;
+  overflow-y: visible;
+  touch-action: pan-y;
   display: flex;
   flex-direction: column;
   position: relative;
-
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   -webkit-text-size-adjust: 100%;
@@ -60,16 +62,8 @@
 }
 
 @keyframes dml-pulse {
-  0%,
-  100% {
-    transform: scale(1);
-    opacity: 0.55;
-  }
-
-  50% {
-    transform: scale(1.5);
-    opacity: 1;
-  }
+  0%, 100% { transform: scale(1); opacity: 0.55; }
+  50% { transform: scale(1.5); opacity: 1; }
 }
 
 .dml-theme-modern .dml-state-text {
@@ -78,35 +72,26 @@
   opacity: 0.75;
 }
 
-/* ---------- Header ---------- */
-
+/* ---------- Header (compact, fixed, swaps out for CategoryNav on scroll) ---------- */
 .dml-theme-modern .dml-header {
-  border-bottom: none;
-  padding: 0;
-  text-align: left;
-
+  border-bottom: none; padding: 0; text-align: left; /* explicit reset: contest shared class name from other themes */
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-
   z-index: 40;
   width: 100%;
-
   background: var(--dml-bg-translucent);
-
   backdrop-filter: saturate(160%) blur(16px);
   -webkit-backdrop-filter: saturate(160%) blur(16px);
-
   padding-top: env(safe-area-inset-top, 0px);
-
   transform: translateY(0);
   opacity: 1;
-
-  transition:
-    transform 0.25s ease,
-    opacity 0.25s ease;
-
+  transition: transform 0.25s ease, opacity 0.25s ease;
+  /* Inset colored line for brand identity + a soft drop shadow, so the
+     bar reads as an elevated piece of UI chrome rather than blending
+     into the page it's floating over — a plain hairline alone doesn't
+     separate the two when both share the owner's background color. */
   box-shadow:
     inset 0 -2px 0 0 var(--dml-signature),
     0 8px 20px -14px rgba(0, 0, 0, 0.5);
@@ -119,61 +104,40 @@
 }
 
 .dml-theme-modern .dml-header-inner {
-  flex-direction: row;
-  position: static;
-  z-index: auto;
-
+  flex-direction: row; position: static; z-index: auto; /* explicit reset: contest shared class name from other themes */
   min-height: var(--dml-header-h);
   max-width: 900px;
   margin: 0 auto;
-
   display: flex;
   align-items: center;
-
   gap: 0.7rem;
-
-  padding:
-    0.35rem
-    max(1rem, env(safe-area-inset-right))
-    0.35rem
-    max(1rem, env(safe-area-inset-left));
+  padding: 0.35rem max(1rem, env(safe-area-inset-right)) 0.35rem max(1rem, env(safe-area-inset-left));
 }
 
 .dml-theme-modern .dml-logo-frame {
   flex: 0 0 auto;
-
   width: 36px;
   height: 36px;
-
   border-radius: 11px;
-
-  box-shadow:
-    0 0 0 1px var(--dml-hairline),
-    0 2px 6px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 0 0 1px var(--dml-hairline), 0 2px 6px rgba(0, 0, 0, 0.25);
 }
 
 .dml-theme-modern .dml-logo {
-  border: none;
-
+  border: none; /* explicit reset: contest shared class name from other themes */
   width: 100%;
   height: 100%;
-
   border-radius: 11px;
   object-fit: cover;
-
   display: block;
 }
 
 .dml-theme-modern .dml-logo-placeholder {
-  border: none;
-
+  border: none; /* explicit reset: contest shared class name from other themes */
   display: flex;
   align-items: center;
   justify-content: center;
-
   background: var(--dml-signature);
-  color: var(--dml-signature-contrast);
-
+  color: #fff;
   font-family: var(--dml-display-font);
   font-size: 1em;
   font-weight: 700;
@@ -181,85 +145,62 @@
 
 .dml-theme-modern .dml-header-text {
   min-width: 0;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
-
   line-height: 1.2;
 }
 
 .dml-theme-modern .dml-owner-name {
-  line-height: 1.3;
+  line-height: 1.3; /* explicit reset: contest shared class name from other themes */
   margin: 0;
-
   font-family: var(--dml-display-font);
   font-weight: 700;
   font-size: calc(var(--dml-font-size) * 1.08);
-
   letter-spacing: -0.01em;
-
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .dml-theme-modern .dml-slogan {
-  font-style: normal;
-  letter-spacing: normal;
-
+  font-style: normal; letter-spacing: normal; /* explicit reset: contest shared class name from other themes */
   margin: 0.05rem 0 0;
-
   font-family: var(--dml-font);
   font-size: 0.72em;
-
   opacity: 0.6;
-
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-/* ---------- Category hero ---------- */
-
+/* ---------- Category hero (the tile grid that replaces the photo hero) ---------- */
 .dml-theme-modern .dml-hero {
   width: 100%;
   max-width: 900px;
-
   margin: 0 auto;
-
-  padding:
-    calc(var(--dml-header-h-live, var(--dml-header-h)) + 1rem)
-    max(1rem, env(safe-area-inset-right))
-    0.25rem
-    max(1rem, env(safe-area-inset-left));
+  /* The header is now position:fixed (out of flow) so it no longer
+     reserves space for itself — this padding stands in for it, kept in
+     sync with the header's true measured height by useHeaderHeightSync. */
+  padding: calc(var(--dml-header-h-live, var(--dml-header-h)) + 1rem) max(1rem, env(safe-area-inset-right)) 0.25rem max(1rem, env(safe-area-inset-left));
 }
 
 .dml-theme-modern .dml-hero-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-
   gap: 0.7rem;
 }
 
 .dml-theme-modern .dml-hero-tile {
   position: relative;
-
   aspect-ratio: 1 / 1;
-
   border-radius: 18px;
   overflow: hidden;
-
   border: none;
   padding: 0;
-
   cursor: pointer;
-
   background: var(--dml-signature);
-
-  touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
-
   transition: transform 0.15s ease;
 }
 
@@ -275,10 +216,8 @@
 .dml-theme-modern .dml-hero-tile-image {
   position: absolute;
   inset: 0;
-
   width: 100%;
   height: 100%;
-
   object-fit: cover;
 }
 
@@ -286,8 +225,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
-  color: var(--dml-signature-contrast);
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .dml-theme-modern .dml-hero-tile-flat .dml-hero-tile-scrim {
@@ -297,27 +235,17 @@
 .dml-theme-modern .dml-hero-tile-scrim {
   position: absolute;
   inset: 0;
-
-  background: linear-gradient(
-    to top,
-    rgba(6, 12, 9, 0.82) 0%,
-    rgba(6, 12, 9, 0.05) 55%,
-    transparent 100%
-  );
+  background: linear-gradient(to top, rgba(6, 12, 9, 0.82) 0%, rgba(6, 12, 9, 0.05) 55%, transparent 100%);
 }
 
 .dml-theme-modern .dml-hero-tile-label {
   position: absolute;
-
   left: 0.85rem;
   right: 0.85rem;
   bottom: 0.75rem;
-
   display: flex;
   flex-direction: column;
-
   gap: 0.15rem;
-
   text-align: left;
 }
 
@@ -325,86 +253,60 @@
   font-family: var(--dml-display-font);
   font-weight: 700;
   font-size: 1.02em;
-
   line-height: 1.2;
-
   color: #fff;
-
   text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35);
 }
 
 .dml-theme-modern .dml-hero-tile-count {
   font-family: var(--dml-font);
   font-size: 0.7em;
-
   color: rgba(255, 255, 255, 0.75);
 }
 
 /* ---------- Category nav ---------- */
-
+/* Hidden and out of the document flow until the hero has been fully
+   scrolled past, then takes over the header's exact spot at the true
+   top of the screen — the two never stack, they swap. */
 .dml-theme-modern .dml-category-nav {
-  max-width: 100%;
-
+  max-width: 100%; /* explicit reset: contest shared class name from other themes */
   position: fixed;
-
   top: 0;
   left: 0;
   right: 0;
-
   z-index: 41;
-
   width: 100%;
-
   background: var(--dml-bg-translucent);
-
   border-bottom: 1px solid var(--dml-hairline);
-
   backdrop-filter: saturate(140%) blur(10px);
   -webkit-backdrop-filter: saturate(140%) blur(10px);
-
   padding-top: env(safe-area-inset-top, 0px);
-
   opacity: 0;
   transform: translateY(-6px);
-
   pointer-events: none;
-
-  transition:
-    opacity 0.2s ease,
-    transform 0.2s ease;
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 .dml-theme-modern .dml-category-nav-visible {
   opacity: 1;
   transform: translateY(0);
-
   pointer-events: auto;
 }
 
 .dml-theme-modern .dml-category-scroll {
   min-height: var(--dml-nav-h);
   max-width: 900px;
-
   margin: 0 auto;
-
   display: flex;
   align-items: center;
-
   gap: 0.5rem;
-
   overflow-x: auto;
   overflow-y: hidden;
-
-  padding:
-    0.55rem
-    max(1rem, env(safe-area-inset-right))
-    0.55rem
-    max(1rem, env(safe-area-inset-left));
-
+  padding: 0.55rem max(1rem, env(safe-area-inset-right)) 0.55rem max(1rem, env(safe-area-inset-left));
   scrollbar-width: none;
-
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-x: contain;
+  touch-action: pan-x pan-y;
 }
 
 .dml-theme-modern .dml-category-scroll::-webkit-scrollbar {
@@ -412,35 +314,20 @@
 }
 
 .dml-theme-modern .dml-category-tab {
-  letter-spacing: normal;
-  position: static;
-  text-transform: none;
-
+  letter-spacing: normal; position: static; text-transform: none; /* explicit reset: contest shared class name from other themes */
   flex: 0 0 auto;
-
   padding: 0.4rem 0.9rem;
-
   border-radius: 999px;
-
   border: 1px solid var(--dml-hairline);
-
   background: transparent;
   color: var(--dml-fg);
-
   font-family: var(--dml-font);
   font-size: 0.82em;
   font-weight: 600;
-
   opacity: 0.65;
-
   cursor: pointer;
   white-space: nowrap;
-  touch-action: manipulation;
-
-  transition:
-    opacity 0.2s ease,
-    background-color 0.2s ease,
-    border-color 0.2s ease;
+  transition: opacity 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .dml-theme-modern .dml-category-tab:hover {
@@ -449,33 +336,23 @@
 
 .dml-theme-modern .dml-category-tab-active {
   opacity: 1;
-
   background: var(--dml-signature);
   border-color: var(--dml-signature);
-  color: var(--dml-signature-contrast);
+  color: #fff;
 }
 
 /* ---------- Main / sections ---------- */
-
 .dml-theme-modern .dml-main {
   flex: 1;
-
   max-width: 900px;
   width: 100%;
-
   margin: 0 auto;
-
-  padding:
-    2rem
-    max(1.1rem, env(safe-area-inset-right))
-    2rem
-    max(1.1rem, env(safe-area-inset-left));
+  padding: 2rem max(1.1rem, env(safe-area-inset-right)) 2rem max(1.1rem, env(safe-area-inset-left));
+  touch-action: pan-y;
 }
 
 .dml-theme-modern .dml-category-section {
-  scroll-margin-top:
-    calc(var(--dml-header-h-live, var(--dml-header-h)) + 14px);
-
+  scroll-margin-top: calc(var(--dml-header-h-live, var(--dml-header-h)) + 14px);
   margin-bottom: 2.5rem;
 }
 
@@ -486,9 +363,7 @@
 .dml-theme-modern .dml-category-heading-row {
   display: flex;
   align-items: baseline;
-
   gap: 0.75rem;
-
   margin: 0 0 1.1rem;
 }
 
@@ -496,67 +371,45 @@
   font-family: var(--dml-display-font);
   font-size: 1.25em;
   font-weight: 700;
-
   margin: 0;
-
   letter-spacing: -0.01em;
 }
 
 .dml-theme-modern .dml-category-heading-rule {
-  opacity: 1;
-  transform: none;
-
+  opacity: 1; transform: none; /* explicit reset: contest shared class name from other themes */
   flex: 1;
-
   height: 1px;
-
   background: var(--dml-hairline);
 }
 
 .dml-theme-modern .dml-category-count {
   flex: 0 0 auto;
-
   font-family: var(--dml-font);
   font-size: 0.75em;
   font-weight: 600;
-
   opacity: 0.45;
 }
 
 .dml-theme-modern .dml-item-grid {
   display: grid;
   grid-template-columns: 1fr;
-
   gap: 0.85rem;
-
   width: 100%;
 }
 
 /* ---------- Item card ---------- */
-
 .dml-theme-modern .dml-item-card {
-  position: static;
-
+  position: static; /* explicit reset: contest shared class name from other themes */
   display: flex;
-
   gap: 0.85rem;
-
   background: var(--dml-card-bg);
-
   border: 1px solid var(--dml-hairline);
   border-radius: 16px;
-
   padding: 0.75rem;
-
   width: 100%;
   min-height: 44px;
-
   cursor: pointer;
-  touch-action: manipulation;
-
-  transition:
-    border-color 0.2s ease,
-    transform 0.12s ease;
+  transition: border-color 0.2s ease, transform 0.12s ease;
 }
 
 .dml-theme-modern .dml-item-card:active {
@@ -564,9 +417,7 @@
 }
 
 .dml-theme-modern .dml-item-card:hover {
-  box-shadow: none;
-  transform: none;
-
+  box-shadow: none; transform: none; /* explicit reset: contest shared class name from other themes */
   border-color: var(--dml-signature);
 }
 
@@ -580,25 +431,19 @@
 }
 
 .dml-theme-modern .dml-item-image {
-  border: none;
-
+  border: none; /* explicit reset: contest shared class name from other themes */
   width: 84px;
   height: 84px;
-
   border-radius: 12px;
-
   object-fit: cover;
-
   display: block;
 }
 
 .dml-theme-modern .dml-item-image-placeholder {
-  opacity: 1;
-
+  opacity: 1; /* explicit reset: contest shared class name from other themes */
   display: flex;
   align-items: center;
   justify-content: center;
-
   background: var(--dml-signature-soft);
   color: var(--dml-signature);
 }
@@ -606,7 +451,6 @@
 .dml-theme-modern .dml-item-body {
   flex: 1;
   min-width: 0;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -616,214 +460,137 @@
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-
   gap: 0.6rem;
 }
 
 .dml-theme-modern .dml-item-name {
-  letter-spacing: normal;
-
+  letter-spacing: normal; /* explicit reset: contest shared class name from other themes */
   margin: 0;
-
   font-family: var(--dml-display-font);
   font-size: 1em;
   font-weight: 700;
-
   line-height: 1.3;
 }
 
 .dml-theme-modern .dml-item-price {
-  border: none;
-  border-radius: 0;
-  letter-spacing: normal;
-  padding: 0;
-
+  border: none; border-radius: 0; letter-spacing: normal; padding: 0; /* explicit reset: contest shared class name from other themes */
   flex: 0 0 auto;
-
   font-family: var(--dml-font);
   font-weight: 700;
   font-size: 0.85em;
-
   color: var(--dml-signature);
-
   font-variant-numeric: tabular-nums;
-
   white-space: nowrap;
 }
 
 .dml-theme-modern .dml-item-description {
-  font-style: normal;
-
+  font-style: normal; /* explicit reset: contest shared class name from other themes */
   margin: 0.3rem 0 0;
-
   font-family: var(--dml-font);
   font-size: 0.85em;
-
   opacity: 0.65;
-
   line-height: 1.45;
-
   overflow-wrap: break-word;
 }
 
 .dml-theme-modern .dml-item-allergens {
-  align-items: center;
-
-  display: flex;
-  flex-wrap: wrap;
-
-  gap: 0.3rem;
-
+  align-items: center; display: flex; flex-wrap: wrap; gap: 0.3rem; /* explicit reset: contest shared class name from other themes */
   margin-top: 0.55rem;
 }
 
 .dml-theme-modern .dml-allergen-label {
   font-size: 0.6em;
-
   text-transform: uppercase;
-
   letter-spacing: 0.1em;
-
   opacity: 0.45;
-
   font-weight: 600;
 }
 
 .dml-theme-modern .dml-allergen-list {
   display: flex;
   flex-wrap: wrap;
-
   gap: 0.3rem;
 }
 
 .dml-theme-modern .dml-allergen-tag {
-  letter-spacing: normal;
-  text-transform: none;
-
+  letter-spacing: normal; text-transform: none; /* explicit reset: contest shared class name from other themes */
   font-size: 0.65em;
-
   padding: 0.18rem 0.55rem;
-
   border-radius: 999px;
-
   background: transparent;
-
   border: 1px solid var(--dml-hairline);
-
   color: var(--dml-fg);
-
   opacity: 0.7;
 }
 
 .dml-theme-modern .dml-allergen-empty {
-  font-style: normal;
-
+  font-style: normal; /* explicit reset: contest shared class name from other themes */
   font-size: 0.75em;
-
   opacity: 0.4;
-
   font-family: var(--dml-font);
 }
 
 /* ---------- Footer ---------- */
-
 .dml-theme-modern .dml-footer {
   text-align: center;
-
-  padding:
-    2rem
-    max(1.25rem, env(safe-area-inset-right))
-    calc(1.75rem + env(safe-area-inset-bottom))
-    max(1.25rem, env(safe-area-inset-left));
-
+  padding: 2rem max(1.25rem, env(safe-area-inset-right)) calc(1.75rem + env(safe-area-inset-bottom)) max(1.25rem, env(safe-area-inset-left));
   font-size: 0.78em;
-
   width: 100%;
 }
 
 .dml-theme-modern .dml-footer-line {
-  font-size: 0.78em;
-  font-style: normal;
-  letter-spacing: normal;
-
+  font-size: 0.78em; font-style: normal; letter-spacing: normal; /* explicit reset: contest shared class name from other themes */
   margin: 0.2rem 0;
-
   opacity: 0.55;
-
   font-family: var(--dml-font);
 }
 
 .dml-theme-modern .dml-footer-phone a {
-  border-bottom: none;
-
-  font-style: normal;
-  letter-spacing: normal;
-
-  padding-bottom: 0;
-
+  border-bottom: none; font-style: normal; letter-spacing: normal; padding-bottom: 0; /* explicit reset: contest shared class name from other themes */
   color: var(--dml-signature);
-
   text-decoration: none;
-
   font-weight: 600;
 }
 
-/* ---------- Scroll-to-top ---------- */
-
+/* ---------- Scroll-to-top button ---------- */
+/* Bottom-left, deliberately opposite the chat/QR/locale widget stack
+   which anchors bottom-right, so the two never compete for the same
+   corner. Hidden at rest — appears once there's somewhere to scroll
+   back to (same trigger as the text nav reveal), and stays out of the
+   tab order while hidden. */
 .dml-theme-modern .dml-scroll-top {
   position: fixed;
-
   left: max(1rem, env(safe-area-inset-left));
   bottom: calc(1rem + env(safe-area-inset-bottom));
-
   z-index: 300;
-
   width: 42px;
   height: 42px;
-
   border-radius: 50%;
-
   border: 1px solid var(--dml-hairline);
-
   background: var(--dml-bg-translucent);
-
   backdrop-filter: saturate(140%) blur(10px);
   -webkit-backdrop-filter: saturate(140%) blur(10px);
-
   color: var(--dml-fg);
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   cursor: pointer;
   touch-action: manipulation;
-
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.22);
-
   opacity: 0;
-
   transform: translateY(8px) scale(0.9);
-
   pointer-events: none;
-
-  transition:
-    opacity 0.2s ease,
-    transform 0.2s ease,
-    border-color 0.2s ease;
+  transition: opacity 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
 }
 
 .dml-theme-modern .dml-scroll-top-visible {
   opacity: 0.88;
-
   transform: translateY(0) scale(1);
-
   pointer-events: auto;
 }
 
 .dml-theme-modern .dml-scroll-top:hover {
   opacity: 1;
-
   border-color: var(--dml-signature);
 }
 
@@ -836,68 +603,47 @@
   outline-offset: 2px;
 }
 
-/* ---------- Item detail panel ---------- */
-
+/* ---------- Item detail panel: bottom sheet (mobile) → side panel (desktop) ---------- */
 .dml-theme-modern .dml-panel-overlay {
   position: fixed;
-
   inset: 0;
-
   background: var(--dml-scrim);
-
   opacity: 0;
-
   pointer-events: none;
-
   transition: opacity 0.3s ease;
-
   z-index: 400;
 }
 
 .dml-theme-modern .dml-panel-overlay-open {
   opacity: 1;
-
   pointer-events: auto;
 }
 
 .dml-theme-modern .dml-panel {
   position: fixed;
-
   left: 0;
   right: 0;
   bottom: 0;
   top: auto;
-
   width: 100%;
   max-width: 100%;
-
   max-height: 88dvh;
   max-height: 88svh;
-
   background: var(--dml-bg);
   color: var(--dml-fg);
-
   font-family: var(--dml-font);
-
   z-index: 401;
-
   border-radius: 22px 22px 0 0;
-
   border: 1px solid var(--dml-hairline);
   border-bottom: none;
-
   transform: translateY(100%);
-
-  transition:
-    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  overflow-x: hidden;
   overflow-y: auto;
-
-  overscroll-behavior: contain;
+  overscroll-behavior-y: contain;
+  touch-action: pan-y;
   -webkit-overflow-scrolling: touch;
-
   box-shadow: 0 -16px 40px rgba(0, 0, 0, 0.3);
-
   display: flex;
   flex-direction: column;
 }
@@ -908,97 +654,68 @@
 
 .dml-theme-modern .dml-panel-handle {
   display: block;
-
   flex: 0 0 auto;
-
   width: 36px;
   height: 4px;
-
   border-radius: 999px;
-
   background: var(--dml-hairline);
-
   margin: 0.65rem auto 0;
 }
 
 .dml-theme-modern .dml-panel-close {
   position: absolute;
-
   top: 0.9rem;
   right: 0.9rem;
-
   width: 34px;
   height: 34px;
-
   border-radius: 50%;
   border: none;
-
   background: rgba(0, 0, 0, 0.35);
   color: #fff;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   cursor: pointer;
   touch-action: manipulation;
-
   z-index: 2;
-
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
 }
 
 .dml-theme-modern .dml-panel-media {
-  position: relative;
-
+  position: relative; /* explicit reset: contest shared class name from other themes */
   width: 100%;
-
   aspect-ratio: 16 / 10;
-
   flex: 0 0 auto;
-
   margin-top: 0.4rem;
 }
 
 .dml-theme-modern .dml-panel-image {
   width: 100%;
   height: 100%;
-
   object-fit: cover;
-
   display: block;
 }
 
 .dml-theme-modern .dml-panel-image-placeholder {
-  opacity: 1;
-
+  opacity: 1; /* explicit reset: contest shared class name from other themes */
   display: flex;
   align-items: center;
   justify-content: center;
-
   background: var(--dml-signature-soft);
   color: var(--dml-signature);
 }
 
 .dml-theme-modern .dml-panel-content {
-  padding:
-    1.25rem
-    1.4rem
-    calc(2rem + env(safe-area-inset-bottom));
+  padding: 1.25rem 1.4rem calc(2rem + env(safe-area-inset-bottom));
 }
 
 .dml-theme-modern .dml-panel-category {
-  opacity: 1;
-
+  opacity: 1; /* explicit reset: contest shared class name from other themes */
   font-size: 0.68em;
-
   text-transform: uppercase;
-
   letter-spacing: 0.1em;
-
   color: var(--dml-signature);
-
   font-weight: 700;
 }
 
@@ -1006,77 +723,51 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-
   gap: 1rem;
-
   margin-top: 0.4rem;
 }
 
 .dml-theme-modern .dml-panel-name {
-  letter-spacing: normal;
-
+  letter-spacing: normal; /* explicit reset: contest shared class name from other themes */
   margin: 0;
-
   font-family: var(--dml-display-font);
-
   font-size: 1.4em;
   font-weight: 700;
-
   line-height: 1.25;
 }
 
 .dml-theme-modern .dml-panel-price {
-  border: none;
-  border-radius: 0;
-
-  letter-spacing: normal;
-
-  padding: 0;
-
+  border: none; border-radius: 0; letter-spacing: normal; padding: 0; /* explicit reset: contest shared class name from other themes */
   flex: 0 0 auto;
-
   font-family: var(--dml-font);
-
   font-weight: 700;
   font-size: 1em;
-
   color: var(--dml-signature);
-
   font-variant-numeric: tabular-nums;
-
   white-space: nowrap;
-
   margin-top: 0.15rem;
 }
 
 .dml-theme-modern .dml-panel-description {
-  font-style: normal;
-
+  font-style: normal; /* explicit reset: contest shared class name from other themes */
   margin: 0.9rem 0 0;
-
   font-family: var(--dml-font);
   font-size: 0.95em;
-
   line-height: 1.6;
-
   opacity: 0.72;
 }
 
 .dml-theme-modern .dml-panel-allergens {
   margin-top: 1.4rem;
   padding-top: 1.1rem;
-
   border-top: 1px solid var(--dml-hairline);
-
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-
   gap: 0.5rem;
 }
 
 /* ---------- Responsive ---------- */
-
 @media (min-width: 480px) {
   .dml-theme-modern .dml-hero-grid {
     grid-template-columns: repeat(3, 1fr);
@@ -1098,23 +789,19 @@
     aspect-ratio: 4 / 3;
   }
 
+  /* Panel switches from a bottom sheet to a right-side panel */
   .dml-theme-modern .dml-panel {
     top: 0;
     left: auto;
     bottom: 0;
     right: 0;
-
     width: 440px;
     max-width: 440px;
-
     max-height: none;
-
     border-radius: 0;
     border: none;
     border-left: 1px solid var(--dml-hairline);
-
     transform: translateX(100%);
-
     box-shadow: -20px 0 48px rgba(0, 0, 0, 0.25);
   }
 
@@ -1135,13 +822,18 @@
   .dml-theme-modern .dml-category-scroll {
     justify-content: center;
     flex-wrap: wrap;
-
     overflow-x: visible;
   }
 }
 
-/* ---------- Neutralize leaking pseudo-elements ---------- */
-
+/* ---------- Neutralize other themes' leaking pseudo-elements ---------- */
+/* Other themes (Luxury) attach decorative ::before/::after content to
+   these same shared class names — a texture overlay, a gold frame
+   inset, tab underlines, card corner-brackets, a panel gradient. CSS
+   cascade doesn't care which theme's JS rendered the element, only
+   which selector matches it, so without this those would render on
+   top of Modern's flat design too. content: none suppresses them
+   outright regardless of whatever else that theme's rule declares. */
 .dml-theme-modern .dml-root::before,
 .dml-theme-modern .dml-header::after,
 .dml-theme-modern .dml-category-tab::after,
@@ -1155,15 +847,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .dml-theme-modern .dml-panel,
-  .dml-theme-modern .dml-panel-overlay,
-  .dml-theme-modern .dml-item-card,
-  .dml-theme-modern .dml-hero-tile,
-  .dml-theme-modern .dml-category-tab,
-  .dml-theme-modern .dml-header,
-  .dml-theme-modern .dml-category-nav,
-  .dml-theme-modern .dml-scroll-top,
-  .dml-theme-modern .dml-pulse-dot {
+  .dml-theme-modern .dml-panel, .dml-theme-modern .dml-panel-overlay, .dml-theme-modern .dml-item-card, .dml-theme-modern .dml-hero-tile, .dml-theme-modern .dml-category-tab, .dml-theme-modern .dml-header, .dml-theme-modern .dml-category-nav, .dml-theme-modern .dml-scroll-top, .dml-theme-modern .dml-pulse-dot {
     transition: none;
     animation: none;
   }
