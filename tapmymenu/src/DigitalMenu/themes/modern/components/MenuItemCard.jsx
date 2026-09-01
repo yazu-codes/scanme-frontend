@@ -2,24 +2,6 @@ import React from "react";
 import { formatPrice, parseAllergens } from "../../../core";
 import AllergenTag from "./AllergenTag";
 
-function ItemImagePlaceholder() {
-  return (
-    <div className="dml-item-image dml-item-image-placeholder" aria-hidden="true">
-      <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
-        <path
-          d="M4 16.5 8.5 12l3 3L16 10l4 6.5"
-          stroke="currentColor"
-          strokeWidth="1.4"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <circle cx="8" cy="8" r="1.4" fill="currentColor" />
-        <rect x="3" y="4" width="18" height="16" rx="3" stroke="currentColor" strokeWidth="1.4" />
-      </svg>
-    </div>
-  );
-}
-
 export default function MenuItemCard({ item, onSelect }) {
   const allergens = parseAllergens(item.allergens);
 
@@ -36,27 +18,29 @@ export default function MenuItemCard({ item, onSelect }) {
         }
       }}
     >
-      <div className="dml-item-media">
-        {item.picture_url ? (
+      {item.picture_url ? (
+        <div className="dml-item-media">
           <img
             src={item.picture_url}
             alt={item.name}
             loading="lazy"
             className="dml-item-image"
           />
-        ) : (
-          <ItemImagePlaceholder />
-        )}
-      </div>
+        </div>
+      ) : null}
 
       <div className="dml-item-body">
         <div className="dml-item-title-row">
           <h3 className="dml-item-name">{item.name}</h3>
-          <span className="dml-item-price">€{formatPrice(item.price)}</span>
+          <span className="dml-item-price">
+            €{formatPrice(item.price)}
+          </span>
         </div>
 
         {item.description ? (
-          <p className="dml-item-description">{item.description}</p>
+          <p className="dml-item-description">
+            {item.description}
+          </p>
         ) : null}
 
         {allergens.length > 0 ? (
