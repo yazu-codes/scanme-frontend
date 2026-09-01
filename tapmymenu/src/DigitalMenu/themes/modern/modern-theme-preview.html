@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Modern theme — preview</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#e9e9e4; }
+
+/* ====== BEGIN modern-theme.css (verbatim) ====== */
+.dml-root, .dml-root *, .dml-root *::before, .dml-root *::after {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+.dml-root {
+  --dml-header-h: 60px;
+  --dml-nav-h: 50px;
+  background: var(--dml-bg);
+  color: var(--dml-fg);
+  font-family: var(--dml-font);
+  font-size: var(--dml-font-size);
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  overscroll-behavior-y: contain;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+@media (min-width: 900px) { .dml-root { --dml-header-h: 76px; --dml-nav-h: 56px; } }
+.dml-header { position: sticky; top: 0; z-index: 40; width: 100%; background: var(--dml-bg-translucent); border-bottom: 1px solid var(--dml-hairline); backdrop-filter: saturate(140%) blur(14px); -webkit-backdrop-filter: saturate(140%) blur(14px); padding-top: env(safe-area-inset-top, 0px); }
+.dml-header-inner { min-height: var(--dml-header-h); max-width: 900px; margin: 0 auto; display: flex; align-items: center; gap: 0.75rem; padding: 0.4rem max(1rem, env(safe-area-inset-right)) 0.4rem max(1rem, env(safe-area-inset-left)); }
+.dml-logo-frame { flex: 0 0 auto; width: 38px; height: 38px; }
+.dml-logo { width: 100%; height: 100%; border-radius: 10px; object-fit: cover; display: block; }
+.dml-logo-placeholder { display: flex; align-items: center; justify-content: center; background: var(--dml-signature); color: #fff; font-family: var(--dml-display-font); font-size: 1.05em; font-weight: 700; }
+.dml-header-text { min-width: 0; display: flex; flex-direction: column; justify-content: center; line-height: 1.2; }
+.dml-owner-name { margin: 0; font-family: var(--dml-display-font); font-weight: 700; font-size: calc(var(--dml-font-size) * 1.08); letter-spacing: -0.01em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dml-slogan { margin: 0.05rem 0 0; font-family: var(--dml-font); font-size: 0.72em; opacity: 0.6; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dml-hero { width: 100%; max-width: 900px; margin: 0 auto; padding: 1rem max(1rem, env(safe-area-inset-right)) 0.25rem max(1rem, env(safe-area-inset-left)); }
+.dml-hero-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.7rem; }
+.dml-hero-tile { position: relative; aspect-ratio: 1 / 1; border-radius: 18px; overflow: hidden; border: none; padding: 0; cursor: pointer; background: var(--dml-signature); touch-action: manipulation; transition: transform 0.15s ease; }
+.dml-hero-tile:active { transform: scale(0.97); }
+.dml-hero-tile:focus-visible { outline: 2px solid var(--dml-signature-bright); outline-offset: 2px; }
+.dml-hero-tile-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.dml-hero-tile-flat { display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.5); }
+.dml-hero-tile-flat .dml-hero-tile-scrim { display: none; }
+.dml-hero-tile-scrim { position: absolute; inset: 0; background: linear-gradient(to top, rgba(6,12,9,0.82) 0%, rgba(6,12,9,0.05) 55%, transparent 100%); }
+.dml-hero-tile-label { position: absolute; left: 0.85rem; right: 0.85rem; bottom: 0.75rem; display: flex; flex-direction: column; gap: 0.15rem; text-align: left; }
+.dml-hero-tile-name { font-family: var(--dml-display-font); font-weight: 700; font-size: 1.02em; line-height: 1.2; color: #fff; text-shadow: 0 1px 8px rgba(0,0,0,0.35); }
+.dml-hero-tile-count { font-family: var(--dml-font); font-size: 0.7em; color: rgba(255,255,255,0.75); }
+.dml-category-nav { position: sticky; top: var(--dml-header-h); z-index: 30; width: 100%; background: var(--dml-bg-translucent); border-bottom: 1px solid var(--dml-hairline); backdrop-filter: saturate(140%) blur(10px); -webkit-backdrop-filter: saturate(140%) blur(10px); margin-top: 0.75rem; }
+.dml-category-scroll { min-height: var(--dml-nav-h); max-width: 900px; margin: 0 auto; display: flex; align-items: center; gap: 0.5rem; overflow-x: auto; overflow-y: hidden; padding: 0.55rem max(1rem, env(safe-area-inset-right)) 0.55rem max(1rem, env(safe-area-inset-left)); scrollbar-width: none; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; }
+.dml-category-scroll::-webkit-scrollbar { display: none; }
+.dml-category-tab { flex: 0 0 auto; padding: 0.4rem 0.9rem; border-radius: 999px; border: 1px solid var(--dml-hairline); background: transparent; color: var(--dml-fg); font-family: var(--dml-font); font-size: 0.82em; font-weight: 600; opacity: 0.65; cursor: pointer; white-space: nowrap; touch-action: manipulation; transition: opacity 0.2s ease, background-color 0.2s ease, border-color 0.2s ease; }
+.dml-category-tab:hover { opacity: 0.85; }
+.dml-category-tab-active { opacity: 1; background: var(--dml-signature); border-color: var(--dml-signature); color: #fff; }
+.dml-main { flex: 1; max-width: 900px; width: 100%; margin: 0 auto; padding: 2rem max(1.1rem, env(safe-area-inset-right)) 2rem max(1.1rem, env(safe-area-inset-left)); }
+.dml-category-section { scroll-margin-top: calc(var(--dml-header-h) + var(--dml-nav-h) + 14px); margin-bottom: 2.5rem; }
+.dml-category-section:last-child { margin-bottom: 0.5rem; }
+.dml-category-heading-row { display: flex; align-items: baseline; gap: 0.75rem; margin: 0 0 1.1rem; }
+.dml-category-heading { font-family: var(--dml-display-font); font-size: 1.25em; font-weight: 700; margin: 0; letter-spacing: -0.01em; }
+.dml-category-heading-rule { flex: 1; height: 1px; background: var(--dml-hairline); }
+.dml-category-count { flex: 0 0 auto; font-family: var(--dml-font); font-size: 0.75em; font-weight: 600; opacity: 0.45; }
+.dml-item-grid { display: grid; grid-template-columns: 1fr; gap: 0.85rem; width: 100%; }
+.dml-item-card { display: flex; gap: 0.85rem; background: var(--dml-card-bg); border: 1px solid var(--dml-hairline); border-radius: 16px; padding: 0.75rem; width: 100%; min-height: 44px; cursor: pointer; touch-action: manipulation; transition: border-color 0.2s ease, transform 0.12s ease; }
+.dml-item-card:active { transform: scale(0.99); }
+.dml-item-card:hover { border-color: var(--dml-signature); }
+.dml-item-card:focus-visible { outline: 2px solid var(--dml-signature-bright); outline-offset: 2px; }
+.dml-item-media { flex: 0 0 auto; }
+.dml-item-image { width: 84px; height: 84px; border-radius: 12px; object-fit: cover; display: block; }
+.dml-item-image-placeholder { display: flex; align-items: center; justify-content: center; background: var(--dml-signature-soft); color: var(--dml-signature); }
+.dml-item-body { flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center; }
+.dml-item-title-row { display: flex; justify-content: space-between; align-items: baseline; gap: 0.6rem; }
+.dml-item-name { margin: 0; font-family: var(--dml-display-font); font-size: 1em; font-weight: 700; line-height: 1.3; }
+.dml-item-price { flex: 0 0 auto; font-family: var(--dml-font); font-weight: 700; font-size: 0.85em; color: var(--dml-signature); white-space: nowrap; }
+.dml-item-description { margin: 0.3rem 0 0; font-family: var(--dml-font); font-size: 0.85em; opacity: 0.65; line-height: 1.45; }
+.dml-item-allergens { margin-top: 0.55rem; }
+.dml-allergen-list { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+.dml-allergen-tag { font-size: 0.65em; padding: 0.18rem 0.55rem; border-radius: 999px; background: transparent; border: 1px solid var(--dml-hairline); color: var(--dml-fg); opacity: 0.7; }
+.dml-footer { text-align: center; padding: 2rem 1.25rem calc(1.75rem + env(safe-area-inset-bottom)) 1.25rem; font-size: 0.78em; width: 100%; }
+.dml-footer-line { margin: 0.2rem 0; opacity: 0.55; font-family: var(--dml-font); }
+.dml-footer-phone a { color: var(--dml-signature); text-decoration: none; font-weight: 600; }
+.dml-panel-overlay { position: fixed; inset: 0; background: var(--dml-scrim); opacity: 0; pointer-events: none; transition: opacity 0.3s ease; z-index: 400; }
+.dml-panel-overlay-open { opacity: 1; pointer-events: auto; }
+.dml-panel { position: fixed; left: 0; right: 0; bottom: 0; top: auto; width: 100%; max-width: 100%; max-height: 88dvh; max-height: 88svh; background: var(--dml-bg); color: var(--dml-fg); font-family: var(--dml-font); z-index: 401; border-radius: 22px 22px 0 0; border: 1px solid var(--dml-hairline); border-bottom: none; transform: translateY(100%); transition: transform 0.35s cubic-bezier(0.22,1,0.36,1); overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; box-shadow: 0 -16px 40px rgba(0,0,0,0.3); display: flex; flex-direction: column; }
+.dml-panel-open { transform: translateY(0); }
+.dml-panel-handle { display: block; flex: 0 0 auto; width: 36px; height: 4px; border-radius: 999px; background: var(--dml-hairline); margin: 0.65rem auto 0; }
+.dml-panel-close { position: absolute; top: 0.9rem; right: 0.9rem; width: 34px; height: 34px; border-radius: 50%; border: none; background: rgba(0,0,0,0.35); color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 2; }
+.dml-panel-media { width: 100%; aspect-ratio: 16/10; flex: 0 0 auto; margin-top: 0.4rem; background: var(--dml-signature-soft); }
+.dml-panel-content { padding: 1.25rem 1.4rem calc(2rem + env(safe-area-inset-bottom)); }
+.dml-panel-category { font-size: 0.68em; text-transform: uppercase; letter-spacing: 0.1em; color: var(--dml-signature); font-weight: 700; }
+.dml-panel-title-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-top: 0.4rem; }
+.dml-panel-name { margin: 0; font-family: var(--dml-display-font); font-size: 1.4em; font-weight: 700; line-height: 1.25; }
+.dml-panel-price { flex: 0 0 auto; font-family: var(--dml-font); font-weight: 700; font-size: 1em; color: var(--dml-signature); white-space: nowrap; margin-top: 0.15rem; }
+.dml-panel-description { margin: 0.9rem 0 0; font-family: var(--dml-font); font-size: 0.95em; line-height: 1.6; opacity: 0.72; }
+.dml-panel-allergens { margin-top: 1.4rem; padding-top: 1.1rem; border-top: 1px solid var(--dml-hairline); display: flex; flex-wrap: wrap; gap: 0.5rem; }
+@media (min-width: 480px) { .dml-hero-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 640px) { .dml-item-grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 760px) {
+  .dml-hero-grid { grid-template-columns: repeat(4, 1fr); }
+  .dml-hero-tile { aspect-ratio: 4/3; }
+  .dml-panel { top: 0; left: auto; bottom: 0; right: 0; width: 440px; max-width: 440px; max-height: none; border-radius: 0; border: none; border-left: 1px solid var(--dml-hairline); transform: translateX(100%); box-shadow: -20px 0 48px rgba(0,0,0,0.25); }
+  .dml-panel-open { transform: translateX(0); }
+  .dml-panel-handle { display: none; }
+}
+@media (min-width: 900px) { .dml-category-scroll { justify-content: center; flex-wrap: wrap; overflow-x: visible; } }
+/* ====== END modern-theme.css ====== */
+
+/* preview-only chrome, not part of the theme */
+.frame-wrap { display:flex; justify-content:center; padding:2rem 1rem; }
+.frame { width:390px; max-width:100%; height:844px; border-radius:44px; overflow:hidden; box-shadow:0 30px 60px rgba(0,0,0,0.35); border:8px solid #1a1a1a; position:relative; }
+.frame .dml-root { height:100%; overflow-y:auto; }
+.widget-stack { position:fixed; right:1rem; bottom:calc(1rem + env(safe-area-inset-bottom)); display:flex; flex-direction:column; gap:10px; z-index:350; }
+.widget-btn { width:48px; height:48px; border-radius:50%; background:#14171a; color:#fff; display:flex; align-items:center; justify-content:center; font-size:19px; box-shadow:0 6px 16px rgba(0,0,0,0.3); border:none; }
+.note { max-width:390px; margin:0 auto 1rem; font:13px/1.5 Inter, sans-serif; color:#555; text-align:center; }
+.ph1 { background: linear-gradient(135deg,#4a3728,#7c5a3a); }
+.ph2 { background: linear-gradient(135deg,#2f4d3a,#5a8a63); }
+</style>
+</head>
+<body>
+<p class="note">This is a static preview with placeholder data — colored blocks stand in for dish photos, and the three round buttons stand in for the chat / QR / language widgets. Tap a menu item to see the bottom sheet.</p>
+
+<div class="frame-wrap">
+<div class="frame">
+<div class="dml-root" style="
+  --dml-bg:#0F1512; --dml-bg-translucent:rgba(15,21,18,0.88); --dml-fg:#F3F6F4;
+  --dml-font:'Inter',sans-serif; --dml-display-font:'Space Grotesk',sans-serif;
+  --dml-font-size:16px; --dml-title-size:20.8px;
+  --dml-signature:#1E5B44; --dml-signature-bright:#5FD69A; --dml-signature-deep:#0B2118;
+  --dml-signature-soft:rgba(95,214,154,0.14); --dml-hairline:rgba(255,255,255,0.14);
+  --dml-card-bg:rgba(255,255,255,0.045); --dml-scrim:rgba(9,14,12,0.55);
+">
+  <header class="dml-header">
+    <div class="dml-header-inner">
+      <div class="dml-logo-frame">
+        <div class="dml-logo dml-logo-placeholder">O</div>
+      </div>
+      <div class="dml-header-text">
+        <h1 class="dml-owner-name">Osteria Verde</h1>
+        <p class="dml-slogan">Seasonal, unfussy, local</p>
+      </div>
+    </div>
+  </header>
+
+  <nav class="dml-hero" aria-label="Browse categories">
+    <div class="dml-hero-grid">
+      <button type="button" class="dml-hero-tile">
+        <div class="dml-hero-tile-image ph1" style="position:absolute;inset:0;"></div>
+        <span class="dml-hero-tile-scrim"></span>
+        <span class="dml-hero-tile-label"><span class="dml-hero-tile-name">Starters</span><span class="dml-hero-tile-count">5 dishes</span></span>
+      </button>
+      <button type="button" class="dml-hero-tile">
+        <div class="dml-hero-tile-image ph2" style="position:absolute;inset:0;"></div>
+        <span class="dml-hero-tile-scrim"></span>
+        <span class="dml-hero-tile-label"><span class="dml-hero-tile-name">Mains</span><span class="dml-hero-tile-count">8 dishes</span></span>
+      </button>
+      <button type="button" class="dml-hero-tile dml-hero-tile-flat" style="font-size:22px;">🍽</button>
+      <button type="button" class="dml-hero-tile dml-hero-tile-flat" style="font-size:22px;">🍽</button>
+    </div>
+  </nav>
+
+  <nav class="dml-category-nav" aria-label="Jump to category">
+    <div class="dml-category-scroll">
+      <button class="dml-category-tab dml-category-tab-active">Starters</button>
+      <button class="dml-category-tab">Mains</button>
+      <button class="dml-category-tab">Desserts</button>
+      <button class="dml-category-tab">Wine list</button>
+    </div>
+  </nav>
+
+  <main class="dml-main">
+    <section class="dml-category-section">
+      <div class="dml-category-heading-row">
+        <h2 class="dml-category-heading">Starters</h2>
+        <span class="dml-category-heading-rule"></span>
+        <span class="dml-category-count">2</span>
+      </div>
+      <div class="dml-item-grid">
+        <article class="dml-item-card" onclick="document.getElementById('panel').classList.add('dml-panel-open');document.getElementById('overlay').classList.add('dml-panel-overlay-open')">
+          <div class="dml-item-media"><div class="dml-item-image dml-item-image-placeholder" style="width:84px;height:84px;border-radius:12px;"></div></div>
+          <div class="dml-item-body">
+            <div class="dml-item-title-row"><h3 class="dml-item-name">Burrata</h3><span class="dml-item-price">€14</span></div>
+            <p class="dml-item-description">Heirloom tomato, basil oil, sourdough crumb</p>
+            <div class="dml-item-allergens"><div class="dml-allergen-list"><span class="dml-allergen-tag">Dairy</span><span class="dml-allergen-tag">Gluten</span></div></div>
+          </div>
+        </article>
+        <article class="dml-item-card">
+          <div class="dml-item-media"><div class="dml-item-image dml-item-image-placeholder" style="width:84px;height:84px;border-radius:12px;"></div></div>
+          <div class="dml-item-body">
+            <div class="dml-item-title-row"><h3 class="dml-item-name">Whipped cod</h3><span class="dml-item-price">€12</span></div>
+            <p class="dml-item-description">Crispbread, chili oil, lemon</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="dml-category-section">
+      <div class="dml-category-heading-row">
+        <h2 class="dml-category-heading">Mains</h2>
+        <span class="dml-category-heading-rule"></span>
+        <span class="dml-category-count">1</span>
+      </div>
+      <div class="dml-item-grid">
+        <article class="dml-item-card">
+          <div class="dml-item-media"><div class="dml-item-image dml-item-image-placeholder" style="width:84px;height:84px;border-radius:12px;"></div></div>
+          <div class="dml-item-body">
+            <div class="dml-item-title-row"><h3 class="dml-item-name">Pappardelle</h3><span class="dml-item-price">€22</span></div>
+            <p class="dml-item-description">Slow-braised short rib ragù, parmesan</p>
+            <div class="dml-item-allergens"><div class="dml-allergen-list"><span class="dml-allergen-tag">Gluten</span></div></div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="dml-footer">
+    <p class="dml-footer-line">Osteria Verde</p>
+    <p class="dml-footer-line dml-footer-phone"><a href="#">+34 600 000 000</a></p>
+  </footer>
+
+  <div class="widget-stack">
+    <button class="widget-btn" title="Chat">💬</button>
+    <button class="widget-btn" title="QR code">▦</button>
+    <button class="widget-btn" title="Language">🌐</button>
+  </div>
+
+  <div id="overlay" class="dml-panel-overlay" onclick="this.classList.remove('dml-panel-overlay-open');document.getElementById('panel').classList.remove('dml-panel-open')"></div>
+  <aside id="panel" class="dml-panel">
+    <span class="dml-panel-handle"></span>
+    <button class="dml-panel-close" onclick="document.getElementById('panel').classList.remove('dml-panel-open');document.getElementById('overlay').classList.remove('dml-panel-overlay-open')">✕</button>
+    <div class="dml-panel-media"></div>
+    <div class="dml-panel-content">
+      <span class="dml-panel-category">Starters</span>
+      <div class="dml-panel-title-row"><h2 class="dml-panel-name">Burrata</h2><span class="dml-panel-price">€14</span></div>
+      <p class="dml-panel-description">Heirloom tomato, basil oil, sourdough crumb, a touch of chili and good olive oil.</p>
+      <div class="dml-panel-allergens"><span class="dml-allergen-tag">Dairy</span><span class="dml-allergen-tag">Gluten</span></div>
+    </div>
+  </aside>
+</div>
+</div>
+</div>
+
+</body>
+</html>

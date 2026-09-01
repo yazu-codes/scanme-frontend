@@ -6,7 +6,7 @@ import LandingPage from "./LandingPage.world";
 function MenuRoute() {
   const { urlname } = useParams();
   // console.log(`MenuRoute: urlname=${urlname}`);
-  return <DigitalMenu urlname={urlname} theme="luxury" />;
+  return <DigitalMenu urlname={urlname} theme="modern" />;
 }
 
 function QrRoute() {

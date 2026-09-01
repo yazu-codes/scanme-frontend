@@ -1,6 +1,7 @@
 import ClassicTheme from "./classic/Theme";
 import MinimalTheme from "./minimal/Theme";
 import LuxuryTheme from "./luxury/Theme";
+import ModernTheme from "./modern/Theme";
 
 // To add a new style: create themes/<name>/Theme.jsx (+ its own
 // components/ and theme.css, following classic/ or minimal/ as a
@@ -11,6 +12,7 @@ const themes = {
   classic: ClassicTheme,
   minimal: MinimalTheme,
   luxury: LuxuryTheme,
+  modern: ModernTheme,
 };
 
 export default themes;

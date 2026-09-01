@@ -20,6 +20,7 @@ import useDocumentMeta from "./hooks/useDocumentMeta";
 export default function useDigitalMenu(urlname) {
   // console.log("URLNAME", urlname)
   const { menu, status } = useMenuData(urlname);
+  
   useDocumentMeta(menu);
   const { categories, itemsByCategory } = useGroupedMenuItems(menu);
 
