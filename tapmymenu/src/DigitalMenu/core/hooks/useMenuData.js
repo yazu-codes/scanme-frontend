@@ -20,8 +20,6 @@ export default function useMenuData(urlname) {
 
         let menuUrl = `https://${API_BASE}/${urlname}?lang=${language}`
 
-        console.log("MENU URL:", menuUrl)
-
         const res = await fetch(menuUrl);
         if (!res.ok) throw new Error(`Request failed: ${res.status}`);
         const data = await res.json();
