@@ -31,7 +31,7 @@ export function toAbsoluteUrl(raw) {
   // Already absolute http(s).
   if (/^https?:\/\//i.test(url)) return url;
 
-  // Some other scheme (mailto:, tel:, javascript:, ...) — only allow safe ones.
+  // Some other scheme (mailto:, tel:, javascript:, ...) - only allow safe ones.
   const scheme = url.match(/^([a-z][a-z0-9+.-]*):/i);
   if (scheme) {
     const name = scheme[1].toLowerCase();
@@ -176,7 +176,7 @@ export default function ReviewsPage({ urlname }) {
             <p className="rvw-state-title">No review links yet</p>
             <p className="rvw-state-body">
               This place hasn't added anywhere to review it. Do mention it to
-              them — they'll want to know.
+              them - they'll want to know.
             </p>
           </section>
         )}
