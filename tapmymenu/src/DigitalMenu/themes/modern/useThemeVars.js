@@ -77,4 +77,4 @@ export default function useThemeVars({
       "--dml-scrim": "rgba(9, 14, 12, 0.55)",
     };
   }, [backgroundColor, fontColor, fontSize, resolvedFont]);
-}
+} 

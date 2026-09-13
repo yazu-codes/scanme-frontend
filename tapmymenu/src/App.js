@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, BrowserRouter, Routes, Route, useParams } from "react-router-dom";
 import DigitalMenu from "./DigitalMenu/";
+import ReviewsPage from "./ReviewsPage";
 import LandingPage from "./LandingPage.world";
 
 function MenuRoute() {
   const { urlname } = useParams();
   // console.log(`MenuRoute: urlname=${urlname}`);
-  return <DigitalMenu urlname={urlname} theme="modern" />;
+  return <DigitalMenu urlname={urlname} theme="luxury" />;
 }
 
 function QrRoute() {
@@ -44,6 +45,12 @@ function CodeRoute() {
   return <DigitalMenu code={code} urlname={urlname} theme="luxury" />;
 }
 
+function ReviewRoute() {
+  const { urlname } = useParams();
+  // console.log(`ReviewRoute: urlname=${urlname}`);
+  return <ReviewsPage urlname={urlname} />;
+}
+
 
 export default function App() {
   return (
@@ -53,6 +60,7 @@ export default function App() {
         <Route path="/qr/:urlname" element={<QrRoute />} />
         <Route path="/c/:code" element={<CodeRoute />} />
         <Route path="/:urlname" element={<MenuRoute />} />
+        <Route path="/:urlname/reviews" element={<ReviewRoute />} />
       </Routes>
     </BrowserRouter>
   );

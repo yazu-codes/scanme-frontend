@@ -14,7 +14,7 @@ export function setLocaleCookie(locale) {
   date.setTime(date.getTime() + COOKIE_EXPIRY_DAYS * 24 * 60 * 60 * 1000);
   const expires = `expires=${date.toUTCString()}`;
   document.cookie = `${LOCALE_COOKIE_NAME}=${locale};${expires};path=/`;
-  console.log(`✓ Locale cookie set to: ${locale}`);
+  // console.log(`✓ Locale cookie set to: ${locale}`);
 }
 
 /**
@@ -40,7 +40,7 @@ export function getLocaleCookie() {
  */
 export function clearLocaleCookie() {
   document.cookie = `${LOCALE_COOKIE_NAME}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;`;
-  console.log('✓ Locale cookie cleared');
+  // console.log('✓ Locale cookie cleared');
 }
 
 /**
