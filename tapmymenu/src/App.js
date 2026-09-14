@@ -29,7 +29,7 @@ function CodeRoute({ review }) {
 
   // console.log(code)
   
-  useEffect(() => {
+  useEffect((review) => {
     async function run() {
       const response = await fetch(`https://${process.env.REACT_APP_API_BASE}/c/${code}`);
       const data = await response.json();
