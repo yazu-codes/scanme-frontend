@@ -29,7 +29,7 @@ function CodeRoute({ review }) {
 
   // console.log(code)
   
-  useEffect((review) => {
+  useEffect(() => {
     async function run() {
       const response = await fetch(`https://${process.env.REACT_APP_API_BASE}/c/${code}`);
       const data = await response.json();
@@ -43,7 +43,7 @@ function CodeRoute({ review }) {
       navigate(`/${data.menuName}`, { replace: true });
     }
     run();
-  }, [code, navigate]);
+  }, [code, navigate, review]);
 
   if (urlname === null) return null;
 
