@@ -22,7 +22,7 @@ function QrRoute() {
   return <DigitalMenu urlname={urlname} theme="luxury" />;
 }
 
-function CodeRoute() {
+function CodeRoute({ review }) {
   const { code } = useParams();
   const [urlname, setUrlname] = useState(null);
   const navigate = useNavigate();
@@ -34,6 +34,11 @@ function CodeRoute() {
       const response = await fetch(`https://${process.env.REACT_APP_API_BASE}/c/${code}`);
       const data = await response.json();
       // console.log(`CodeRoute: code=${code}, urlname=${data.menuName}`);
+      if (review) {
+        setUrlname(data.menuName);
+        navigate(`/${data.menuName}/reviews`, { replace: true });
+        return;
+      }
       setUrlname(data.menuName);
       navigate(`/${data.menuName}`, { replace: true });
     }
@@ -59,6 +64,7 @@ export default function App() {
         <Route path="/" element={<LandingPage locale="en" />} />
         <Route path="/qr/:urlname" element={<QrRoute />} />
         <Route path="/c/:code" element={<CodeRoute />} />
+        <Route path="/c/:code/r" element={<CodeRoute review={true} />} />
         <Route path="/:urlname" element={<MenuRoute />} />
         <Route path="/:urlname/reviews" element={<ReviewRoute />} />
       </Routes>
