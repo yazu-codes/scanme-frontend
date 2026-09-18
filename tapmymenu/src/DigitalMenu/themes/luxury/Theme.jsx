@@ -16,6 +16,7 @@ import { LoadingScreen, ErrorScreen } from "./components/StatusScreen";
 import MenuChatWidget from "../../core/MenuChatWidget";
 import QRCodeWidget from "../../core/QRWidget";
 import LocaleWidget from "../../core/LocaleWidget";
+import { useAnalytics } from "../../core/Analytics";
 
 const parseMenuTree = (value) => {
   if (!value) return null;
@@ -44,6 +45,7 @@ export default function LuxuryTheme({ urlname, status, owner, config, categories
   // console.log("RESTAURANT NAME:", urlname)
   // console.log("CODE:", code)
   const tree = parseMenuTree(config.category_order);
+  const track = useAnalytics();
 
   const [selectedItem, setSelectedItem] = useState(null);
   const [panelOpen, setPanelOpen] = useState(false);
@@ -65,6 +67,7 @@ export default function LuxuryTheme({ urlname, status, owner, config, categories
   });
 
   function handleSelectItem(item) {
+    track("item_click", `${urlname}/${item.slug ?? item.name}`);
     setSelectedItem(item);
     setPanelOpen(true);
   }
