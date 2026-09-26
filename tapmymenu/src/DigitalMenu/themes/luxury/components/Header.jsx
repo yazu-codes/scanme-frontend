@@ -1,7 +1,7 @@
 import React from "react";
 
 import {ClickableCta} from "../../../core/ClickableWidget";
-import { Wifi, KeyRound, Clock } from "lucide-react";
+import { Wifi, Clock } from "lucide-react";
 
 export default function Header({ owner, accentColor }) {
   const {
@@ -11,7 +11,6 @@ export default function Header({ owner, accentColor }) {
     menu_owner_place_background_url,
     menu_owner_wifi,
     menu_owner_working_schedule,
-    color,
   } = owner;
 
   const hasPlaceBackground = Boolean(menu_owner_place_background_url);
