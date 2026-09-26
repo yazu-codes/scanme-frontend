@@ -1,11 +1,17 @@
 import React from "react";
 
-export default function Header({ owner }) {
+import {ClickableCta} from "../../../core/ClickableWidget";
+import { Wifi, KeyRound, Clock } from "lucide-react";
+
+export default function Header({ owner, accentColor }) {
   const {
     menu_owner_name,
     menu_owner_slogan,
     menu_owner_logo_url,
     menu_owner_place_background_url,
+    menu_owner_wifi,
+    menu_owner_working_schedule,
+    color,
   } = owner;
 
   const hasPlaceBackground = Boolean(menu_owner_place_background_url);
@@ -59,6 +65,23 @@ export default function Header({ owner }) {
           <>
             <div className="dml-owner-rule" aria-hidden="true" />
             <p className="dml-slogan">{menu_owner_slogan}</p>
+          </>
+        ) : null}
+
+        
+        {menu_owner_wifi ? (
+          <>
+            {/* <WifiWidget wifiName={menu_owner_wifi} accentColor={color} /> */}
+          </>
+        ) : null}
+
+        <br/>
+        {menu_owner_working_schedule ? (
+          <>
+            <div className="flex flex-row items-center justify-center gap-3">
+              <ClickableCta title="Get connected!" label="WiFi" icon={Wifi} value={menu_owner_wifi} accentColor={accentColor} />
+              <ClickableCta title="View working hours" label="Working Hours" icon={Clock} value={menu_owner_working_schedule} accentColor={accentColor} />
+            </div>
           </>
         ) : null}
       </div>

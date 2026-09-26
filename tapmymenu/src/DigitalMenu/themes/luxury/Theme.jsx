@@ -86,7 +86,7 @@ export default function LuxuryTheme({ urlname, status, owner, config, categories
 
   return (
     <div className="dml-root" style={cssVars}>
-      <Header owner={owner} />
+      <Header owner={owner} accentColor={config.background_color} />
 
       {tree != null ? (
           <CategoryNav
