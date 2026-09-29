@@ -23,6 +23,15 @@ const REDIRECT_ONLY = [/^\/qr\//, /^\/c\//];
 
 function MenuRoute() {
   const { urlname } = useParams();
+
+  if (urlname === "contacts" || urlname === "contact" || urlname === "contact-us" || urlname === "contactus" || urlname === "contact-us.html" || urlname === "contactus.html" ||
+    urlname === "about" || urlname === "about-us" || urlname === "aboutus" || urlname === "about-us.html" || urlname === "aboutus.html" ||
+    urlname === "kontakti" || urlname === "kontakti.html" || urlname === "za-nas" || urlname === "za-nas.html"
+  ) {
+    window.location.href = "https://tapmy.menu";
+    return null;
+  }
+
   return <DigitalMenu urlname={urlname} theme="luxury" />;
 }
 

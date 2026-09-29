@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import useDigitalMenu from "./core/useDigitalMenu";
 import themes from "./themes";
 
@@ -7,8 +7,16 @@ import themes from "./themes";
 // theme   -> which visual style to render it with (themes concern)
 export default function DigitalMenu({ urlname, theme = "luxury" }) {
   const menuData = useDigitalMenu(urlname);
-  
-  const Theme = themes[menuData.config.theme] || themes.luxury;
-  
+  console.log("DigitalMenu: menuData", menuData);
+  useEffect(() => {
+    if (menuData.menu == null && menuData.status === "ready") {
+      // Full page load to the landing page. "/" lives in public/index.html, outside React,
+      // so React Router's navigate("/") would not show it.
+      window.location.replace("/");
+    }
+  }, [menuData]);
+
+  const Theme = themes[menuData.config?.theme] || themes.luxury;
+
   return <Theme {...menuData} />;
 }

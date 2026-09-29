@@ -23,10 +23,14 @@ export default function useMenuData(urlname) {
         const res = await fetch(menuUrl);
         if (!res.ok) throw new Error(`Request failed: ${res.status}`);
         const data = await res.json();
-        if (!cancelled) {
-          // console.log(data.menu)
+        
+        if (!cancelled && data.menu) {
           setMenu(data.menu);
           setStatus("ready");
+        }
+        
+        if (!cancelled && !data.menu) {
+          setStatus("error");
         }
       } catch (err) {
         if (!cancelled) {
