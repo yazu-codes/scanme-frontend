@@ -1,0 +1,76 @@
+# TapMyMenu
+
+> TapMyMenu makes custom wooden and 3D-printed NFC and QR menus for hotels and restaurants in Bulgaria, together with the software behind them: a multilingual digital menu, in-room ordering (room service), an AI assistant trained only on the venue's own information, a one-tap review system and analytics. Website: https://tapmy.menu
+
+TapMyMenu (ТапМайМеню) is a Bulgarian company. It works with hotels that have a restaurant, restaurants and resorts across Bulgaria, including ski, seaside, spa and city destinations. More than 25 hotels and restaurants use it.
+
+## What guests get
+- Tap a phone on a wooden tablet, 3D item or NFC sticker on the table or in the room, or scan its QR code. No app to download; the menu opens in the browser.
+- The menu in the guest's own language (all languages supported), with photos, descriptions and allergens.
+- Room service: order food to the room from the phone; orders go straight to the kitchen.
+- An AI assistant that answers guest questions using only the venue's information (Wi-Fi, hours, spa, check-out, dishes).
+- One tap to leave a review on all review platforms.
+
+## What owners get
+- New room-service revenue, more reviews, less staff time explaining and translating menus, faster table turnover.
+- A control panel to change dishes, prices, photos and availability at any time.
+- Analytics: which dishes get clicks and how guests open the menu (NFC, QR or direct link).
+- Support 7 days a week. The product is continuously improved.
+
+## Physical formats
+- Wooden tablet, engraved to the venue's design.
+- 3D-printed item in a shape that fits the brand, with a built-in NFC chip.
+- NFC sticker for any surface (bar, reception, spa).
+
+## Pricing
+One-off price for producing the physical items plus a monthly subscription that includes the control panel and 7-day support. The exact price depends on the number of tables and rooms and is given at the visit.
+
+## How it works
+1. Free on-site visit (about 30 minutes) with samples.
+2. Free custom design mock-up of the venue's own menu.
+3. Production: about 2 business weeks after the design is approved.
+4. Installation and a short staff training.
+
+## Contact
+- Phone and Viber: +359 878 780 915
+- Email: leads@tapmy.menu
+- Book a free visit: https://tapmy.menu/#tmm-book
+- Languages: Bulgarian, English
+
+## FAQ (English)
+### How much does it cost?
+A one-off price for producing the physical menus, plus a monthly subscription that includes the control panel and 7-day support. The exact price depends on your number of tables and rooms - you'll get it at the visit.
+
+### Do guests need to download an app?
+No. They tap their phone or scan the QR code and the menu opens in the browser.
+
+### What if a guest's phone has no NFC?
+Every menu also has a QR code, and it can be opened with a direct link too.
+
+### How many languages do you support?
+All of them. The menu shows in the guest's language.
+
+### Can I change the menu myself?
+Yes. From the control panel you change dishes, prices, photos and availability at any time.
+
+### What if something stops working?
+Our support works 7 days a week, including during your season.
+
+## Често задавани въпроси (Bulgarian)
+### Колко струва?
+Еднократна цена за изработка на физическите менюта и месечен абонамент, който включва контролния панел и поддръжка 7 дни в седмицата. Точната цена зависи от броя маси и стаи - ще я получите на посещението.
+
+### Трябва ли гостите да теглят приложение?
+Не. Докосват с телефона или сканират QR кода и менюто се отваря в браузъра.
+
+### А ако телефонът на госта няма NFC?
+Всяко меню има и QR код, а може да се отвори и с директен линк.
+
+### Колко езика поддържате?
+Всички. Менюто се показва на езика на госта.
+
+### Мога ли сам да променям менюто?
+Да. От контролния панел сменяте ястия, цени, снимки и наличност по всяко време.
+
+### Какво става, ако нещо не работи?
+Поддръжката ни работи 7 дни в седмицата, включително през сезона.

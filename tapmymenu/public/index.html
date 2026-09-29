@@ -1,33 +1,1010 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <!-- <link rel="icon" href="%PUBLIC_URL%/favicon.ico" /> -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, interactive-widget=resizes-content" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="TapMyMenu is a digital menu platform that allows restaurants to create and manage their menus online, providing customers with a convenient and interactive dining experience."
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
+<html lang="bg">
+<head>
+<meta charset="utf-8">
+<!-- ============================================================
+     URL CHECKER: "/" shows the landing page. Every other path loads the React app.
+     To show the landing on more paths, add them to the list below.
+     ============================================================ -->
+<script>
+  window.__TMM_LANDING__ = ["/", "/index.html"].includes(location.pathname.replace(/\/+$/, "") || "/");
+  if (!window.__TMM_LANDING__) document.documentElement.classList.add("tmm-app");
+</script>
+<style>html.tmm-app #tmm-landing{display:none !important}html:not(.tmm-app) #root{display:none !important}</style>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>Tap My Menu | Your Digital Menu</title>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-  </body>
+<!-- ============================ SEO ============================ -->
+<title>TapMyMenu - NFC и QR дигитални менюта за хотели и ресторанти</title>
+<meta name="description" content="Дървени и 3D менюта с NFC и QR за хотели и ресторанти: меню на всеки език, рум сървис, AI асистент, отзиви и анализи. Безплатно посещение и дизайн.">
+<meta name="keywords" content="дигитално меню, NFC меню, QR меню, меню за хотел, меню за ресторант, рум сървис, електронно меню, дървено меню, digital menu, NFC menu, QR menu, hotel room service">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<script>if (!window.__TMM_LANDING__) document.querySelector('meta[name="robots"]').content = "noindex, nofollow";</script>
+<meta name="author" content="TapMyMenu">
+<meta name="application-name" content="TapMyMenu">
+<meta name="apple-mobile-web-app-title" content="TapMyMenu">
+<meta name="theme-color" content="#1A1410">
+<meta name="color-scheme" content="dark">
+<link rel="canonical" href="https://tapmy.menu/">
+<link rel="alternate" hreflang="bg" href="https://tapmy.menu/">
+<link rel="alternate" hreflang="en" href="https://tapmy.menu/?lang=en">
+<link rel="alternate" hreflang="x-default" href="https://tapmy.menu/">
+<link rel="alternate" type="text/plain" href="https://tapmy.menu/llms.txt" title="LLM summary">
+
+<!-- Social sharing (Facebook, Viber, LinkedIn, WhatsApp, X) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="TapMyMenu">
+<meta property="og:title" content="TapMyMenu - NFC и QR дигитални менюта за хотели и ресторанти">
+<meta property="og:description" content="Дървени и 3D менюта с NFC и QR за хотели и ресторанти: меню на всеки език, рум сървис, AI асистент, отзиви и анализи. Безплатно посещение и дизайн.">
+<meta property="og:url" content="https://tapmy.menu/">
+<meta property="og:image" content="https://tapmy.menu/og-image.png">
+<meta property="og:image:secure_url" content="https://tapmy.menu/og-image.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Дървено NFC меню TapMyMenu на маса в хотел">
+<meta property="og:locale" content="bg_BG">
+<meta property="og:locale:alternate" content="en_GB">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="TapMyMenu - NFC и QR дигитални менюта за хотели и ресторанти">
+<meta name="twitter:description" content="Дървени и 3D менюта с NFC и QR за хотели и ресторанти: меню на всеки език, рум сървис, AI асистент, отзиви и анализи. Безплатно посещение и дизайн.">
+<meta name="twitter:image" content="https://tapmy.menu/og-image.png">
+<meta name="twitter:image:alt" content="Дървено NFC меню TapMyMenu на маса в хотел">
+
+<!-- Icons (files in /public) -->
+<link rel="icon" href="%PUBLIC_URL%/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="192x192" href="%PUBLIC_URL%/icon-192.png">
+<link rel="apple-touch-icon" href="%PUBLIC_URL%/apple-touch-icon.png">
+<link rel="manifest" href="%PUBLIC_URL%/manifest.json">
+
+<!-- Structured data for Google and AI assistants -->
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "Organization",
+   "@id": "https://tapmy.menu/#organization",
+   "name": "TapMyMenu",
+   "url": "https://tapmy.menu/",
+   "logo": {
+    "@type": "ImageObject",
+    "url": "https://tapmy.menu/icon-512.png",
+    "width": 512,
+    "height": 512
+   },
+   "image": "https://tapmy.menu/og-image.png",
+   "description": "TapMyMenu прави дървени и 3D дигитални менюта с NFC и QR за хотели и ресторанти, заедно със софтуер за рум сървис, AI асистент, отзиви и анализи.",
+   "email": "office@tapmy.menu",
+   "telephone": "+359878780915",
+   "areaServed": {
+    "@type": "Country",
+    "name": "Bulgaria"
+   },
+   "knowsLanguage": [
+    "bg",
+    "en"
+   ],
+   "contactPoint": [
+    {
+     "@type": "ContactPoint",
+     "contactType": "sales",
+     "telephone": "+359878780915",
+     "email": "office@tapmy.menu",
+     "areaServed": "BG",
+     "availableLanguage": [
+      "Bulgarian",
+      "English"
+     ]
+    }
+   ],
+   "sameAs": []
+  },
+  {
+   "@type": "WebSite",
+   "@id": "https://tapmy.menu/#website",
+   "url": "https://tapmy.menu/",
+   "name": "TapMyMenu",
+   "publisher": {
+    "@id": "https://tapmy.menu/#organization"
+   },
+   "inLanguage": [
+    "bg",
+    "en"
+   ]
+  },
+  {
+   "@type": "WebPage",
+   "@id": "https://tapmy.menu/#webpage",
+   "url": "https://tapmy.menu/",
+   "name": "TapMyMenu - NFC и QR дигитални менюта за хотели и ресторанти",
+   "description": "Дървени и 3D менюта с NFC и QR за хотели и ресторанти: меню на всеки език, рум сървис, AI асистент, отзиви и анализи. Безплатно посещение и дизайн.",
+   "isPartOf": {
+    "@id": "https://tapmy.menu/#website"
+   },
+   "about": {
+    "@id": "https://tapmy.menu/#organization"
+   },
+   "mainEntity": {
+    "@id": "https://tapmy.menu/#service"
+   },
+   "inLanguage": "bg",
+   "primaryImageOfPage": {
+    "@type": "ImageObject",
+    "url": "https://tapmy.menu/og-image.png",
+    "width": 1200,
+    "height": 630
+   }
+  },
+  {
+   "@type": "Service",
+   "@id": "https://tapmy.menu/#service",
+   "name": "TapMyMenu - NFC и QR дигитални менюта за хотели и ресторанти",
+   "serviceType": "Дигитални NFC и QR менюта и рум сървис за хотели и ресторанти",
+   "provider": {
+    "@id": "https://tapmy.menu/#organization"
+   },
+   "areaServed": {
+    "@type": "Country",
+    "name": "Bulgaria"
+   },
+   "audience": {
+    "@type": "BusinessAudience",
+    "audienceType": "Хотели и ресторанти"
+   },
+   "description": "Физически NFC и QR менюта по дизайн на обекта плюс софтуер: меню на всеки език, рум сървис, AI асистент, отзиви и анализи. Еднократна цена за изработка и месечен абонамент с поддръжка 7 дни в седмицата. Изработка около 2 работни седмици след одобрение на дизайна.",
+   "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "TapMyMenu",
+    "itemListElement": [
+     {
+      "@type": "Offer",
+      "itemOffered": {
+       "@type": "Service",
+       "name": "Дървен таблет с NFC и QR",
+       "description": "Гравиран по дизайна на обекта, за масите и стаите."
+      }
+     },
+     {
+      "@type": "Offer",
+      "itemOffered": {
+       "@type": "Service",
+       "name": "3D отпечатан предмет с NFC",
+       "description": "Форма по бранда на обекта с вграден NFC чип."
+      }
+     },
+     {
+      "@type": "Offer",
+      "itemOffered": {
+       "@type": "Service",
+       "name": "NFC стикер",
+       "description": "Дискретен стикер за бар, рецепция или СПА."
+      }
+     },
+     {
+      "@type": "Offer",
+      "itemOffered": {
+       "@type": "Service",
+       "name": "Дигитално меню на всеки език",
+       "description": "Меню със снимки, описания и алергени, винаги актуално."
+      }
+     },
+     {
+      "@type": "Offer",
+      "itemOffered": {
+       "@type": "Service",
+       "name": "Рум сървис",
+       "description": "Гостите поръчват храна до стаята от телефона си."
+      }
+     },
+     {
+      "@type": "Offer",
+      "itemOffered": {
+       "@type": "Service",
+       "name": "AI асистент",
+       "description": "Отговаря на въпросите на гостите, обучен само с информацията за обекта."
+      }
+     },
+     {
+      "@type": "Offer",
+      "itemOffered": {
+       "@type": "Service",
+       "name": "Система за отзиви",
+       "description": "Свързва всички платформи за отзиви в едно докосване."
+      }
+     },
+     {
+      "@type": "Offer",
+      "itemOffered": {
+       "@type": "Service",
+       "name": "Анализи и контролен панел",
+       "description": "Кликове по ястия, начин на отваряне (NFC, QR, линк), промени по менюто по всяко време."
+      }
+     }
+    ]
+   }
+  },
+  {
+   "@type": "FAQPage",
+   "@id": "https://tapmy.menu/#faq",
+   "inLanguage": "bg",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Колко струва?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Еднократна цена за изработка на физическите менюта и месечен абонамент, който включва контролния панел и поддръжка 7 дни в седмицата. Точната цена зависи от броя маси и стаи - ще я получите на посещението."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Трябва ли гостите да теглят приложение?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Не. Докосват с телефона или сканират QR кода и менюто се отваря в браузъра."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "А ако телефонът на госта няма NFC?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Всяко меню има и QR код, а може да се отвори и с директен линк."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Колко езика поддържате?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Всички. Менюто се показва на езика на госта."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Мога ли сам да променям менюто?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Да. От контролния панел сменяте ястия, цени, снимки и наличност по всяко време."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Какво става, ако нещо не работи?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Поддръжката ни работи 7 дни в седмицата, включително през сезона."
+     }
+    }
+   ]
+  }
+ ]
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Manrope:wght@400;500;600;700&display=swap&subset=cyrillic" rel="stylesheet">
+
+<!-- ============================================================
+     TRACKING - paste your Meta Pixel and Google Analytics snippets here
+     ============================================================ -->
+
+<style id="tmm-landing-css">
+/* Scoped base: everything below only targets #tmm-landing, with tmm- prefixed classes */
+#tmm-landing{display:block;margin:0;padding:0;border:0;width:auto;max-width:none;background:var(--tmm-espresso);color:var(--tmm-cream);font-family:var(--tmm-sans);font-size:17px;font-weight:400;line-height:1.6;text-align:left;letter-spacing:normal;text-transform:none}
+#tmm-landing *,#tmm-landing *::before,#tmm-landing *::after{box-sizing:border-box}
+/* Neutralise outside element styles (e.g. a React app's global CSS). Component rules below use classes, so they still win. */
+#tmm-landing :is(h1,h2,h3,p,ul,ol,li,figure,figcaption,blockquote,table,thead,tbody,tr,th,td,section,header,footer,main,article,div,span,a,button,input,select,label,form,details,summary,strong,b,small,cite,svg){margin:0;padding:0;border:0;border-radius:0;background:none;box-shadow:none;font-family:inherit;font-size:inherit;font-weight:inherit;font-style:inherit;line-height:inherit;letter-spacing:inherit;text-transform:none;text-decoration:none;color:inherit;float:none;min-height:0;max-height:none}
+#tmm-landing h1,#tmm-landing h2,#tmm-landing h3,#tmm-landing p,#tmm-landing figure,#tmm-landing blockquote{margin:0}
+#tmm-landing strong,#tmm-landing b{font-weight:700}
+#tmm-landing button,#tmm-landing input,#tmm-landing select{font:inherit;color:inherit;margin:0}
+#tmm-landing img,#tmm-landing svg{max-width:100%}
+:root{
+  --tmm-espresso:#1A1410; --tmm-charcoal:#231B16; --tmm-char-2:#2C221B;
+  --tmm-gold:#C9A45C; --tmm-gold-light:#E3C98E; --tmm-walnut:#6B4A32; --tmm-oak:#A9784F;
+  --tmm-cream:#F3EADB; --tmm-muted:#B9AC9A; --tmm-line:rgba(201,164,92,.28);
+  --tmm-serif:"Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --tmm-sans:"Manrope", "Segoe UI", Arial, sans-serif;
+  --tmm-wrap:1160px;
+}
+#tmm-landing,#tmm-landing *{box-sizing:border-box}
+html:not(.tmm-app){scroll-behavior:smooth;scroll-padding-top:calc(76px + env(safe-area-inset-top,0px))}
+html:not(.tmm-app) body{margin:0;background:var(--tmm-espresso);color:var(--tmm-cream);font-family:var(--tmm-sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;padding:0 0 env(safe-area-inset-bottom,0px);border:0;font-size:17px}
+#tmm-landing img{max-width:100%}
+#tmm-landing a{color:var(--tmm-gold-light)}
+#tmm-landing :focus-visible{outline:2px solid var(--tmm-gold-light);outline-offset:3px;border-radius:2px}
+html[lang="bg"] #tmm-landing [data-tmm-l="en"],html[lang="en"] #tmm-landing [data-tmm-l="bg"]{display:none !important}
+#tmm-landing .tmm-wrap{max-width:var(--tmm-wrap);margin:0 auto;padding:0 24px}
+#tmm-landing h1,#tmm-landing h2,#tmm-landing h3{font-family:var(--tmm-serif);font-weight:600;line-height:1.08;margin:0;letter-spacing:-.005em}
+#tmm-landing h2{font-size:clamp(34px,4.6vw,54px);max-width:18ch}
+#tmm-landing h3{font-size:26px}
+#tmm-landing p{margin:0}
+#tmm-landing .tmm-lead{color:var(--tmm-muted);font-size:19px;max-width:58ch}
+#tmm-landing section{padding:112px 0}
+
+/* ---------- header ---------- */
+#tmm-landing header{position:sticky;top:0;z-index:20;background:rgba(26,20,16,.9);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--tmm-line);padding-top:env(safe-area-inset-top,0px)}
+#tmm-landing .tmm-bar{display:flex;align-items:center;justify-content:space-between;height:72px;gap:16px}
+#tmm-landing .tmm-logo{display:flex;align-items:flex-end;gap:2px;text-decoration:none;color:var(--tmm-cream);font-family:var(--tmm-serif);font-size:28px;font-weight:600;line-height:1}
+#tmm-landing .tmm-logo svg{width:22px;height:22px;margin-right:6px;margin-bottom:3px}
+#tmm-landing .tmm-logo b{color:var(--tmm-gold);font-weight:600}
+#tmm-landing .tmm-bar-right{display:flex;align-items:center;gap:14px}
+#tmm-landing .tmm-lang{display:flex;border:1px solid var(--tmm-line);border-radius:999px;padding:3px}
+#tmm-landing .tmm-lang button{background:none;border:0;color:var(--tmm-muted);font:600 13px var(--tmm-sans);padding:6px 11px;border-radius:999px;cursor:pointer}
+#tmm-landing .tmm-lang button[aria-pressed="true"]{background:var(--tmm-gold);color:var(--tmm-espresso)}
+#tmm-landing .tmm-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--tmm-gold);color:var(--tmm-espresso);font:700 16px var(--tmm-sans);text-decoration:none;padding:15px 26px;border-radius:3px;border:1px solid var(--tmm-gold);cursor:pointer;transition:background .2s}
+#tmm-landing .tmm-btn:hover{background:var(--tmm-gold-light)}
+#tmm-landing .tmm-btn.tmm-ghost{background:transparent;color:var(--tmm-cream);border-color:var(--tmm-line)}
+#tmm-landing .tmm-btn.tmm-ghost:hover{border-color:var(--tmm-gold);background:transparent}
+#tmm-landing .tmm-btn.tmm-small{padding:10px 16px;font-size:14px}
+@media (max-width:640px){#tmm-landing .tmm-bar .tmm-btn.tmm-small{display:none}}
+
+/* ---------- hero ---------- */
+#tmm-landing .tmm-hero{padding:88px 0 104px;position:relative;overflow:hidden}
+#tmm-landing .tmm-hero::before{content:"";position:absolute;inset:auto -10% -40% 30%;height:70%;background:radial-gradient(ellipse at center,rgba(201,164,92,.13),transparent 65%);pointer-events:none}
+#tmm-landing .tmm-hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+#tmm-landing .tmm-hero h1{font-size:clamp(42px,5.2vw,70px);max-width:14ch}
+#tmm-landing .tmm-hero .tmm-lead{margin-top:26px}
+#tmm-landing .tmm-hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px}
+#tmm-landing .tmm-hero-note{margin-top:18px;color:var(--tmm-muted);font-size:15px;max-width:44ch}
+#tmm-landing .tmm-proof{display:flex;align-items:center;gap:14px;margin-top:40px;padding-top:24px;border-top:1px solid var(--tmm-line);color:var(--tmm-muted);font-size:15px}
+#tmm-landing .tmm-proof strong{font-family:var(--tmm-serif);font-size:40px;color:var(--tmm-gold);font-weight:600;line-height:1}
+
+/* the tablet + phone scene */
+#tmm-landing .tmm-scene{position:relative;height:520px;display:flex;align-items:flex-end;justify-content:center}
+#tmm-landing .tmm-table-top{position:absolute;left:0;right:0;bottom:0;height:120px;border-radius:6px 6px 0 0;
+  background:
+    repeating-linear-gradient(90deg,rgba(0,0,0,.08) 0 2px,transparent 2px 38px),
+    repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 1px,transparent 1px 7px),
+    linear-gradient(180deg,#4a3223,#35231a);
+  box-shadow:inset 0 2px 0 rgba(227,201,142,.18)}
+#tmm-landing .tmm-tablet{position:absolute;left:0;bottom:84px;width:210px;height:290px;border-radius:14px 14px 6px 6px;
+  background:
+    repeating-radial-gradient(ellipse at 30% 110%,rgba(0,0,0,.14) 0 2px,transparent 2px 11px),
+    repeating-linear-gradient(92deg,rgba(255,255,255,.05) 0 1px,transparent 1px 5px),
+    linear-gradient(160deg,var(--tmm-oak),var(--tmm-walnut) 70%);
+  box-shadow:0 30px 40px -18px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.18);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;transform:perspective(900px) rotateY(12deg)}
+#tmm-landing .tmm-tablet::after{content:"";position:absolute;bottom:-26px;left:50%;width:120px;height:28px;transform:translateX(-50%);background:linear-gradient(180deg,#5a3d29,#3a271c);border-radius:0 0 6px 6px}
+#tmm-landing .tmm-tablet .tmm-engr{font-family:var(--tmm-serif);font-size:25px;color:rgba(26,20,16,.72);text-shadow:0 1px 0 rgba(255,255,255,.18);text-align:center;line-height:1.1}
+#tmm-landing .tmm-tablet .tmm-ring{width:86px;height:86px;border-radius:50%;border:2px solid var(--tmm-gold);display:grid;place-items:center;position:relative;background:rgba(26,20,16,.14)}
+#tmm-landing .tmm-tablet .tmm-ring svg{width:40px;height:40px}
+#tmm-landing .tmm-tablet .tmm-hint{font-size:12px;color:rgba(26,20,16,.75);font-weight:700}
+#tmm-landing .tmm-ripple{position:absolute;inset:-2px;border-radius:50%;border:2px solid var(--tmm-gold-light);opacity:0}
+#tmm-landing .tmm-phone{position:absolute;right:0;bottom:60px;width:232px;height:452px;border-radius:34px;background:#0e0b09;padding:12px;box-shadow:0 40px 60px -24px rgba(0,0,0,.8),0 0 0 1px rgba(227,201,142,.18);transform:rotate(4deg)}
+#tmm-landing .tmm-screen{width:100%;height:100%;border-radius:24px;background:var(--tmm-cream);color:var(--tmm-espresso);overflow:hidden;display:flex;flex-direction:column}
+#tmm-landing .tmm-screen-top{background:var(--tmm-charcoal);color:var(--tmm-cream);padding:30px 18px 16px}
+#tmm-landing .tmm-screen-top small{display:block;color:var(--tmm-gold-light);font-size:11px;font-weight:600}
+#tmm-landing .tmm-screen-top .tmm-mt{font-family:var(--tmm-serif);font-size:30px;line-height:1.05;margin-top:4px;transition:opacity .35s}
+#tmm-landing .tmm-langs{display:flex;gap:5px;margin-top:10px}
+#tmm-landing .tmm-langs span{font-size:10px;font-weight:700;padding:3px 6px;border-radius:999px;border:1px solid rgba(227,201,142,.35);color:var(--tmm-muted);transition:all .35s}
+#tmm-landing .tmm-langs span.tmm-on{background:var(--tmm-gold);border-color:var(--tmm-gold);color:var(--tmm-espresso)}
+#tmm-landing .tmm-dishes{list-style:none;margin:0;padding:6px 16px;flex:1;transition:opacity .35s}
+#tmm-landing .tmm-dishes li{display:flex;justify-content:space-between;gap:8px;padding:11px 0;border-bottom:1px solid rgba(26,20,16,.1);font-size:13px;font-weight:600}
+#tmm-landing .tmm-dishes li span:last-child{color:var(--tmm-walnut);white-space:nowrap}
+#tmm-landing .tmm-order{margin:0 14px 14px;background:var(--tmm-espresso);color:var(--tmm-gold-light);text-align:center;font-size:12px;font-weight:700;padding:11px;border-radius:12px;transition:opacity .35s}
+#tmm-landing .tmm-fade{opacity:0}
+@media (max-width:960px){
+  #tmm-landing .tmm-hero-grid{grid-template-columns:1fr}
+  #tmm-landing .tmm-scene{height:470px;max-width:520px;margin:0 auto;width:100%}
+}
+@media (max-width:480px){
+  #tmm-landing .tmm-scene{height:430px}
+  #tmm-landing .tmm-tablet{width:160px;height:230px;left:2%;bottom:80px}
+  #tmm-landing .tmm-tablet .tmm-engr{font-size:20px}
+  #tmm-landing .tmm-tablet .tmm-ring{width:68px;height:68px}
+  #tmm-landing .tmm-phone{width:180px;height:370px;right:12px;padding:10px}
+  #tmm-landing .tmm-screen-top{padding:24px 14px 12px}
+  #tmm-landing .tmm-screen-top .tmm-mt{font-size:25px}
+  #tmm-landing .tmm-langs{gap:3px}
+  #tmm-landing .tmm-langs span{padding:2px 4px;font-size:9px}
+  #tmm-landing .tmm-dishes{padding:4px 12px}
+  #tmm-landing .tmm-dishes li{font-size:12px;padding:9px 0}
+  #tmm-landing .tmm-tablet .tmm-hint{font-size:10px;text-align:center;padding:0 8px}
+}
+
+/* ---------- before / after ---------- */
+#tmm-landing .tmm-ba{background:var(--tmm-charcoal)}
+#tmm-landing .tmm-ba-head{display:flex;justify-content:space-between;align-items:end;gap:32px;flex-wrap:wrap;margin-bottom:56px}
+#tmm-landing .tmm-ba-table{width:100%;border-collapse:collapse}
+#tmm-landing .tmm-ba-table th{font:600 15px var(--tmm-sans);color:var(--tmm-muted);text-align:left;padding:0 0 14px;border-bottom:1px solid var(--tmm-line)}
+#tmm-landing .tmm-ba-table th:last-child{color:var(--tmm-gold)}
+#tmm-landing .tmm-ba-table td{padding:22px 24px 22px 0;border-bottom:1px solid var(--tmm-line);vertical-align:top;width:50%}
+#tmm-landing .tmm-ba-table td:first-child{color:var(--tmm-muted);text-decoration:line-through;text-decoration-color:rgba(185,172,154,.45)}
+#tmm-landing .tmm-ba-table td:last-child{font-family:var(--tmm-serif);font-size:23px;line-height:1.3}
+@media (max-width:700px){
+  #tmm-landing .tmm-ba-table thead{display:none}
+  #tmm-landing .tmm-ba-table tr{display:block;border-bottom:1px solid var(--tmm-line);padding:18px 0}
+  #tmm-landing .tmm-ba-table td{display:block;width:auto;border:0;padding:0}
+  #tmm-landing .tmm-ba-table td:last-child{margin-top:6px}
+}
+
+/* ---------- system ---------- */
+#tmm-landing .tmm-sys-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:64px;border-top:1px solid var(--tmm-line)}
+#tmm-landing .tmm-zone{padding:36px 32px 8px 0}
+#tmm-landing .tmm-zone + .tmm-zone{padding-left:32px;border-left:1px solid var(--tmm-line)}
+#tmm-landing .tmm-zone h3{color:var(--tmm-gold-light);margin-bottom:22px}
+#tmm-landing .tmm-feat{padding:18px 0;border-top:1px solid rgba(201,164,92,.14)}
+#tmm-landing .tmm-feat:first-of-type{border-top:0;padding-top:0}
+#tmm-landing .tmm-feat strong{display:block;font-size:17px;margin-bottom:4px}
+#tmm-landing .tmm-feat p{color:var(--tmm-muted);font-size:15.5px}
+@media (max-width:900px){
+  #tmm-landing .tmm-sys-grid{grid-template-columns:1fr}
+  #tmm-landing .tmm-zone,#tmm-landing .tmm-zone + .tmm-zone{padding:32px 0 8px;border-left:0;border-top:1px solid var(--tmm-line)}
+}
+
+/* ---------- formats ---------- */
+#tmm-landing .tmm-formats{background:var(--tmm-charcoal)}
+#tmm-landing .tmm-fmt-row{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:64px}
+#tmm-landing .tmm-fmt{margin:0}
+#tmm-landing .tmm-fmt .tmm-stage{height:220px;border-radius:4px;background:linear-gradient(180deg,var(--tmm-char-2),#1f1813);display:grid;place-items:center;border:1px solid rgba(201,164,92,.16)}
+#tmm-landing .tmm-fmt figcaption{margin-top:20px}
+#tmm-landing .tmm-fmt figcaption strong{font-family:var(--tmm-serif);font-size:26px;font-weight:600;display:block}
+#tmm-landing .tmm-fmt figcaption p{color:var(--tmm-muted);font-size:15.5px;margin-top:6px}
+#tmm-landing .tmm-mini-tablet{width:96px;height:132px;border-radius:9px 9px 4px 4px;background:repeating-linear-gradient(92deg,rgba(255,255,255,.05) 0 1px,transparent 1px 5px),linear-gradient(160deg,var(--tmm-oak),var(--tmm-walnut));box-shadow:0 18px 24px -12px rgba(0,0,0,.7);display:grid;place-items:center}
+#tmm-landing .tmm-mini-3d{width:120px;height:120px;background:linear-gradient(145deg,#3b2d24,#231b16);clip-path:polygon(50% 0,100% 30%,100% 75%,50% 100%,0 75%,0 30%);display:grid;place-items:center;box-shadow:0 0 0 1px var(--tmm-gold)}
+#tmm-landing .tmm-mini-sticker{width:92px;height:92px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff7e6,var(--tmm-cream) 60%,#d9ccb6);display:grid;place-items:center;box-shadow:0 10px 18px -8px rgba(0,0,0,.6)}
+#tmm-landing .tmm-mini-tablet svg,#tmm-landing .tmm-mini-3d svg,#tmm-landing .tmm-mini-sticker svg{width:40px;height:40px}
+@media (max-width:860px){#tmm-landing .tmm-fmt-row{grid-template-columns:1fr;gap:48px}}
+
+/* ---------- staff ---------- */
+#tmm-landing .tmm-staff{padding:128px 0}
+#tmm-landing .tmm-staff-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:64px;align-items:start}
+#tmm-landing .tmm-staff h2{font-size:clamp(40px,5.4vw,68px);max-width:14ch}
+#tmm-landing .tmm-staff-points{list-style:none;margin:0;padding:0}
+#tmm-landing .tmm-staff-points li{padding:22px 0;border-top:1px solid var(--tmm-line)}
+#tmm-landing .tmm-staff-points li:last-child{border-bottom:1px solid var(--tmm-line)}
+#tmm-landing .tmm-staff-points strong{display:block;margin-bottom:4px}
+#tmm-landing .tmm-staff-points li > span{display:block;color:var(--tmm-muted);font-size:15.5px}
+@media (max-width:860px){#tmm-landing .tmm-staff-grid{grid-template-columns:1fr;gap:36px}}
+
+/* ---------- outcomes ---------- */
+#tmm-landing .tmm-outcomes{background:var(--tmm-charcoal)}
+#tmm-landing .tmm-out-grid{display:grid;grid-template-columns:repeat(4,1fr);margin-top:56px;border-top:1px solid var(--tmm-gold)}
+#tmm-landing .tmm-out{padding:28px 24px 0 0}
+#tmm-landing .tmm-out + .tmm-out{padding-left:24px;border-left:1px solid var(--tmm-line)}
+#tmm-landing .tmm-out h3{font-size:28px;margin-bottom:10px}
+#tmm-landing .tmm-out p{color:var(--tmm-muted);font-size:15.5px}
+@media (max-width:900px){#tmm-landing .tmm-out-grid{grid-template-columns:1fr 1fr}#tmm-landing .tmm-out:nth-child(3){padding-left:0;border-left:0}#tmm-landing .tmm-out{padding-bottom:28px}}
+@media (max-width:520px){#tmm-landing .tmm-out-grid{grid-template-columns:1fr}#tmm-landing .tmm-out,#tmm-landing .tmm-out + .tmm-out{padding-left:0;border-left:0;border-bottom:1px solid var(--tmm-line)}}
+
+/* ---------- testimonials (placeholders) ---------- */
+#tmm-landing .tmm-t-head{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap}
+#tmm-landing .tmm-t-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:20px;margin-top:56px}
+#tmm-landing .tmm-t{grid-column:span 4;display:flex;flex-direction:column;border:1px dashed rgba(201,164,92,.45);border-radius:4px;overflow:hidden}
+#tmm-landing .tmm-t.tmm-wide{grid-column:span 6}
+#tmm-landing .tmm-t.tmm-full{grid-column:span 12;flex-direction:row}
+#tmm-landing .tmm-t .tmm-ph{aspect-ratio:4/3;background:repeating-linear-gradient(135deg,rgba(201,164,92,.06) 0 12px,transparent 12px 24px),var(--tmm-charcoal);display:grid;place-items:center;color:var(--tmm-muted);font-size:14px;text-align:center;padding:12px}
+#tmm-landing .tmm-t.tmm-full .tmm-ph{aspect-ratio:auto;flex:1;min-height:260px}
+#tmm-landing .tmm-t .tmm-ph img{width:100%;height:100%;object-fit:cover}
+#tmm-landing .tmm-t blockquote{margin:0;padding:22px;font-family:var(--tmm-serif);font-size:21px;line-height:1.35;flex:1}
+#tmm-landing .tmm-t.tmm-full blockquote{flex:1;display:flex;flex-direction:column;justify-content:center;font-size:28px;padding:36px}
+#tmm-landing .tmm-t cite{display:block;margin-top:14px;font:600 14px var(--tmm-sans);color:var(--tmm-gold-light);font-style:normal}
+@media (max-width:900px){#tmm-landing .tmm-t,#tmm-landing .tmm-t.tmm-wide{grid-column:span 6}#tmm-landing .tmm-t.tmm-full{grid-column:span 12;flex-direction:column}}
+@media (max-width:600px){#tmm-landing .tmm-t,#tmm-landing .tmm-t.tmm-wide{grid-column:span 12}}
+
+/* ---------- steps ---------- */
+#tmm-landing .tmm-steps{background:var(--tmm-charcoal)}
+#tmm-landing .tmm-step-list{list-style:none;margin:56px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:0;counter-reset:s}
+#tmm-landing .tmm-step-list li{counter-increment:s;padding:0 24px 0 0;position:relative}
+#tmm-landing .tmm-step-list li::before{content:counter(s);display:grid;place-items:center;width:46px;height:46px;border-radius:50%;border:1px solid var(--tmm-gold);color:var(--tmm-gold);font-family:var(--tmm-serif);font-size:24px;font-weight:600;background:var(--tmm-charcoal);position:relative;z-index:1;margin-bottom:22px}
+#tmm-landing .tmm-step-list li::after{content:"";position:absolute;top:23px;left:46px;right:0;height:1px;background:var(--tmm-line)}
+#tmm-landing .tmm-step-list li:last-child::after{display:none}
+#tmm-landing .tmm-step-list strong{display:block;font-family:var(--tmm-serif);font-size:25px;font-weight:600;margin-bottom:6px}
+#tmm-landing .tmm-step-list p{color:var(--tmm-muted);font-size:15.5px}
+@media (max-width:860px){
+  #tmm-landing .tmm-step-list{grid-template-columns:1fr;gap:28px}
+  #tmm-landing .tmm-step-list li{padding:0 0 0 66px}
+  #tmm-landing .tmm-step-list li::before{position:absolute;left:0;top:-4px;margin:0}
+  #tmm-landing .tmm-step-list li::after{display:none}
+}
+
+/* ---------- booking ---------- */
+#tmm-landing .tmm-book-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:56px;align-items:start}
+#tmm-landing .tmm-book-box{background:var(--tmm-cream);color:var(--tmm-espresso);border-radius:4px;overflow:hidden}
+/* Calendly section background: change --tmm-cal-bg / --tmm-cal-ink to try other colours */
+#tmm-landing .tmm-cal-row{--tmm-cal-bg:var(--tmm-cream);--tmm-cal-ink:var(--tmm-espresso);background:var(--tmm-cal-bg);color:var(--tmm-cal-ink);padding:88px 0 64px}
+#tmm-landing .tmm-cal-head{margin-bottom:32px}
+#tmm-landing .tmm-cal-head h2{color:var(--tmm-cal-ink)}
+#tmm-landing .tmm-cal-row .calendly-inline-widget{width:100%;min-width:320px;height:720px}
+#tmm-landing .tmm-cal-missing{padding:20px 24px;background:#f7e9c9;font-size:14px;color:#5a3d29;border-bottom:1px solid #e6d3a8}
+#tmm-landing .tmm-form{padding:32px}
+#tmm-landing .tmm-form h3{font-size:30px;margin-bottom:6px}
+#tmm-landing .tmm-form .tmm-sub{color:#6d5e50;font-size:15px;margin-bottom:22px}
+#tmm-landing .tmm-form .tmm-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+#tmm-landing .tmm-form label{display:block;font-size:14px;font-weight:600;margin:14px 0 6px}
+#tmm-landing .tmm-form input,#tmm-landing .tmm-form select{width:100%;padding:13px 12px;border:1px solid #cdbfa8;border-radius:3px;font:500 16px var(--tmm-sans);background:#fffaf1;color:var(--tmm-espresso)}
+#tmm-landing .tmm-form .tmm-btn{margin-top:22px;width:100%}
+#tmm-landing .tmm-form .tmm-msg{margin-top:14px;font-size:15px;font-weight:600}
+@media (max-width:900px){#tmm-landing .tmm-book-grid{grid-template-columns:1fr}#tmm-landing .tmm-form .tmm-row{grid-template-columns:1fr}}
+
+/* ---------- faq ---------- */
+#tmm-landing .tmm-faq{background:var(--tmm-charcoal)}
+#tmm-landing .tmm-faq-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:56px}
+#tmm-landing details{border-bottom:1px solid var(--tmm-line);padding:6px 0}
+#tmm-landing details:first-child{border-top:1px solid var(--tmm-line)}
+#tmm-landing summary{cursor:pointer;list-style:none;padding:18px 36px 18px 0;font-family:var(--tmm-serif);font-size:24px;font-weight:600;position:relative}
+#tmm-landing summary::-webkit-details-marker{display:none}
+#tmm-landing summary::after{content:"+";position:absolute;right:4px;top:14px;color:var(--tmm-gold);font-family:var(--tmm-sans);font-size:26px;font-weight:400;transition:transform .2s}
+#tmm-landing details[open] summary::after{transform:rotate(45deg)}
+#tmm-landing details p{color:var(--tmm-muted);padding:0 0 20px;max-width:62ch}
+@media (max-width:860px){#tmm-landing .tmm-faq-grid{grid-template-columns:1fr;gap:28px}}
+
+/* ---------- footer ---------- */
+#tmm-landing footer{padding:64px 0 48px;border-top:1px solid var(--tmm-line)}
+#tmm-landing .tmm-foot{display:flex;justify-content:space-between;gap:32px;flex-wrap:wrap;align-items:flex-start}
+#tmm-landing .tmm-foot-contacts{display:flex;gap:40px;flex-wrap:wrap}
+#tmm-landing .tmm-foot-contacts div > span{display:block;color:var(--tmm-muted);font-size:14px}
+#tmm-landing .tmm-foot-contacts a{color:var(--tmm-cream);text-decoration:none;font-weight:600}
+#tmm-landing .tmm-foot-contacts a:hover{color:var(--tmm-gold-light)}
+#tmm-landing .tmm-copy{margin-top:40px;color:var(--tmm-muted);font-size:13px}
+
+@media (prefers-reduced-motion:reduce){
+  html:not(.tmm-app){scroll-behavior:auto}
+  #tmm-landing,#tmm-landing *{transition:none !important;animation:none !important}
+}
+</style>
+<script>if (!window.__TMM_LANDING__) document.getElementById("tmm-landing-css").remove();</script>
+</head>
+<body>
+
+<div id="tmm-landing">
+<header>
+  <div class="tmm-wrap tmm-bar">
+    <a class="tmm-logo" href="#tmm-top" aria-label="TapMyMenu">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11a11 11 0 0 1 16 0M7.5 14.5a6 6 0 0 1 9 0" fill="none" stroke="#C9A45C" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="18.5" r="2" fill="#C9A45C"/></svg>
+      Tap<b>My</b>Menu
+    </a>
+    <div class="tmm-bar-right">
+      <div class="tmm-lang" role="group" aria-label="Език / Language">
+        <button type="button" data-tmm-set-lang="bg" aria-pressed="true">БГ</button>
+        <button type="button" data-tmm-set-lang="en" aria-pressed="false">EN</button>
+      </div>
+      <a class="tmm-btn tmm-small" href="#tmm-book"><span data-tmm-l="bg">Запазете посещение</span><span data-tmm-l="en">Book a visit</span></a>
+    </div>
+  </div>
+</header>
+
+<main id="tmm-top">
+
+<!-- ================= HERO ================= -->
+<section class="tmm-hero">
+  <div class="tmm-wrap tmm-hero-grid">
+    <div>
+      <h1>
+        <span data-tmm-l="bg">Менюто, което продава - на масата и в стаята.</span>
+        <span data-tmm-l="en">The menu that sells - at the table and in the room.</span>
+      </h1>
+      <p class="tmm-lead">
+        <span data-tmm-l="bg">Дървени и 3D менюта с NFC и QR за хотели с ресторант. Гостите разглеждат, поръчват рум сървис и ви оставят отзив - на своя език, от своя телефон.</span>
+        <span data-tmm-l="en">Wooden and 3D NFC and QR menus for hotels with a restaurant. Guests browse, order room service and leave you a review - in their own language, on their own phone.</span>
+      </p>
+      <div class="tmm-hero-cta">
+        <a class="tmm-btn" href="#tmm-book"><span data-tmm-l="bg">Запазете безплатно посещение</span><span data-tmm-l="en">Book a free visit</span></a>
+        <a class="tmm-btn tmm-ghost" href="#tmm-how"><span data-tmm-l="bg">Как работи</span><span data-tmm-l="en">How it works</span></a>
+      </div>
+      <p class="tmm-hero-note">
+        <span data-tmm-l="bg">Идваме при вас с мостри и готов дизайн на вашето собствено меню. Безплатно и без ангажимент.</span>
+        <span data-tmm-l="en">We come to you with samples and a ready design of your own menu. Free, with no commitment.</span>
+      </p>
+      <div class="tmm-proof">
+        <strong>25+</strong>
+        <span data-tmm-l="bg">хотела и ресторанта вече работят с TapMyMenu</span>
+        <span data-tmm-l="en">hotels and restaurants already use TapMyMenu</span>
+      </div>
+    </div>
+
+    <div class="tmm-scene" aria-hidden="true">
+      <div class="tmm-table-top"></div>
+      <div class="tmm-tablet">
+        <div class="tmm-engr"><span data-tmm-l="bg">Вашият<br>хотел</span><span data-tmm-l="en">Your<br>hotel</span></div>
+        <div class="tmm-ring">
+          <span class="tmm-ripple" id="tmm-ripple"></span>
+          <svg viewBox="0 0 24 24"><path d="M4 11a11 11 0 0 1 16 0M7.5 14.5a6 6 0 0 1 9 0" fill="none" stroke="#1A1410" stroke-opacity=".75" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="18.5" r="2" fill="#1A1410" fill-opacity=".75"/></svg>
+        </div>
+        <div class="tmm-hint"><span data-tmm-l="bg">Докоснете с телефона</span><span data-tmm-l="en">Tap with your phone</span></div>
+      </div>
+      <div class="tmm-phone">
+        <div class="tmm-screen">
+          <div class="tmm-screen-top">
+            <small id="tmm-scrHotel">Ресторант · Room 214</small>
+            <div class="tmm-mt" id="tmm-scrTitle">Меню</div>
+            <div class="tmm-langs" id="tmm-scrLangs"><span class="tmm-on">BG</span><span>EN</span><span>DE</span><span>RO</span><span>EL</span></div>
+          </div>
+          <ul class="tmm-dishes" id="tmm-scrDishes"></ul>
+          <div class="tmm-order" id="tmm-scrOrder">Поръчай в стаята</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BEFORE / AFTER ================= -->
+<section class="tmm-ba">
+  <div class="tmm-wrap">
+    <div class="tmm-ba-head">
+      <h2><span data-tmm-l="bg">Какво се променя в хотела ви</span><span data-tmm-l="en">What changes in your hotel</span></h2>
+      <p class="tmm-lead"><span data-tmm-l="bg">Печатното меню и телефонът на рецепцията вършат работа. Но губят поръчки, време и отзиви всеки ден.</span><span data-tmm-l="en">Printed menus and the reception phone get the job done. But they lose orders, time and reviews every day.</span></p>
+    </div>
+    <table class="tmm-ba-table">
+      <thead><tr>
+        <th><span data-tmm-l="bg">Днес</span><span data-tmm-l="en">Today</span></th>
+        <th><span data-tmm-l="bg">С TapMyMenu</span><span data-tmm-l="en">With TapMyMenu</span></th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td><span data-tmm-l="bg">Печатни менюта, които остаряват и се препечатват</span><span data-tmm-l="en">Printed menus that go out of date and get reprinted</span></td>
+          <td><span data-tmm-l="bg">Сменяте цени и ястия от телефона си за секунди</span><span data-tmm-l="en">Change prices and dishes from your phone in seconds</span></td>
+        </tr>
+        <tr>
+          <td><span data-tmm-l="bg">PDF меню с QR код, което трудно се чете на телефон</span><span data-tmm-l="en">A PDF menu behind a QR code that's hard to read on a phone</span></td>
+          <td><span data-tmm-l="bg">Удобно меню със снимки, описания и алергени</span><span data-tmm-l="en">An easy menu with photos, descriptions and allergens</span></td>
+        </tr>
+        <tr>
+          <td><span data-tmm-l="bg">Рум сървис по телефона, който заема рецепцията</span><span data-tmm-l="en">Room service by phone that ties up reception</span></td>
+          <td><span data-tmm-l="bg">Поръчките от стаята отиват направо в кухнята</span><span data-tmm-l="en">Room orders go straight to the kitchen</span></td>
+        </tr>
+        <tr>
+          <td><span data-tmm-l="bg">Персонал, който превежда менюто на чужденци</span><span data-tmm-l="en">Staff translating the menu for foreign guests</span></td>
+          <td><span data-tmm-l="bg">Всеки гост вижда менюто на своя език</span><span data-tmm-l="en">Every guest sees the menu in their own language</span></td>
+        </tr>
+        <tr>
+          <td><span data-tmm-l="bg">Отзиви, за които никой не се сеща да помоли</span><span data-tmm-l="en">Reviews nobody remembers to ask for</span></td>
+          <td><span data-tmm-l="bg">Едно докосване води госта към всички платформи за отзиви</span><span data-tmm-l="en">One tap takes the guest to every review platform</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ================= SYSTEM ================= -->
+<section id="tmm-system">
+  <div class="tmm-wrap">
+    <h2><span data-tmm-l="bg">Една система за ресторанта и за стаите</span><span data-tmm-l="en">One system for the restaurant and the rooms</span></h2>
+    <p class="tmm-lead" style="margin-top:20px"><span data-tmm-l="bg">Физическите менюта са това, което гостът докосва. Софтуерът зад тях върши останалото.</span><span data-tmm-l="en">The physical menus are what guests touch. The software behind them does the rest.</span></p>
+    <div class="tmm-sys-grid">
+      <div class="tmm-zone">
+        <h3><span data-tmm-l="bg">В ресторанта</span><span data-tmm-l="en">In the restaurant</span></h3>
+        <div class="tmm-feat"><strong><span data-tmm-l="bg">Дигитално меню</span><span data-tmm-l="en">Digital menu</span></strong><p><span data-tmm-l="bg">На всеки език, със снимки и описания. Винаги актуално.</span><span data-tmm-l="en">In every language, with photos and descriptions. Always up to date.</span></p></div>
+        <div class="tmm-feat"><strong><span data-tmm-l="bg">AI асистент</span><span data-tmm-l="en">AI assistant</span></strong><p><span data-tmm-l="bg">Отговаря на въпросите на гостите, обучен само с информацията за вашия обект.</span><span data-tmm-l="en">Answers guests' questions, trained only on your venue's information.</span></p></div>
+        <div class="tmm-feat"><strong><span data-tmm-l="bg">Отзиви</span><span data-tmm-l="en">Reviews</span></strong><p><span data-tmm-l="bg">Свързва всички платформи за отзиви в едно докосване.</span><span data-tmm-l="en">Links every review platform in a single tap.</span></p></div>
+      </div>
+      <div class="tmm-zone">
+        <h3><span data-tmm-l="bg">В стаята</span><span data-tmm-l="en">In the room</span></h3>
+        <div class="tmm-feat"><strong><span data-tmm-l="bg">Рум сървис</span><span data-tmm-l="en">Room service</span></strong><p><span data-tmm-l="bg">Гостите поръчват храна до стаята от телефона си. Нови приходи, които досега не сте имали.</span><span data-tmm-l="en">Guests order food to the room from their phone. New revenue you didn't have before.</span></p></div>
+        <div class="tmm-feat"><strong><span data-tmm-l="bg">Информация за хотела</span><span data-tmm-l="en">Hotel information</span></strong><p><span data-tmm-l="bg">Wi-Fi, часове на ресторанта, СПА, напускане - всичко на едно място.</span><span data-tmm-l="en">Wi-Fi, restaurant hours, spa, check-out - all in one place.</span></p></div>
+      </div>
+      <div class="tmm-zone">
+        <h3><span data-tmm-l="bg">За вас</span><span data-tmm-l="en">For you</span></h3>
+        <div class="tmm-feat"><strong><span data-tmm-l="bg">Анализи</span><span data-tmm-l="en">Analytics</span></strong><p><span data-tmm-l="bg">Кои ястия получават най-много кликове и как гостите отварят менюто - с NFC, QR или линк.</span><span data-tmm-l="en">Which dishes get the most clicks and how guests open the menu - NFC, QR or direct link.</span></p></div>
+        <div class="tmm-feat"><strong><span data-tmm-l="bg">Контролен панел</span><span data-tmm-l="en">Control panel</span></strong><p><span data-tmm-l="bg">Променяте менюто, цените и наличността сами, по всяко време.</span><span data-tmm-l="en">Change the menu, prices and availability yourself, any time.</span></p></div>
+        <div class="tmm-feat"><strong><span data-tmm-l="bg">Поддръжка 7 дни в седмицата</span><span data-tmm-l="en">Support 7 days a week</span></strong><p><span data-tmm-l="bg">Продуктът се развива постоянно. Не изчезваме след първото плащане.</span><span data-tmm-l="en">The product keeps improving. We don't disappear after the first payment.</span></p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FORMATS ================= -->
+<section class="tmm-formats">
+  <div class="tmm-wrap">
+    <h2><span data-tmm-l="bg">Изработени по дизайн на вашия хотел</span><span data-tmm-l="en">Made to match your hotel</span></h2>
+    <p class="tmm-lead" style="margin-top:20px"><span data-tmm-l="bg">Всяко меню е уникално - с вашето лого, цветове и стил. Поставяме ги на масите и в стаите.</span><span data-tmm-l="en">Every menu is one of a kind - with your logo, colours and style. We place them on tables and in rooms.</span></p>
+    <div class="tmm-fmt-row">
+      <figure class="tmm-fmt">
+        <div class="tmm-stage"><div class="tmm-mini-tablet"><svg viewBox="0 0 24 24"><path d="M4 11a11 11 0 0 1 16 0M7.5 14.5a6 6 0 0 1 9 0" fill="none" stroke="#1A1410" stroke-opacity=".7" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="18.5" r="2" fill="#1A1410" fill-opacity=".7"/></svg></div></div>
+        <figcaption><strong><span data-tmm-l="bg">Дървен таблет</span><span data-tmm-l="en">Wooden tablet</span></strong><p><span data-tmm-l="bg">Гравиран по ваш дизайн. Стои на масата или в стаята и сам кани госта да докосне.</span><span data-tmm-l="en">Engraved to your design. It stands on the table or in the room and invites the tap by itself.</span></p></figcaption>
+      </figure>
+      <figure class="tmm-fmt">
+        <div class="tmm-stage"><div class="tmm-mini-3d"><svg viewBox="0 0 24 24"><path d="M4 11a11 11 0 0 1 16 0M7.5 14.5a6 6 0 0 1 9 0" fill="none" stroke="#C9A45C" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="18.5" r="2" fill="#C9A45C"/></svg></div></div>
+        <figcaption><strong><span data-tmm-l="bg">3D предмет</span><span data-tmm-l="en">3D printed piece</span></strong><p><span data-tmm-l="bg">Форма, която отговаря на вашия бранд, с вграден NFC чип.</span><span data-tmm-l="en">A shape that fits your brand, with an NFC chip built in.</span></p></figcaption>
+      </figure>
+      <figure class="tmm-fmt">
+        <div class="tmm-stage"><div class="tmm-mini-sticker"><svg viewBox="0 0 24 24"><path d="M4 11a11 11 0 0 1 16 0M7.5 14.5a6 6 0 0 1 9 0" fill="none" stroke="#6B4A32" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="18.5" r="2" fill="#6B4A32"/></svg></div></div>
+        <figcaption><strong><span data-tmm-l="bg">NFC стикер</span><span data-tmm-l="en">NFC sticker</span></strong><p><span data-tmm-l="bg">Дискретен, за всяка повърхност - бар, рецепция, СПА.</span><span data-tmm-l="en">Discreet, for any surface - the bar, reception, the spa.</span></p></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ================= STAFF OBJECTION ================= -->
+<section class="tmm-staff">
+  <div class="tmm-wrap tmm-staff-grid">
+    <h2><span data-tmm-l="bg">Персоналът ви не трябва да го продава.</span><span data-tmm-l="en">Your staff don't need to sell it.</span></h2>
+    <ul class="tmm-staff-points">
+      <li><strong><span data-tmm-l="bg">Менюто се представя само</span><span data-tmm-l="en">The menu presents itself</span></strong><span><span data-tmm-l="bg">Таблетът на масата и в стаята кани госта да докосне, без някой да обяснява.</span><span data-tmm-l="en">The tablet on the table and in the room invites guests to tap, without anyone explaining.</span></span></li>
+      <li><strong><span data-tmm-l="bg">Обучаваме екипа ви</span><span data-tmm-l="en">We train your team</span></strong><span><span data-tmm-l="bg">При инсталацията показваме на персонала как да го споменава с едно изречение.</span><span data-tmm-l="en">At installation we show your staff how to mention it in one sentence.</span></span></li>
+      <li><strong><span data-tmm-l="bg">Виждате резултата сами</span><span data-tmm-l="en">You see the results yourself</span></strong><span><span data-tmm-l="bg">В анализите виждате точно колко гости го използват - не разчитате на ничия дума.</span><span data-tmm-l="en">Analytics show exactly how many guests use it - you don't rely on anyone's word.</span></span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= OUTCOMES ================= -->
+<section class="tmm-outcomes">
+  <div class="tmm-wrap">
+    <h2><span data-tmm-l="bg">Какво печелите</span><span data-tmm-l="en">What you gain</span></h2>
+    <div class="tmm-out-grid">
+      <div class="tmm-out"><h3><span data-tmm-l="bg">Нови приходи</span><span data-tmm-l="en">New revenue</span></h3><p><span data-tmm-l="bg">Поръчки за стаята, които по телефона просто не се случват.</span><span data-tmm-l="en">Room orders that simply don't happen over the phone.</span></p></div>
+      <div class="tmm-out"><h3><span data-tmm-l="bg">Повече отзиви</span><span data-tmm-l="en">More reviews</span></h3><p><span data-tmm-l="bg">Гостите оставят отзив с едно докосване, докато са доволни.</span><span data-tmm-l="en">Guests leave a review with one tap while they're happy.</span></p></div>
+      <div class="tmm-out"><h3><span data-tmm-l="bg">Спестено време</span><span data-tmm-l="en">Time saved</span></h3><p><span data-tmm-l="bg">По-малко обяснения и преводи от страна на персонала.</span><span data-tmm-l="en">Less explaining and translating for your staff.</span></p></div>
+      <div class="tmm-out"><h3><span data-tmm-l="bg">По-бързи маси</span><span data-tmm-l="en">Faster tables</span></h3><p><span data-tmm-l="bg">Гостите избират, преди сервитьорът да дойде.</span><span data-tmm-l="en">Guests decide before the waiter arrives.</span></p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS: removed for now. The full section is saved in index-with-testimonials.html -->
+
+<!-- ================= HOW IT WORKS ================= -->
+<section class="tmm-steps" id="tmm-how">
+  <div class="tmm-wrap">
+    <h2><span data-tmm-l="bg">От посещение до работещо меню</span><span data-tmm-l="en">From visit to a working menu</span></h2>
+    <ol class="tmm-step-list">
+      <li><strong><span data-tmm-l="bg">Посещение</span><span data-tmm-l="en">Visit</span></strong><p><span data-tmm-l="bg">Идваме при вас с мостри и показваме всичко на живо - около 30 минути.</span><span data-tmm-l="en">We come to you with samples and show everything live - about 30 minutes.</span></p></li>
+      <li><strong><span data-tmm-l="bg">Безплатен дизайн</span><span data-tmm-l="en">Free design</span></strong><p><span data-tmm-l="bg">Подготвяме дизайн на вашето меню в стила на хотела.</span><span data-tmm-l="en">We prepare a design of your menu in your hotel's style.</span></p></li>
+      <li><strong><span data-tmm-l="bg">Изработка</span><span data-tmm-l="en">Production</span></strong><p><span data-tmm-l="bg">Около 2 работни седмици след одобрение на дизайна.</span><span data-tmm-l="en">About 2 business weeks after you approve the design.</span></p></li>
+      <li><strong><span data-tmm-l="bg">Инсталация</span><span data-tmm-l="en">Installation</span></strong><p><span data-tmm-l="bg">Поставяме всичко, обучаваме екипа и оставаме на линия 7 дни в седмицата.</span><span data-tmm-l="en">We install everything, train your team and stay on call 7 days a week.</span></p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ================= BOOKING ================= -->
+<section id="tmm-book">
+  <div class="tmm-wrap tmm-book-grid">
+    <div class="tmm-region">
+      <h2><span data-tmm-l="bg">Запазете безплатно посещение</span><span data-tmm-l="en">Book a free visit</span></h2>
+      <p class="tmm-lead" style="margin-top:18px"><span data-tmm-l="bg">Идваме при вас с мостри и готов дизайн на вашето меню. Посещението е безплатно и отнема около 30 минути.</span><span data-tmm-l="en">We come to you with samples and a ready design of your menu. The visit is free and takes about 30 minutes.</span></p>
+    </div>
+
+    <div class="tmm-book-box">
+            <form class="tmm-form" id="tmm-fallbackForm" hidden novalidate>
+        <h3><span data-tmm-l="bg">Оставете ни номер</span><span data-tmm-l="en">Leave us your number</span></h3>
+        <p class="tmm-sub"><span data-tmm-l="bg">Ще ви се обадим до един работен ден, за да уговорим посещението.</span><span data-tmm-l="en">We'll call you within one business day to arrange the visit.</span></p>
+        <div class="tmm-row">
+          <div><label for="tmm-fName"><span data-tmm-l="bg">Име</span><span data-tmm-l="en">Name</span></label><input id="tmm-fName" name="name" autocomplete="name" required></div>
+          <div><label for="tmm-fPhone"><span data-tmm-l="bg">Телефон</span><span data-tmm-l="en">Phone</span></label><input id="tmm-fPhone" name="phone" type="tel" autocomplete="tel" required></div>
+        </div>
+        <div class="tmm-row">
+          <div><label for="tmm-fHotel"><span data-tmm-l="bg">Име на хотел/ресторант</span><span data-tmm-l="en">Hotel/restaurant name</span></label><input id="tmm-fHotel" name="hotel" required></div>
+          <div><label for="tmm-fTown"><span data-tmm-l="bg">Град</span><span data-tmm-l="en">Town</span></label><input id="tmm-fTown" name="town" required></div>
+        </div>
+        <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" style="display:none">
+        <button class="tmm-btn" type="submit"><span data-tmm-l="bg">Изпратете</span><span data-tmm-l="en">Send</span></button>
+        <p class="tmm-msg" id="tmm-formMsg" role="status"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CALENDLY (full width, shown only when a link is set in CONFIG) ================= -->
+<section class="tmm-cal-row" id="tmm-calendar" hidden>
+  <div class="tmm-wrap tmm-cal-head">
+    <h2><span data-tmm-l="bg">Или изберете удобен час</span><span data-tmm-l="en">Or pick a time that suits you</span></h2>
+  </div>
+  <div id="tmm-calHolder"></div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="tmm-faq">
+  <div class="tmm-wrap tmm-faq-grid">
+    <h2><span data-tmm-l="bg">Въпроси, които собствениците задават</span><span data-tmm-l="en">Questions owners ask</span></h2>
+    <div>
+      <details><summary><span data-tmm-l="bg">Колко струва?</span><span data-tmm-l="en">How much does it cost?</span></summary>
+        <p><span data-tmm-l="bg">Еднократна цена за изработка на физическите менюта и месечен абонамент, който включва контролния панел и поддръжка 7 дни в седмицата. Точната цена зависи от броя маси и стаи - ще я получите на посещението.</span><span data-tmm-l="en">A one-off price for producing the physical menus, plus a monthly subscription that includes the control panel and 7-day support. The exact price depends on your number of tables and rooms - you'll get it at the visit.</span></p></details>
+      <details><summary><span data-tmm-l="bg">Трябва ли гостите да теглят приложение?</span><span data-tmm-l="en">Do guests need to download an app?</span></summary>
+        <p><span data-tmm-l="bg">Не. Докосват с телефона или сканират QR кода и менюто се отваря в браузъра.</span><span data-tmm-l="en">No. They tap their phone or scan the QR code and the menu opens in the browser.</span></p></details>
+      <details><summary><span data-tmm-l="bg">А ако телефонът на госта няма NFC?</span><span data-tmm-l="en">What if a guest's phone has no NFC?</span></summary>
+        <p><span data-tmm-l="bg">Всяко меню има и QR код, а може да се отвори и с директен линк.</span><span data-tmm-l="en">Every menu also has a QR code, and it can be opened with a direct link too.</span></p></details>
+      <details><summary><span data-tmm-l="bg">Колко езика поддържате?</span><span data-tmm-l="en">How many languages do you support?</span></summary>
+        <p><span data-tmm-l="bg">Всички. Менюто се показва на езика на госта.</span><span data-tmm-l="en">All of them. The menu shows in the guest's language.</span></p></details>
+      <details><summary><span data-tmm-l="bg">Мога ли сам да променям менюто?</span><span data-tmm-l="en">Can I change the menu myself?</span></summary>
+        <p><span data-tmm-l="bg">Да. От контролния панел сменяте ястия, цени, снимки и наличност по всяко време.</span><span data-tmm-l="en">Yes. From the control panel you change dishes, prices, photos and availability at any time.</span></p></details>
+      <details><summary><span data-tmm-l="bg">Какво става, ако нещо не работи?</span><span data-tmm-l="en">What if something stops working?</span></summary>
+        <p><span data-tmm-l="bg">Поддръжката ни работи 7 дни в седмицата, включително през сезона.</span><span data-tmm-l="en">Our support works 7 days a week, including during your season.</span></p></details>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="tmm-wrap">
+    <div class="tmm-foot">
+      <a class="tmm-logo" href="#tmm-top" aria-label="TapMyMenu">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11a11 11 0 0 1 16 0M7.5 14.5a6 6 0 0 1 9 0" fill="none" stroke="#C9A45C" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="18.5" r="2" fill="#C9A45C"/></svg>
+        Tap<b>My</b>Menu
+      </a>
+      <div class="tmm-foot-contacts">
+        <div><span data-tmm-l="bg">Телефон</span><span data-tmm-l="en">Phone</span><a id="tmm-lnkPhone" href="tel:+359878780915">+359 878 780 915</a></div>
+        <div><span>Viber</span><a id="tmm-lnkViber" href="viber://chat?number=%2B359878780915"><span data-tmm-l="bg">Пишете ни</span><span data-tmm-l="en">Message us</span></a></div>
+        <div><span>Email</span><a id="tmm-lnkEmail" href="mailto:office@tapmy.menu">office@tapmy.menu</a></div>
+      </div>
+    </div>
+    <p class="tmm-copy">© 2026 TapMyMenu</p>
+  </div>
+</footer>
+</div>
+<script>if (!window.__TMM_LANDING__) document.getElementById("tmm-landing").remove();</script>
+
+<!-- React app mounts here (hidden on the landing path) -->
+<div id="root"></div>
+
+<script>
+if (window.__TMM_LANDING__) {
+/* =====================================================================
+   CONFIG - replace these before going live
+   ===================================================================== */
+const CONFIG = {
+  phone: "+359878780915",
+  phoneDisplay: "+359 878 780 915",
+  viber: "viber://chat?number=%2B359878780915",
+  email: "office@tapmy.menu",       // shown in the footer
+  formEmail: "leads@tapmy.menu",    // where website form requests go
+  // Your Calendly link, e.g. "https://calendly.com/tapmymenu/visit". Leave "" to show only the form.
+  calendly: "https://calendly.com/tapmymenu",
+  // Web3Forms access key (free, 250 requests/month). Create it at web3forms.com with leads@tapmy.menu.
+  // Leave "" and the form falls back to opening the visitor's own email app.
+  web3formsKey: "c48c6a48-6e79-497e-94ba-8157733e2760"
+};
+
+/* ---------- language ---------- */
+const root = document.documentElement;
+function setLang(l){
+  root.lang = l;
+  document.querySelectorAll("[data-tmm-set-lang]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.tmmSetLang === l)));
+  document.title = l === "bg" ? "TapMyMenu - NFC и QR дигитални менюта за хотели и ресторанти" : "TapMyMenu - NFC and QR digital menus for hotels and restaurants";
+  const desc = l === "bg" ? "Дървени и 3D менюта с NFC и QR за хотели и ресторанти: меню на всеки език, рум сървис, AI асистент, отзиви и анализи. Безплатно посещение и дизайн." : "Wooden and 3D NFC and QR menus for hotels and restaurants: menus in every language, room service, an AI assistant, reviews and analytics. Free visit and design.";
+  document.querySelector('meta[name="description"]').content = desc;
+  document.querySelector('meta[property="og:description"]').content = desc;
+  document.querySelector('meta[property="og:title"]').content = document.title;
+  document.querySelector('link[rel="canonical"]').href = l === "en" ? "https://tapmy.menu/?lang=en" : "https://tapmy.menu/";
+  try { const u = new URL(location.href); if (l === "en") u.searchParams.set("lang", "en"); else u.searchParams.delete("lang"); history.replaceState(null, "", u); } catch(e) {}
+  try { localStorage.setItem("tmm-lang", l); } catch(e) {}
+  renderScreen(true);
+}
+document.querySelectorAll("[data-tmm-set-lang]").forEach(b => b.addEventListener("click", () => setLang(b.dataset.tmmSetLang)));
+
+/* ---------- phone screen: one language cycle ---------- */
+const SCREEN = [
+  {code:"BG", title:"Меню", hotel:"Ресторант · Стая 214", order:"Поръчай в стаята", dishes:[["Шопска салата","9 €"],["Пъстърва на скара","18 €"],["Капама по банско","21 €"],["Баница с тиква","7 €"]]},
+  {code:"EN", title:"Menu", hotel:"Restaurant · Room 214", order:"Order to my room", dishes:[["Shopska salad","9 €"],["Grilled trout","18 €"],["Bansko kapama stew","21 €"],["Pumpkin banitsa","7 €"]]},
+  {code:"DE", title:"Speisekarte", hotel:"Restaurant · Zimmer 214", order:"Aufs Zimmer bestellen", dishes:[["Schopska-Salat","9 €"],["Gegrillte Forelle","18 €"],["Bansko-Kapama","21 €"],["Kürbis-Banitsa","7 €"]]},
+  {code:"RO", title:"Meniu", hotel:"Restaurant · Camera 214", order:"Comandă în cameră", dishes:[["Salată șopska","9 €"],["Păstrăv la grătar","18 €"],["Kapama de Bansko","21 €"],["Banița cu dovleac","7 €"]]},
+  {code:"EL", title:"Μενού", hotel:"Εστιατόριο · Δωμάτιο 214", order:"Παραγγελία στο δωμάτιο", dishes:[["Σαλάτα σόπσκα","9 €"],["Πέστροφα σχάρας","18 €"],["Καπαμάς Μπάνσκο","21 €"],["Μπάνιτσα κολοκύθας","7 €"]]}
+];
+let idx = 0;
+const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+function paint(s){
+  document.getElementById("tmm-scrTitle").textContent = s.title;
+  document.getElementById("tmm-scrHotel").textContent = s.hotel;
+  document.getElementById("tmm-scrOrder").textContent = s.order;
+  document.getElementById("tmm-scrDishes").innerHTML = s.dishes.map(d => `<li><span>${d[0]}</span><span>${d[1]}</span></li>`).join("");
+  document.querySelectorAll("#tmm-scrLangs span").forEach(el => el.classList.toggle("tmm-on", el.textContent === s.code));
+}
+function renderScreen(reset){
+  if (reset) idx = root.lang === "en" ? 1 : 0;
+  paint(SCREEN[idx]);
+}
+function tapAnimation(){
+  const r = document.getElementById("tmm-ripple");
+  if (!r.animate) return;
+  r.animate([{opacity:.9, transform:"scale(1)"},{opacity:0, transform:"scale(2.1)"}], {duration:1100, easing:"ease-out"});
+}
+/* The page's single motion moment: after load, the tablet is "tapped" and the
+   phone menu steps through each language once, then settles on the page language. */
+function playCycle(){
+  if (reduced) return;
+  const parts = ["tmm-scrTitle","tmm-scrDishes","tmm-scrOrder"].map(id => document.getElementById(id));
+  const order = [0,1,2,3,4].filter(i => i !== idx).concat([idx]);
+  let step = 0;
+  tapAnimation();
+  const timer = setInterval(() => {
+    parts.forEach(p => p.classList.add("tmm-fade"));
+    setTimeout(() => {
+      paint(SCREEN[order[step]]);
+      parts.forEach(p => p.classList.remove("tmm-fade"));
+      step++;
+      if (step >= order.length) clearInterval(timer);
+    }, 350);
+  }, 1900);
+}
+
+/* ---------- Calendly ---------- */
+let calLoaded = false;
+function normalizeCal(u){
+  u = String(u || "").trim();
+  if (!u) return "";
+  if (!/^https?:\/\//i.test(u)) u = "https://" + u;       // accepts "calendly.com/..." without https
+  return u.replace(/^http:\/\//i, "https://");
+}
+function loadCalendly(url){
+  const holder = document.getElementById("tmm-calHolder");
+  holder.innerHTML = "";
+  const box = document.createElement("div");
+  box.className = "calendly-inline-widget";
+  box.dataset.url = url;
+  holder.appendChild(box);
+  const init = () => {
+    if (window.Calendly && !box.querySelector("iframe")) window.Calendly.initInlineWidget({url, parentElement: box});
+  };
+  if (calLoaded) init();
+  else {
+    const s = document.createElement("script");
+    s.src = "https://assets.calendly.com/assets/external/widget.js";
+    s.async = true;
+    s.onload = () => { calLoaded = true; setTimeout(init, 50); };
+    s.onerror = () => { holder.innerHTML = ""; document.getElementById("tmm-calendar").hidden = true; console.warn("Calendly script blocked or unreachable"); };
+    document.body.appendChild(s);
+  }
+  // If the calendar hasn't appeared after 10s (wrong link, ad blocker), remove the empty space.
+  setTimeout(() => {
+    if (!box.querySelector("iframe")) { holder.innerHTML = ""; document.getElementById("tmm-calendar").hidden = true; console.warn("Calendly did not load for", url); }
+  }, 10000);
+}
+function updateBooking(){
+  const url = normalizeCal(CONFIG.calendly);
+  const form = document.getElementById("tmm-fallbackForm");
+  const row = document.getElementById("tmm-calendar");
+  row.hidden = !url;
+  if (url) loadCalendly(url); else document.getElementById("tmm-calHolder").innerHTML = "";
+  form.hidden = false;
+}
+
+/* ---------- fallback form ---------- */
+document.getElementById("tmm-fallbackForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const f = e.target, msg = document.getElementById("tmm-formMsg");
+  const data = Object.fromEntries(new FormData(f));
+  delete data.botcheck;
+  const bg = root.lang === "bg";
+  if (!data.name || !data.phone || !data.hotel || !data.town) {
+    msg.textContent = bg ? "Попълнете име, телефон, име на хотел/ресторант и град." : "Fill in name, phone, hotel/restaurant name and town.";
+    return;
+  }
+  if (f.botcheck && f.botcheck.checked) return;
+  if (CONFIG.web3formsKey) {
+    const btn = f.querySelector("button[type=submit]");
+    btn.disabled = true;
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {"Content-Type": "application/json", "Accept": "application/json"},
+        body: JSON.stringify({
+          access_key: CONFIG.web3formsKey,
+          subject: "Заявка от сайта - " + data.hotel,
+          from_name: "TapMyMenu сайт",
+          "Име": data.name, "Телефон": data.phone, "Хотел/ресторант": data.hotel, "Град": data.town,
+          "Език": root.lang === "bg" ? "Български" : "English"
+        })
+      });
+      const out = await res.json();
+      if (!out.success) throw new Error(out.message || "failed");
+      f.reset();
+      msg.textContent = bg ? "Получихме заявката ви. Ще ви се обадим до един работен ден." : "We got your request. We'll call you within one business day.";
+    } catch(err) {
+      msg.textContent = bg ? "Заявката не се изпрати. Обадете ни се на " + CONFIG.phoneDisplay : "The request didn't send. Call us on " + CONFIG.phoneDisplay;
+    } finally { btn.disabled = false; }
+  } else {
+    const body = encodeURIComponent(`Име: ${data.name}\nТелефон: ${data.phone}\nХотел/ресторант: ${data.hotel}\nГрад: ${data.town}`);
+    window.location.href = `mailto:${CONFIG.formEmail}?subject=${encodeURIComponent("Заявка от сайта - " + data.hotel)}&body=${body}`;
+    msg.textContent = bg ? "Отваряме имейла ви с попълнена заявка." : "Opening your email with the request filled in.";
+  }
+});
+
+/* ---------- contacts ---------- */
+document.getElementById("tmm-lnkPhone").href = "tel:" + CONFIG.phone;
+document.getElementById("tmm-lnkPhone").textContent = CONFIG.phoneDisplay;
+document.getElementById("tmm-lnkViber").href = CONFIG.viber;
+document.getElementById("tmm-lnkEmail").href = "mailto:" + CONFIG.email;
+document.getElementById("tmm-lnkEmail").textContent = CONFIG.email;
+
+/* ---------- start ---------- */
+let saved = null;
+try { saved = localStorage.getItem("tmm-lang"); } catch(e) {}
+const urlLang = new URLSearchParams(location.search).get("lang");
+setLang(urlLang === "en" || urlLang === "bg" ? urlLang : (saved === "en" ? "en" : "bg"));
+updateBooking();
+window.addEventListener("load", () => setTimeout(playCycle, 700));
+}
+</script>
+<!-- React app: Create React App adds its own script automatically. src/index.js decides whether to start it. -->
+</body>
 </html>

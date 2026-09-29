@@ -99,7 +99,7 @@ function TrackedRoutes() {
       path={skipView ? null : pathname}
     >
       <Routes>
-        <Route path="/" element={<LandingPage locale="en" />} />
+        {/* <Route path="/" element={<LandingPage locale="en" />} /> */}
         <Route path="/qr/:urlname" element={<QrRoute />} />
         <Route path="/c/:code" element={<CodeRoute />} />
         <Route path="/c/:code/r" element={<CodeRoute review={true} />} />
