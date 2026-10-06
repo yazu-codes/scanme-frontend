@@ -20,6 +20,7 @@ import { LoadingScreen, ErrorScreen } from "./components/StatusScreen";
 import MenuChatWidget from "../../core/MenuChatWidget";
 import QRCodeWidget from "../../core/QRWidget";
 import LocaleWidget from "../../core/LocaleWidget";
+import { useAnalytics } from "../../core/Analytics";
 
 const parseMenuTree = (value) => {
   if (!value) return null;
@@ -52,6 +53,7 @@ const parseMenuTree = (value) => {
 // component is purely presentational.
 export default function ModernTheme({ urlname, status, owner, config, categories, itemsByCategory, code }) {
   const tree = parseMenuTree(config.category_order);
+  const track = useAnalytics();
   const activeCategories = tree != null ? tree : categories;
 
   const [selectedItem, setSelectedItem] = useState(null);
@@ -87,6 +89,7 @@ export default function ModernTheme({ urlname, status, owner, config, categories
   });
 
   function handleSelectItem(item) {
+    track("item_click", `${urlname}/${item.slug ?? item.name}`);
     setSelectedItem(item);
     setPanelOpen(true);
   }
