@@ -1,5 +1,6 @@
 import React from 'react';
 import { getLocaleCookie, changeLocaleAndReload } from './cookieUtils';
+import { useAnalytics } from "./Analytics";
 
 /**
  * Language selector component
@@ -29,10 +30,12 @@ function LanguageSelector({ languages = [
 ] }) {
   const [currentLocale, setCurrentLocale] = React.useState(() => getLocaleCookie());
 
+  const track = useAnalytics();
+
   const handleLanguageChange = (locale) => {
     if (locale !== currentLocale) {
       setCurrentLocale(locale);
-      changeLocaleAndReload(locale);
+      changeLocaleAndReload(locale, track);
     }
   };
 
