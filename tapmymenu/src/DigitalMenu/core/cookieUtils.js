@@ -2,6 +2,8 @@
  * Cookie utility functions for managing locale preference
  */
 
+import { AnalyticsProvider, useAnalytics } from "./DigitalMenu/core/Analytics";
+
 const LOCALE_COOKIE_NAME = 'app_locale';
 const COOKIE_EXPIRY_DAYS = 365;
 
@@ -48,6 +50,13 @@ export function clearLocaleCookie() {
  * @param {string} locale - Language code
  */
 export function changeLocaleAndReload(locale) {
+  const analytics = useAnalytics();
   setLocaleCookie(locale);
+  const currentUrl = window.location.toString();
+  let spliturlarray = currentUrl.split('/'); // Remove query parameters
+  
+  let name = spliturlarray[spliturlarray.length - 1].split('?')[0];
+  
+  analytics.track("translate", name + '_' + locale);
   window.location.reload();
 }
