@@ -2,7 +2,7 @@
  * Cookie utility functions for managing locale preference
  */
 
-import { AnalyticsProvider, useAnalytics } from "./DigitalMenu/core/Analytics";
+import { AnalyticsProvider, useAnalytics } from "./Analytics";
 
 const LOCALE_COOKIE_NAME = 'app_locale';
 const COOKIE_EXPIRY_DAYS = 365;
