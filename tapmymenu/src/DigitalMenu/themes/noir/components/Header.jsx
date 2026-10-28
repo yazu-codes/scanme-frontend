@@ -1,7 +1,7 @@
 import React from "react";
 import LangSwitch from "./LangSwitch";
 
-function BurgerIcon() {
+export function BurgerIcon() {
   return (
     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
       <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />

@@ -8,13 +8,17 @@ menu with `"theme": "noir"` in `menu_configuration` (registered in
 
 1. **Splash.** The owner logo reveals itself with a sweep and blur, then the name settles in with wide letter-spacing.
 2. **Cover page.** "Explore our menu / Menu", then one photo card per top-level category from `category_order`. Each card shows the item count, the title, the diamonds, a short teaser and a **VIEW MENU** button. Cards fade up as they scroll in.
-3. **Category page.** VIEW MENU replays the splash, then shows the category. A horizontal strip of line icons lists every category. The active one sits on a champagne tile and is kept centred, with a scroll-position thumb under the strip. Once you scroll, the strip pins to the top, the header steps aside and BG / EN moves into the strip.
+3. **Category page.** VIEW MENU replays the splash, then shows the category. A horizontal strip of line icons lists every category. The active one sits on a champagne tile and is kept centred, with a scroll-position thumb under the strip. Once you scroll, the strip pins to the top, the header steps aside and the strip gets the ☰ button, which opens the category tree.
    - Sections with photos use photo cards: name, two-line description, portion size, price.
    - Sections without any photos (typically drinks) use the text-only list layout.
    - Child categories become sub-headings.
    - **BACK TO MAIN MENU** ends the page.
 4. **Dish detail.** A centred card over a blurred page shows the category, name, diamonds, full description, weight, allergens and price.
-5. **Hamburger.** A full-screen menu lists the categories, contacts (phone, `working_schedule`, `wifi`) and `review_links`.
+5. **Hamburger.** A full-screen menu shows the whole category tree, then contacts (phone, `working_schedule`, `wifi`) and `review_links`.
+   - Each top-level category shows its icon, name and dish count.
+   - A category with sub-categories expands in place: a chevron turns and a branch line leads to "View all" and each sub-category with its count. Deeper levels nest the same way.
+   - Tapping a sub-category opens its category and lands on that section, just below the pinned icon strip. On the same page it glides there.
+   - The category you're currently viewing starts expanded and highlighted.
 6. **Back button.** Every page change goes through the splash. It is mirrored to `#c-<index>` in the URL, so the phone's back gesture returns to the cover and category links can be shared.
 
 ## Kept from the other themes

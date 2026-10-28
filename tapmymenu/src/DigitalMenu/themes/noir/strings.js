@@ -12,7 +12,7 @@ const STRINGS = {
     weight: "Грамаж",
     price: "Цена",
     allergens: "Алергени",
-    items: (n) => (n === 1 ? "1 позиция" : `${n} позиции`),
+    items: (n) => (n === 1 ? "1 предложение" : `${n} предложения`),
     navigation: "Навигация",
     contacts: "Контакти",
     followUs: "Последвайте ни",
@@ -23,6 +23,8 @@ const STRINGS = {
     backToTop: "Към началото",
     error: "Менюто не можа да се зареди. Моля, опитайте отново след малко.",
     showStaff: "Покажете на персонала",
+    allCategories: "Всички категории",
+    viewAll: "Виж всички",
   },
   en: {
     explore: "Explore our menu",
@@ -44,6 +46,8 @@ const STRINGS = {
     backToTop: "Back to top",
     error: "We couldn't load this menu. Please try again shortly.",
     showStaff: "Show this to our staff",
+    allCategories: "All categories",
+    viewAll: "View all",
   },
 };
 

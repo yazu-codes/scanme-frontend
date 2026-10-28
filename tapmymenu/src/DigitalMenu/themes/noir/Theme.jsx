@@ -101,14 +101,26 @@ export default function NoirTheme({ urlname, status, owner, config, categories, 
   const headerHidden = onCategory ? stripStuck : y > 120 && dir === "down";
   const accent = USE_OWNER_PALETTE ? config.font_color || NOIR_ACCENT : NOIR_ACCENT;
 
+  // subLabel (optional): a sub-category to land on, from the drawer tree.
+  const [focusSub, setFocusSub] = useState(null);
   const handleOpenCategory = useCallback(
-    (index) => {
+    (index, subLabel = null) => {
       setDrawerOpen(false);
       const node = nodes[index];
-      if (node) track("category_click", `${urlname}/${node.label}`);
+      if (node) track("category_click", `${urlname}/${subLabel || node.label}`);
+      if (index === view) {
+        // Already on this page: just glide to the section (or the top).
+        setFocusSub(null);
+        const target = subLabel
+          ? rootRef.current && rootRef.current.querySelector(`[data-sub="${CSS.escape(subLabel)}"]`)
+          : rootRef.current && rootRef.current.querySelector(".nr-category");
+        if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+        return;
+      }
+      setFocusSub(subLabel);
       openCategory(index);
     },
-    [nodes, openCategory, track, urlname]
+    [nodes, openCategory, track, urlname, view]
   );
 
   const handleHome = useCallback(() => {
@@ -160,10 +172,10 @@ export default function NoirTheme({ urlname, status, owner, config, categories, 
                 itemsByCategory={itemsByLabel}
                 originalLabelOf={originalLabelOf}
                 iconKeyOf={iconKeyOf}
+                focusLabel={focusSub}
                 strings={strings}
                 onStripStuck={setStripStuck}
-                locale={locale}
-                track={track}
+                onMenu={() => setDrawerOpen(true)}
                 onSelectCategory={handleOpenCategory}
                 onSelectItem={handleSelectItem}
                 onBack={handleHome}
@@ -199,6 +211,8 @@ export default function NoirTheme({ urlname, status, owner, config, categories, 
             open={drawerOpen}
             owner={owner}
             nodes={nodes}
+            itemsByCategory={itemsByLabel}
+            iconKeyOf={iconKeyOf}
             activeIndex={view}
             strings={strings}
             onClose={handleCloseDrawer}

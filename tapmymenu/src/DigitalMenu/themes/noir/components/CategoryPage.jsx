@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useLayoutEffect, useRef } from "react";
 import Ornament, { PageTitle } from "./Ornament";
 import CategoryStrip from "./CategoryStrip";
 import DishCard, { DishRow } from "./DishCard";
@@ -38,7 +38,7 @@ function Dishes({ items, onSelectItem }) {
 
 function SubSection({ node, itemsByCategory, originalLabelOf, onSelectItem, depth }) {
   return (
-    <section className="nr-sub" data-depth={depth}>
+    <section className="nr-sub" data-depth={depth} data-sub={node.label}>
       <div className="nr-sub-head">
         <h3 className="nr-sub-title">{node.label}</h3>
         {originalLabelOf[node.label] ? (
@@ -69,19 +69,29 @@ export default function CategoryPage({
   itemsByCategory,
   originalLabelOf = {},
   iconKeyOf = {},
+  focusLabel = null,
   strings,
   onStripStuck,
-  locale,
-  track,
+  onMenu,
   onSelectCategory,
   onSelectItem,
   onBack,
 }) {
+  const pageRef = useRef(null);
   const node = nodes[index];
+
+  // Opened from a sub-category in the navigation tree: land on that
+  // section (this runs while the page-change splash still covers it).
+  useLayoutEffect(() => {
+    if (!focusLabel || !pageRef.current) return;
+    const el = pageRef.current.querySelector(`[data-sub="${CSS.escape(focusLabel)}"]`);
+    if (el) el.scrollIntoView({ block: "start" });
+  }, [focusLabel]);
+
   if (!node) return null;
 
   return (
-    <div className="nr-page nr-page-category">
+    <div className="nr-page nr-page-category" ref={pageRef}>
       <PageTitle title={strings.menu} />
 
       <CategoryStrip
@@ -90,8 +100,8 @@ export default function CategoryPage({
         activeIndex={index}
         onSelect={onSelectCategory}
         onStuckChange={onStripStuck}
-        locale={locale}
-        track={track}
+        onMenu={onMenu}
+        menuLabel={strings.openMenu}
       />
 
       <section className="nr-category">

@@ -594,7 +594,7 @@
   }
 }
 
-.nr-strip-lang {
+.nr-strip-menu {
   flex: 0 0 auto;
   max-width: 0;
   overflow: hidden;
@@ -602,10 +602,10 @@
   transition: max-width 0.4s var(--nr-ease), opacity 0.3s ease, padding 0.4s var(--nr-ease);
 }
 
-.nr-strip-stuck .nr-strip-lang {
+.nr-strip-stuck .nr-strip-menu {
   max-width: 90px;
   opacity: 1;
-  padding: 0 var(--nr-gutter) 0 4px;
+  padding: 0 calc(var(--nr-gutter) - 8px) 0 4px;
 }
 
 .nr-strip-track {
@@ -1096,41 +1096,228 @@
   padding: 30px var(--nr-gutter) calc(48px + env(safe-area-inset-bottom));
 }
 
-.nr-drawer-links {
-  margin: 14px 0 34px;
+/* Category tree */
+.nr-tree-home {
+  display: block;
+  width: 100%;
+  padding: 4px 0 14px;
+  text-align: left;
+  font-size: 0.64em;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--nr-muted);
+  border-bottom: 1px solid var(--nr-line);
+  transition: color 0.2s ease;
 }
 
-.nr-drawer-links li {
+.nr-tree-home:hover,
+.nr-tree-home.nr-tree-active {
+  color: var(--nr-gold-bright);
+}
+
+.nr-tree {
+  margin-bottom: 30px;
+}
+
+.nr-tree-item {
+  border-bottom: 1px solid var(--nr-line);
   opacity: 0;
   transform: translateY(12px);
   transition: opacity 0.5s var(--nr-ease), transform 0.5s var(--nr-ease);
 }
 
-.nr-drawer-open .nr-drawer-links li {
+.nr-drawer-open .nr-tree-item {
   opacity: 1;
   transform: none;
-  transition-delay: calc(var(--i) * 45ms + 120ms);
+  transition-delay: calc(min(var(--i), 12) * 40ms + 100ms);
 }
 
-.nr-drawer-links button {
-  display: block;
+.nr-tree-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
   width: 100%;
-  padding: 7px 0;
+  min-height: 60px;
+  padding: 8px 0;
   text-align: left;
+}
+
+.nr-tree-icon {
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--nr-line-strong);
+  color: rgba(243, 239, 231, 0.8);
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.nr-tree-active .nr-tree-icon {
+  background: var(--nr-gold-tile);
+  border-color: var(--nr-gold-tile);
+  color: var(--nr-on-gold);
+}
+
+.nr-tree-label {
+  flex: 1;
+  min-width: 0;
   font-family: var(--nr-serif);
   font-weight: 400;
-  font-size: 1.65em;
-  line-height: 1.25;
-  transition: color 0.25s ease, padding 0.35s var(--nr-ease);
+  font-size: 1.35em;
+  line-height: 1.2;
+  transition: color 0.2s ease;
 }
 
-.nr-drawer-links button:hover {
+.nr-tree-row:hover .nr-tree-label,
+.nr-tree-active > .nr-tree-row .nr-tree-label {
   color: var(--nr-gold-bright);
-  padding-left: 6px;
 }
 
-.nr-drawer-links .nr-drawer-active {
+.nr-tree-count {
+  flex: 0 0 auto;
+  min-width: 24px;
+  text-align: right;
+  font-size: 0.64em;
+  letter-spacing: 0.06em;
+  color: var(--nr-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.nr-tree-toggle {
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--nr-gold);
+  transition: transform 0.35s var(--nr-ease);
+}
+
+.nr-tree-toggle-open {
+  transform: rotate(90deg);
+}
+
+.nr-tree-toggle-ghost {
+  color: var(--nr-faint);
+  opacity: 0.5;
+}
+
+/* Expand/collapse: animate the row height via grid rows */
+.nr-tree-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.4s var(--nr-ease);
+}
+
+.nr-tree-panel > ul {
+  min-height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s;
+}
+
+.nr-tree-panel-open {
+  grid-template-rows: 1fr;
+}
+
+.nr-tree-panel-open > ul {
+  visibility: visible;
+  transition: visibility 0s linear 0s;
+}
+
+.nr-tree-subs {
+  position: relative;
+  margin-left: 19px;
+  padding-left: 0;
+}
+
+.nr-tree-item > .nr-tree-panel-open > .nr-tree-subs {
+  padding-bottom: 10px;
+}
+
+/* the hairline "branch" connecting a category to its sub-categories */
+.nr-tree-subs::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 14px;
+  width: 1px;
+  background: var(--nr-line-strong);
+}
+
+.nr-tree-sub {
+  position: relative;
+}
+
+.nr-tree-subrow {
+  display: flex;
+  align-items: center;
+}
+
+.nr-tree-sublink {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  padding: 8px 0 8px 22px;
+  text-align: left;
+  position: relative;
+}
+
+.nr-tree-sublink::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 12px;
+  height: 1px;
+  background: var(--nr-line-strong);
+}
+
+.nr-tree-sublabel {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.86em;
+  line-height: 1.35;
+  color: var(--nr-text);
+  opacity: 0.85;
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+.nr-tree-sublink:hover .nr-tree-sublabel {
   color: var(--nr-gold-bright);
+  opacity: 1;
+}
+
+.nr-tree-viewall .nr-tree-sublabel {
+  font-size: 0.66em;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--nr-gold);
+  opacity: 1;
+}
+
+.nr-tree-subrow .nr-tree-toggle {
+  margin-left: 4px;
+}
+
+.nr-tree-sub .nr-tree-subs {
+  margin-left: 22px;
+}
+
+/* land a sub-category below the pinned icon strip (its real height is
+   measured by CategoryStrip into --nr-strip-h) */
+.nr-category,
+.nr-sub {
+  scroll-margin-top: calc(var(--nr-strip-h, 150px) + 18px);
 }
 
 .nr-drawer-block {

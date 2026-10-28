@@ -1,17 +1,19 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import CategoryIcon from "./CategoryIcon";
-import LangSwitch from "./LangSwitch";
+import { BurgerIcon } from "./Header";
 
 // Horizontally scrolling row of line-icon tiles. The active category
 // sits on a filled champagne tile and is kept centred; a slim thumb
-// underneath tracks the strip's horizontal scroll position. It's sticky,
+// underneath tracks the strip's horizontal scroll position. Once pinned
+// (the header has slid away) it carries the hamburger button, so the
+// full category tree stays one tap away. It's sticky,
 // and once the header has slid away it carries the BG / EN switch too.
 //
 // Pinning uses position: fixed + a placeholder of the same height rather
 // than position: sticky: the shared useBodyBackgroundSync hook puts
 // overflow-x: hidden on <html> and <body>, which turns <body> into a
 // scroll container and silently breaks sticky positioning.
-export default function CategoryStrip({ nodes, iconKeyOf = {}, activeIndex, onSelect, onStuckChange, locale, track }) {
+export default function CategoryStrip({ nodes, iconKeyOf = {}, activeIndex, onSelect, onStuckChange, onMenu, menuLabel }) {
   const holderRef = useRef(null);
   const navRef = useRef(null);
   const scrollerRef = useRef(null);
@@ -38,7 +40,13 @@ export default function CategoryStrip({ nodes, iconKeyOf = {}, activeIndex, onSe
       if (frame == null) frame = requestAnimationFrame(check);
     }
     function measureHeight() {
-      if (navRef.current) setHeight(navRef.current.offsetHeight);
+      if (navRef.current) {
+        const h = navRef.current.offsetHeight;
+        setHeight(h);
+        // Lets section anchors land just below the pinned strip.
+        const page = holderRef.current && holderRef.current.parentElement;
+        if (page) page.style.setProperty("--nr-strip-h", `${h}px`);
+      }
       schedule();
     }
     measureHeight();
@@ -97,8 +105,16 @@ export default function CategoryStrip({ nodes, iconKeyOf = {}, activeIndex, onSe
             </button>
           ))}
         </div>
-        <div className="nr-strip-lang">
-          <LangSwitch locale={locale} track={track} />
+        <div className="nr-strip-menu">
+          <button
+            type="button"
+            className="nr-burger"
+            onClick={onMenu}
+            aria-label={menuLabel}
+            tabIndex={stuck ? 0 : -1}
+          >
+            <BurgerIcon />
+          </button>
         </div>
       </div>
 
