@@ -35,6 +35,12 @@ menu with `"theme": "noir"` in `menu_configuration` (registered in
   - The same pairing restores the photos the translated response drops.
   - If that request fails, the menu shows translations only, never a wrong original.
 - **Workaround for the translated API (`?lang=en`):** names and descriptions arrive as "<another item's Bulgarian text> / <this item's English text>". When most of a menu's names have that shape and the locale isn't `bg`, the theme keeps only the English part as the translated name (`utils.js → stripBilingualPrefix`). It switches itself off once the API is fixed. Delete it then.
+- **Category icons always come from the original title.** `iconKeywords.js → getCategoryIconKey(originalTitle)` matches keywords at the start of words (Bulgarian and English), so a category keeps the same icon in every language.
+  - In translated menus the original title comes from the paired dishes. For parent groups with no dishes of their own, it comes from the original-language `category_order`.
+  - If no keyword matches, the most common icon among the sub-categories is used, then a generic cloche.
+  - To add a keyword or icon, edit `RULES` in `iconKeywords.js` and `ICONS` in `components/CategoryIcon.jsx`.
+- **Photos are never cropped.** Cover, dish and detail photos use `object-fit: contain` inside the same 4:3 frames, so the whole picture shows without the frames getting bigger.
+- **Widgets mount after the opening splash**, so their 2-second helper bubbles are seen.
 - **The strip uses `position: fixed` with a placeholder, not `sticky`.** The shared `useBodyBackgroundSync` sets `overflow-x: hidden` on `<html>` and `<body>`, which breaks `sticky`.
 - **Fonts.** Cormorant Garamond (display) and Jost (body), both with Cyrillic, loaded from Google Fonts in `noir-theme.css`.
 - **Analytics.** Besides `item_click`, the theme sends `category_click` (`urlname/category`).

@@ -13,8 +13,9 @@ import { API_BASE } from "../../../core/constants";
 // item with its original by display_order_position + price, which is
 // unique per item.
 //
-// Returns the original menu_items array, or null while loading, when not
-// needed, or if the request fails (the theme then shows translations only).
+// Returns { items, categoryOrder } of the original-language menu, or null
+// while loading, when not needed, or if the request fails (the theme then
+// shows translations only).
 
 const ORIGINAL_LOCALE = "bg";
 const cache = new Map();
@@ -39,9 +40,13 @@ export default function useOriginalMenu(urlname, locale, enabled) {
         return res.json();
       })
       .then((data) => {
-        const list = (data && data.menu && data.menu.menu_items) || [];
-        cache.set(urlname, list);
-        if (!cancelled) setItems(list);
+        const menu = (data && data.menu) || {};
+        const original = {
+          items: menu.menu_items || [],
+          categoryOrder: (menu.menu_configuration || {}).category_order || null,
+        };
+        cache.set(urlname, original);
+        if (!cancelled) setItems(original);
       })
       .catch((err) => {
         console.warn("Noir: could not load original-language menu", err);

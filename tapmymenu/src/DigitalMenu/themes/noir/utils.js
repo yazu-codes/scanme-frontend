@@ -1,3 +1,5 @@
+import { DEFAULT_ICON, getCategoryIconKey } from "./iconKeywords";
+
 // Presentation helpers for the Noir theme. Pure functions only — no JSX,
 // no DOM. Anything here is about *how Noir arranges* the data core hands
 // it, not about parsing the menu itself (that stays in core/).
@@ -131,8 +133,9 @@ function localizeItem(item, fixGlued, originals) {
   return out;
 }
 
-// Most common original category per translated category, so headings can
-// show "Lean dishes" with "Постни ястия" underneath.
+// Most common original category per translated category, judged by the
+// category the paired original dishes sit in ("Lean dishes" -> "Постни
+// ястия"). Only covers categories that hold dishes directly.
 function originalLabels(itemsByLabel) {
   const result = {};
   for (const [label, items] of Object.entries(itemsByLabel)) {
@@ -150,9 +153,88 @@ function originalLabels(itemsByLabel) {
         bestCount = count;
       }
     });
-    if (best && !sameText(best, label)) result[label] = best;
+    if (best) result[label] = best;
   }
   return result;
+}
+
+// Original title of EVERY category in the tree, including parent groups
+// that hold no dishes themselves ("Soft drinks" only has children).
+//  - Bulgarian locale: the label is already the original.
+//  - Otherwise: from the paired dishes (above); for a parent, the node in
+//    the original-language category_order whose sub-categories overlap
+//    most with this node's sub-categories' originals.
+// Returns { [label]: originalTitle | undefined }.
+function resolveOriginalTitles(nodes, ownOriginal, originalTreeRaw, translated) {
+  const titles = {};
+  if (!translated) {
+    walk(nodes, (n) => (titles[n.label] = n.label));
+    return titles;
+  }
+
+  const originalTree = (parseTree(originalTreeRaw) || []).map(normalizeNode);
+  const originalNodes = [];
+  walk(originalTree, (n) => originalNodes.push(n));
+  const descendantKeys = (node) => {
+    const keys = new Set();
+    walk(node.children, (c) => keys.add(labelKey(c.label)));
+    return keys;
+  };
+
+  function resolve(node) {
+    node.children.forEach(resolve);
+    if (ownOriginal[node.label]) {
+      titles[node.label] = ownOriginal[node.label];
+      return;
+    }
+    const wanted = new Set();
+    walk(node.children, (c) => {
+      if (titles[c.label]) wanted.add(labelKey(titles[c.label]));
+    });
+    if (wanted.size === 0) return;
+    let best = null;
+    let bestScore = 0;
+    for (const candidate of originalNodes) {
+      if (candidate.children.length === 0) continue;
+      let score = 0;
+      descendantKeys(candidate).forEach((k) => wanted.has(k) && (score += 1));
+      if (score > bestScore) {
+        best = candidate;
+        bestScore = score;
+      }
+    }
+    if (best) titles[node.label] = best.label;
+  }
+  nodes.forEach(resolve);
+  return titles;
+}
+
+// Icon per category, always from its ORIGINAL title (iconKeywords.js). If
+// the original title is unknown or matches no keyword, borrow the most
+// common icon among its sub-categories; otherwise the generic cloche.
+function resolveIconKeys(nodes, originalTitleOf) {
+  const keys = {};
+  function resolve(node) {
+    node.children.forEach(resolve);
+    let key = getCategoryIconKey(originalTitleOf[node.label]);
+    if (key === DEFAULT_ICON && node.children.length) {
+      const votes = new Map();
+      node.children.forEach((c) => {
+        const k = keys[c.label];
+        if (k && k !== DEFAULT_ICON) votes.set(k, (votes.get(k) || 0) + 1);
+      });
+      let bestCount = 0;
+      votes.forEach((count, k) => {
+        if (count > bestCount) {
+          key = k;
+          bestCount = count;
+        }
+      });
+    }
+    keys[node.label] = key;
+  }
+  nodes.forEach(resolve);
+  return keys;
 }
 
 export function countItems(node, itemsByCategory) {
@@ -186,7 +268,14 @@ function prune(nodes, itemsByCategory) {
 // Item categories are matched to tree labels loosely (see labelKey).
 // Anything still unmatched is appended as its own top-level category, so
 // no dish ever silently disappears.
-export function buildCategoryTree(categoryOrder, categories, itemsByCategory, locale, originalItems) {
+//  originalLabelOf  translated label -> original title, only where they
+//                   differ (shown under headings in translated menus)
+//  iconKeyOf        label -> icon key, decided from the ORIGINAL title
+//
+// originalMenu is { items, categoryOrder } of the original-language menu
+// (hooks/useOriginalMenu), or null.
+export function buildCategoryTree(categoryOrder, categories, itemsByCategory, locale, originalMenu) {
+  const originalItems = originalMenu ? originalMenu.items : null;
   const source = parseTree(categoryOrder) || categories || [];
   let nodes = source.map(normalizeNode);
 
@@ -224,11 +313,27 @@ export function buildCategoryTree(categoryOrder, categories, itemsByCategory, lo
     );
   }
 
-  nodes = nodes.concat(orphans.map((label) => ({ label, children: [] })));
+  nodes = prune(nodes.concat(orphans.map((label) => ({ label, children: [] }))), itemsByLabel);
+
+  const translated = Boolean(locale && locale !== "bg");
+  const originalTitleOf = resolveOriginalTitles(
+    nodes,
+    originals ? originalLabels(itemsByLabel) : {},
+    originalMenu ? originalMenu.categoryOrder : null,
+    translated
+  );
+  const originalLabelOf = {};
+  if (translated) {
+    Object.entries(originalTitleOf).forEach(([label, title]) => {
+      if (title && !sameText(title, label)) originalLabelOf[label] = title;
+    });
+  }
+
   return {
-    nodes: prune(nodes, itemsByLabel),
+    nodes,
     itemsByLabel,
-    originalLabelOf: originals ? originalLabels(itemsByLabel) : {},
+    originalLabelOf,
+    iconKeyOf: resolveIconKeys(nodes, originalTitleOf),
   };
 }
 

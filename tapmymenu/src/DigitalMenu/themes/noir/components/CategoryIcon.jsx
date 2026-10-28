@@ -1,10 +1,17 @@
 import React from "react";
+import { DEFAULT_ICON } from "../iconKeywords";
 
-// Hand-drawn-style line icons for the category strip. Picked by keyword
-// from the category name (Bulgarian or English), with a cloche fallback,
-// so the owner never has to configure anything.
+// Line-art icons for the category strip and photo-less cover cards. Which
+// one a category gets is decided by iconKeywords.js from the category's
+// ORIGINAL title; this component only draws it.
 
 const ICONS = {
+  promo: (
+    <>
+      <path d="M24 6l4.8 9.8 10.8 1.6-7.8 7.6 1.8 10.8L24 30.7l-9.6 5.1 1.8-10.8-7.8-7.6 10.8-1.6z" />
+      <path d="M12 41h24" />
+    </>
+  ),
   starter: (
     <>
       <path d="M8 31h32l-3 5H11z" />
@@ -18,6 +25,19 @@ const ICONS = {
       <path d="M7 25h34c0 8-7 13-17 13S7 33 7 25z" />
       <path d="M14 25c-1-5 2-8 6-8M22 25c0-6 4-9 8-8M30 25c1-4 4-6 7-5" />
       <path d="M18 17c1-3 4-5 7-4" />
+    </>
+  ),
+  soup: (
+    <>
+      <path d="M7 24h34c0 8-7 14-17 14S7 32 7 24z" />
+      <path d="M18 18c-2-2 2-4 0-7M24 18c-2-2 2-4 0-7M30 18c-2-2 2-4 0-7" />
+    </>
+  ),
+  egg: (
+    <>
+      <circle cx="21" cy="26" r="13" />
+      <circle cx="21" cy="26" r="5" />
+      <path d="M34 26h9" />
     </>
   ),
   pasta: (
@@ -44,11 +64,40 @@ const ICONS = {
       <path d="M18 16h1M24 15h1M30 16h1" />
     </>
   ),
+  chicken: (
+    <>
+      <path d="M30 9c6 0 10 4 10 10 0 7-6 11-12 10l-9 9" />
+      <path d="M30 9c-6 0-10 5-9 11l-9 9" />
+      <path d="M12 29l7 9" />
+      <path d="M9 32a3 3 0 1 0 4 4M15 41a3 3 0 1 0 4-4" />
+    </>
+  ),
+  meat: (
+    <>
+      <path d="M10 26c-2-9 6-16 16-15 9 1 14 8 12 15-2 8-10 11-18 10-6-1-9-4-10-10z" />
+      <circle cx="29" cy="22" r="3.5" />
+      <path d="M15 26c2 3 6 5 10 4" />
+    </>
+  ),
   main: (
     <>
       <ellipse cx="24" cy="28" rx="17" ry="9" />
       <path d="M14 28c1-4 6-6 10-5 4 1 7 0 9-2 2 3 0 7-5 8-5 1-12 2-14-1z" />
       <path d="M19 27c2-1 4-1 6 0" />
+    </>
+  ),
+  fish: (
+    <>
+      <path d="M8 24c5-7 14-9 22-5l7-5v20l-7-5c-8 4-17 2-22-5z" />
+      <circle cx="15" cy="23" r="1" />
+      <path d="M20 19c1 3 1 7 0 10" />
+    </>
+  ),
+  lean: (
+    <>
+      <path d="M12 38C10 22 20 10 38 9c1 17-9 28-24 29" />
+      <path d="M12 38c6-9 12-15 20-21" />
+      <path d="M20 29l-1-6M25 24l5 0" />
     </>
   ),
   side: (
@@ -57,17 +106,10 @@ const ICONS = {
       <path d="M16 22l-1-12M21 22V8M26 22l1-13M31 22l2-10" />
     </>
   ),
-  soup: (
+  bread: (
     <>
-      <path d="M7 24h34c0 8-7 14-17 14S7 32 7 24z" />
-      <path d="M18 18c-2-2 2-4 0-7M24 18c-2-2 2-4 0-7M30 18c-2-2 2-4 0-7" />
-    </>
-  ),
-  fish: (
-    <>
-      <path d="M8 24c5-7 14-9 22-5l7-5v20l-7-5c-8 4-17 2-22-5z" />
-      <circle cx="15" cy="23" r="1" />
-      <path d="M20 19c1 3 1 7 0 10" />
+      <path d="M8 30c0-9 7-15 16-15s16 6 16 15c0 4-3 6-6 6H14c-3 0-6-2-6-6z" />
+      <path d="M17 21l3 5M23 19l3 5M29 21l3 5" />
     </>
   ),
   dessert: (
@@ -114,7 +156,24 @@ const ICONS = {
       <path d="M24 24v13M17 40h14" />
     </>
   ),
-  spirits: (
+  champagne: (
+    <>
+      <path d="M19 5h10l-1 16c0 3-2 5-4 5s-4-2-4-5z" />
+      <path d="M19.4 12h9.2" />
+      <path d="M24 26v12M18 40h12" />
+      <circle cx="23" cy="17" r="0.6" />
+      <circle cx="25.5" cy="20" r="0.6" />
+      <path d="M33 8l3-2M34 13h4M33 18l3 2" />
+    </>
+  ),
+  rakia: (
+    <>
+      <path d="M16 12h16l-2.5 26h-11z" />
+      <path d="M17 22h14" />
+      <path d="M14 42h20" />
+    </>
+  ),
+  whisky: (
     <>
       <path d="M12 16h24l-2 22H14z" />
       <path d="M13 25h22" />
@@ -130,19 +189,6 @@ const ICONS = {
       <circle cx="30" cy="9" r="3" />
     </>
   ),
-  bread: (
-    <>
-      <path d="M8 30c0-9 7-15 16-15s16 6 16 15c0 4-3 6-6 6H14c-3 0-6-2-6-6z" />
-      <path d="M17 21l3 5M23 19l3 5M29 21l3 5" />
-    </>
-  ),
-  breakfast: (
-    <>
-      <circle cx="21" cy="26" r="13" />
-      <circle cx="21" cy="26" r="5" />
-      <path d="M34 26h9" />
-    </>
-  ),
   cloche: (
     <>
       <path d="M8 33h32" />
@@ -153,44 +199,8 @@ const ICONS = {
   ),
 };
 
-// Order matters: more specific matches first.
-const RULES = [
-  ["coffee", ["кафе", "coffee", "чай", "tea", "топли", "hot drink", "espresso"]],
-  ["beer", ["бира", "beer", "сайдер", "cider"]],
-  ["wine", ["вино", "wine", "шампан", "champagne", "prosecco"]],
-  ["cocktail", ["коктейл", "cocktail", "джин", "gin", "мартини"]],
-  [
-    "spirits",
-    ["ракия", "rakia", "узо", "ouzo", "анис", "анас", "водка", "vodka", "уиски", "whisk",
-     "ликьор", "liqueur", "дижест", "digest", "ром", "rum", "текила", "tequila", "коняк",
-     "cognac", "бренди", "brandy", "алкохол", "alcohol", "spirit"],
-  ],
-  ["soft", ["безалкохол", "soft", "сок", "juice", "вода", "water", "лимонад", "lemonade"]],
-  ["drinks", ["напит", "drink", "бар", "bar"]],
-  ["dessert", ["десерт", "dessert", "сладк", "sweet", "торт", "cake", "сладолед", "ice cream"]],
-  ["side", ["гарнит", "side", "картоф", "fries"]],
-  ["soup", ["супа", "супи", "soup", "чорба"]],
-  ["salad", ["салат", "salad"]],
-  ["pasta", ["паста", "pasta", "спагет", "spaghetti", "ризот", "risotto"]],
-  ["pizza", ["пиц", "pizza"]],
-  ["burger", ["бургер", "burger", "сандвич", "sandwich", "дюнер"]],
-  ["fish", ["риба", "fish", "морск", "seafood", "sea food"]],
-  ["breakfast", ["закуск", "breakfast", "brunch", "яйц"]],
-  ["bread", ["хляб", "bread", "тестен", "bakery", "питк"]],
-  ["starter", ["предяст", "starter", "antipast", "антипаст", "мезе", "meze", "appetizer", "студен"]],
-  ["main", ["основн", "main", "скара", "grill", "месо", "meat", "стек", "steak", "ястия"]],
-];
-
-export function iconKeyFor(label) {
-  const name = (label || "").toLowerCase();
-  for (const [key, words] of RULES) {
-    if (words.some((w) => name.includes(w))) return key;
-  }
-  return "cloche";
-}
-
-export default function CategoryIcon({ label, size = 34 }) {
-  const key = iconKeyFor(label);
+export default function CategoryIcon({ iconKey, size = 34 }) {
+  const shape = ICONS[iconKey] || ICONS[DEFAULT_ICON];
   return (
     <svg
       viewBox="0 0 48 48"
@@ -203,7 +213,7 @@ export default function CategoryIcon({ label, size = 34 }) {
       strokeLinejoin="round"
       aria-hidden="true"
     >
-      {ICONS[key]}
+      {shape}
     </svg>
   );
 }

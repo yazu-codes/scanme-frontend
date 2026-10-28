@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import "./noir-theme.css";
 
 import useBodyBackgroundSync from "../shared/hooks/useBodyBackgroundSync";
@@ -53,16 +53,17 @@ export default function NoirTheme({ urlname, status, owner, config, categories, 
 
   // In a translated language, also load the original-language menu so
   // every dish can show its original name for the staff (see hook).
-  const originalItems = useOriginalMenu(urlname, locale, status === "ready");
+  const originalMenu = useOriginalMenu(urlname, locale, status === "ready");
 
   // itemsByLabel replaces core's itemsByCategory from here on: same
   // shape, but keyed by the category tree's labels (loose matching), with
   // the translated-response fix applied and original_name /
   // original_description attached. originalLabelOf maps a translated
   // category label to its original-language name.
-  const { nodes, itemsByLabel, originalLabelOf } = useMemo(
-    () => buildCategoryTree(config.category_order, categories, itemsByCategory, locale, originalItems),
-    [config.category_order, categories, itemsByCategory, locale, originalItems]
+  // iconKeyOf picks each category's icon from its ORIGINAL title.
+  const { nodes, itemsByLabel, originalLabelOf, iconKeyOf } = useMemo(
+    () => buildCategoryTree(config.category_order, categories, itemsByCategory, locale, originalMenu),
+    [config.category_order, categories, itemsByCategory, locale, originalMenu]
   );
 
   // Display-ready items by pairing key, so a dish opened from the YummGPT
@@ -84,6 +85,14 @@ export default function NoirTheme({ urlname, status, owner, config, categories, 
   const cssVars = useThemeVars({ config, resolvedFont });
   useBodyBackgroundSync(cssVars["--nr-bg"]);
   usePanelScrollLock(modalOpen || drawerOpen);
+
+  // The floating widgets mount once the opening splash has finished, so
+  // their 2-second helper bubbles play while the guest can actually see
+  // them instead of behind the splash.
+  const [booted, setBooted] = useState(false);
+  useEffect(() => {
+    if (splash === "hidden") setBooted(true);
+  }, [splash]);
 
   const { y, dir } = useScrollState(rootRef);
   const onCategory = view != null;
@@ -150,6 +159,7 @@ export default function NoirTheme({ urlname, status, owner, config, categories, 
                 index={view}
                 itemsByCategory={itemsByLabel}
                 originalLabelOf={originalLabelOf}
+                iconKeyOf={iconKeyOf}
                 strings={strings}
                 onStripStuck={setStripStuck}
                 locale={locale}
@@ -163,6 +173,7 @@ export default function NoirTheme({ urlname, status, owner, config, categories, 
                 nodes={nodes}
                 itemsByCategory={itemsByLabel}
                 originalLabelOf={originalLabelOf}
+                iconKeyOf={iconKeyOf}
                 placeBackgroundUrl={owner.menu_owner_place_background_url}
                 strings={strings}
                 onOpen={handleOpenCategory}
@@ -172,9 +183,13 @@ export default function NoirTheme({ urlname, status, owner, config, categories, 
 
           <Footer owner={owner} nodes={nodes} strings={strings} onOpenCategory={handleOpenCategory} />
 
-          <MenuChatWidget restaurantName={urlname} accentColor={accent} itemSelect={handleSelectItem} />
-          <QRCodeWidget urlname={urlname} accentColor={accent} />
-          <LocaleWidget accentColor={accent} />
+          {booted ? (
+            <>
+              <MenuChatWidget restaurantName={urlname} accentColor={accent} itemSelect={handleSelectItem} />
+              <QRCodeWidget urlname={urlname} accentColor={accent} />
+              <LocaleWidget accentColor={accent} />
+            </>
+          ) : null}
 
           <ScrollToTopButton visible={y > 600} targetRef={rootRef} label={strings.backToTop} />
 

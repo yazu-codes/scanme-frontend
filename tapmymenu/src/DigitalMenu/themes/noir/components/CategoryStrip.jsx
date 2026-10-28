@@ -11,7 +11,7 @@ import LangSwitch from "./LangSwitch";
 // than position: sticky: the shared useBodyBackgroundSync hook puts
 // overflow-x: hidden on <html> and <body>, which turns <body> into a
 // scroll container and silently breaks sticky positioning.
-export default function CategoryStrip({ nodes, activeIndex, onSelect, onStuckChange, locale, track }) {
+export default function CategoryStrip({ nodes, iconKeyOf = {}, activeIndex, onSelect, onStuckChange, locale, track }) {
   const holderRef = useRef(null);
   const navRef = useRef(null);
   const scrollerRef = useRef(null);
@@ -92,7 +92,7 @@ export default function CategoryStrip({ nodes, activeIndex, onSelect, onStuckCha
               aria-current={i === activeIndex ? "page" : undefined}
               onClick={() => onSelect(i)}
             >
-              <CategoryIcon label={node.label} />
+              <CategoryIcon iconKey={iconKeyOf[node.label]} />
               <span className="nr-tile-label">{node.label}</span>
             </button>
           ))}

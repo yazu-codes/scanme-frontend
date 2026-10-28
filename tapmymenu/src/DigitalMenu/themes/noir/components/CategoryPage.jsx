@@ -68,6 +68,7 @@ export default function CategoryPage({
   index,
   itemsByCategory,
   originalLabelOf = {},
+  iconKeyOf = {},
   strings,
   onStripStuck,
   locale,
@@ -85,6 +86,7 @@ export default function CategoryPage({
 
       <CategoryStrip
         nodes={nodes}
+        iconKeyOf={iconKeyOf}
         activeIndex={index}
         onSelect={onSelectCategory}
         onStuckChange={onStripStuck}

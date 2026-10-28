@@ -439,13 +439,15 @@
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  /* whole photo, letterboxed inside the same 4:3 frame (no cropping,
+     no extra height) */
+  object-fit: contain;
   transform: scale(1.001);
   transition: transform 1.4s var(--nr-ease);
 }
 
 .nr-cover:hover .nr-cover-image {
-  transform: scale(1.05);
+  transform: scale(1.03);
 }
 
 .nr-cover-placeholder {
@@ -716,12 +718,14 @@
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  /* whole photo, letterboxed inside the same 4:3 frame (no cropping,
+     no extra height) */
+  object-fit: contain;
   transition: transform 1.4s var(--nr-ease);
 }
 
 .nr-dish:hover .nr-dish-image {
-  transform: scale(1.04);
+  transform: scale(1.03);
 }
 
 .nr-dish-body {
@@ -969,7 +973,9 @@
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  /* whole photo, letterboxed inside the same 4:3 frame (no cropping,
+     no extra height) */
+  object-fit: contain;
 }
 
 .nr-modal-spacer {

@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useMemo } from "react";
+import useTimedHint from "./hooks/useTimedHint";
 import { QrCode, X } from "lucide-react";
 import QRCodeCard from "./QRCodeCard";
 
@@ -304,6 +305,11 @@ const scopedCss = `
 }
 .menuchat-badge-icon { animation: menuchat-twinkle 2.2s ease-in-out infinite; }
 .menuchat-label { animation: menuchat-pop-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both; }
+.menuchat-label-leaving { animation: menuchat-hint-out 0.35s ease forwards; }
+@keyframes menuchat-hint-out {
+  from { opacity: 1; transform: translateX(0) scale(1); }
+  to { opacity: 0; transform: translateX(6px) scale(0.92); }
+}
 .menuchat-close:active { background: rgba(255,255,255,0.25); }
 .menuchat-send:disabled { opacity: 0.4; cursor: default; }
 .menuchat-dot { animation: menuchat-bounce 1.2s ease-in-out infinite; }
@@ -326,6 +332,8 @@ export default function QRCodeWidget({
   itemSelect
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  // Helper bubble next to the button: visible for 2s, then fades away.
+  const hintPhase = useTimedHint(2000);
   const scrollRef = useRef(null);
   const inputRef = useRef(null);
   const overlayRef = useRef(null);
@@ -396,12 +404,14 @@ export default function QRCodeWidget({
 
       {!isOpen && (
         <div style={styles.triggerWrap}>
-          <div
-            className="menuchat-label"
-            style={{ ...styles.triggerLabel, color: palette.accentDark }}
-          >
-            Share menu via QR!
-          </div>
+          {hintPhase !== "gone" && (
+            <div
+              className={"menuchat-label" + (hintPhase === "leaving" ? " menuchat-label-leaving" : "")}
+              style={{ ...styles.triggerLabel, color: palette.accentDark }}
+            >
+              Share menu via QR!
+            </div>
+          )}
 
           <button
             onClick={() => setIsOpen(true)}
