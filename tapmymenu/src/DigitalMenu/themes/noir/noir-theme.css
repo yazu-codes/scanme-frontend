@@ -292,14 +292,14 @@
   animation: nr-page-in 0.9s var(--nr-ease) backwards;
 }
 
+/* opacity only: a transform here would offset section landings and
+   make the page the containing block of the pinned strip */
 @keyframes nr-page-in {
   from {
     opacity: 0;
-    transform: translateY(14px);
   }
   to {
     opacity: 1;
-    transform: none;
   }
 }
 
@@ -492,6 +492,33 @@
   color: var(--nr-muted);
 }
 
+/* Sub-categories on a cover card: tap one to land on its section */
+.nr-cover-subs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  max-width: 420px;
+  margin: 20px auto 24px;
+}
+
+.nr-cover-sub {
+  padding: 7px 13px;
+  border: 1px solid var(--nr-line-strong);
+  font-size: 0.66em;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: var(--nr-text);
+  opacity: 0.85;
+  transition: color 0.25s ease, border-color 0.25s ease, opacity 0.25s ease;
+}
+
+.nr-cover-sub:hover {
+  color: var(--nr-gold-bright);
+  border-color: var(--nr-gold);
+  opacity: 1;
+}
+
 .nr-cover-title + .nr-ornament + .nr-btn {
   margin-top: 22px;
 }
@@ -622,6 +649,56 @@
   border-radius: 4px;
   background: rgba(255, 255, 255, 0.16);
   transition: left 0.15s linear;
+}
+
+/* Second level: sub-category chips under the icon strip */
+.nr-subnav {
+  display: flex;
+  gap: 8px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2px var(--nr-gutter) 12px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  border-top: 1px solid var(--nr-line);
+  padding-top: 12px;
+}
+
+.nr-subnav::-webkit-scrollbar {
+  display: none;
+}
+
+.nr-subchip {
+  flex: 0 0 auto;
+  padding: 7px 14px;
+  border: 1px solid var(--nr-line-strong);
+  font-size: 0.66em;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--nr-muted);
+  transition: color 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+}
+
+.nr-subchip:hover {
+  color: var(--nr-text);
+  border-color: var(--nr-gold);
+}
+
+.nr-subchip-active {
+  color: var(--nr-gold-bright);
+  border-color: var(--nr-gold);
+  background: rgba(201, 169, 110, 0.08);
+}
+
+@media (min-width: 900px) {
+  .nr-subnav {
+    justify-content: safe center;
+  }
 }
 
 /* ---------- Category content ---------- */

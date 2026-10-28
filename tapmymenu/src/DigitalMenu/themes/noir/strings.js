@@ -25,6 +25,7 @@ const STRINGS = {
     showStaff: "Покажете на персонала",
     allCategories: "Всички категории",
     viewAll: "Виж всички",
+    all: "Всички",
   },
   en: {
     explore: "Explore our menu",
@@ -48,6 +49,7 @@ const STRINGS = {
     showStaff: "Show this to our staff",
     allCategories: "All categories",
     viewAll: "View all",
+    all: "All",
   },
 };
 

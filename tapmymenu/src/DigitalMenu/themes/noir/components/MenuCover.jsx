@@ -20,8 +20,10 @@ export default function MenuCover({ nodes, itemsByCategory, originalLabelOf = {}
             image={firstImage(node, itemsByCategory) || placeBackgroundUrl || null}
             meta={strings.items(countItems(node, itemsByCategory))}
             summary={coverSummary(node, itemsByCategory)}
+            subs={node.children.map((c) => c.label)}
             strings={strings}
             onOpen={() => onOpen(index)}
+            onOpenSub={(sub) => onOpen(index, sub)}
           />
         ))}
       </div>

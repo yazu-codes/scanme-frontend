@@ -8,10 +8,12 @@ menu with `"theme": "noir"` in `menu_configuration` (registered in
 
 1. **Splash.** The owner logo reveals itself with a sweep and blur, then the name settles in with wide letter-spacing.
 2. **Cover page.** "Explore our menu / Menu", then one photo card per top-level category from `category_order`. Each card shows the item count, the title, the diamonds, a short teaser and a **VIEW MENU** button. Cards fade up as they scroll in.
+   - A category with sub-categories lists them on its card as chips in place of the teaser. Each chip opens the category straight at that section.
 3. **Category page.** VIEW MENU replays the splash, then shows the category. A horizontal strip of line icons lists every category. The active one sits on a champagne tile and is kept centred, with a scroll-position thumb under the strip. Once you scroll, the strip pins to the top, the header steps aside and the strip gets the ☰ button, which opens the category tree.
    - Sections with photos use photo cards: name, two-line description, portion size, price.
    - Sections without any photos (typically drinks) use the text-only list layout.
    - Child categories become sub-headings.
+   - **Second-level navigation:** if the category has sub-categories (e.g. "Ястия" → Салати, Супи, Десерти…), a row of chips sits under the icon strip and pins with it: "All" plus one chip per sub-category. Tapping a chip glides to that section, just below the pinned strip. As you scroll, the chip for the section you're reading lights up and is kept in view.
    - **BACK TO MAIN MENU** ends the page.
 4. **Dish detail.** A centred card over a blurred page shows the category, name, diamonds, full description, weight, allergens and price.
 5. **Hamburger.** A full-screen menu shows the whole category tree, then contacts (phone, `working_schedule`, `wifi`) and `review_links`.

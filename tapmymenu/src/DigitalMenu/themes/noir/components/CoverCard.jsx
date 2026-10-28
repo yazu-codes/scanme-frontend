@@ -4,8 +4,10 @@ import Ornament from "./Ornament";
 import CategoryIcon from "./CategoryIcon";
 
 // One "menu book" on the cover page: photo, small meta line, serif
-// title, diamonds, teaser text and the outlined VIEW MENU button.
-export default function CoverCard({ label, originalLabel, iconKey, image, meta, summary, strings, onOpen }) {
+// title, diamonds, teaser text and the outlined VIEW MENU button. A
+// category with sub-categories lists them as chips instead of the teaser,
+// each one jumping straight to its section.
+export default function CoverCard({ label, originalLabel, iconKey, image, meta, summary, subs = [], strings, onOpen, onOpenSub }) {
   const [ref, shown] = useReveal();
 
   return (
@@ -29,7 +31,19 @@ export default function CoverCard({ label, originalLabel, iconKey, image, meta, 
           </p>
         ) : null}
         <Ornament />
-        {summary ? <p className="nr-cover-summary">{summary}</p> : null}
+        {subs.length > 0 ? (
+          <ul className="nr-cover-subs">
+            {subs.map((sub) => (
+              <li key={sub}>
+                <button type="button" className="nr-cover-sub" onClick={() => onOpenSub(sub)}>
+                  {sub}
+                </button>
+              </li>
+            ))}
+          </ul>
+        ) : summary ? (
+          <p className="nr-cover-summary">{summary}</p>
+        ) : null}
         <button type="button" className="nr-btn" onClick={onOpen}>
           {strings.viewMenu}
         </button>

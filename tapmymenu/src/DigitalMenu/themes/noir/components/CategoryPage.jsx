@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Ornament, { PageTitle } from "./Ornament";
 import CategoryStrip from "./CategoryStrip";
 import DishCard, { DishRow } from "./DishCard";
@@ -34,6 +34,10 @@ function Dishes({ items, onSelectItem }) {
       ))}
     </div>
   );
+}
+
+function containsLabel(node, label) {
+  return node.label === label || node.children.some((c) => containsLabel(c, label));
 }
 
 function SubSection({ node, itemsByCategory, originalLabelOf, onSelectItem, depth }) {
@@ -79,14 +83,77 @@ export default function CategoryPage({
 }) {
   const pageRef = useRef(null);
   const node = nodes[index];
+  const subNodes = node ? node.children : [];
 
-  // Opened from a sub-category in the navigation tree: land on that
-  // section (this runs while the page-change splash still covers it).
+  // Which direct sub-category is being read: the last one whose heading
+  // has scrolled up to just below the pinned strip. null = above the
+  // first one ("All").
+  const [activeSub, setActiveSub] = useState(null);
+  const lockUntil = useRef(0);
+
+  const findSection = (label) =>
+    pageRef.current && pageRef.current.querySelector(`[data-sub="${CSS.escape(label)}"]`);
+
+  useEffect(() => {
+    if (subNodes.length === 0) return undefined;
+    let frame = null;
+    function check() {
+      frame = null;
+      if (!pageRef.current || Date.now() < lockUntil.current) return;
+      const strip = pageRef.current.querySelector(".nr-strip");
+      const line = (strip ? strip.getBoundingClientRect().bottom : 0) + 48;
+      let current = null;
+      for (const sub of subNodes) {
+        const el = findSection(sub.label);
+        if (el && el.getBoundingClientRect().top <= line) current = sub.label;
+      }
+      setActiveSub((prev) => (prev === current ? prev : current));
+    }
+    function schedule() {
+      if (frame == null) frame = requestAnimationFrame(check);
+    }
+    document.addEventListener("scroll", schedule, true);
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    schedule();
+    return () => {
+      document.removeEventListener("scroll", schedule, true);
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+      if (frame != null) cancelAnimationFrame(frame);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [subNodes]);
+
+  // Opened from a sub-category (cover chip or navigation tree): land on
+  // that section while the page-change splash still covers it, and light
+  // up its chip (or the chip of the sub-category that contains it).
   useLayoutEffect(() => {
     if (!focusLabel || !pageRef.current) return;
-    const el = pageRef.current.querySelector(`[data-sub="${CSS.escape(focusLabel)}"]`);
-    if (el) el.scrollIntoView({ block: "start" });
+    const el = findSection(focusLabel);
+    if (!el) return;
+    el.scrollIntoView({ block: "start" });
+    const owner = subNodes.find((sub) => containsLabel(sub, focusLabel));
+    if (owner) {
+      setActiveSub(owner.label);
+      lockUntil.current = Date.now() + 600;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [focusLabel]);
+
+  // Chip tapped: glide to that section (or the top of the category) and
+  // hold the highlight on it while the smooth scroll passes the others.
+  function handleSelectSub(label) {
+    const target =
+      label == null
+        ? pageRef.current && pageRef.current.querySelector(".nr-category")
+        : findSection(label);
+    if (!target) return;
+    setActiveSub(label);
+    lockUntil.current = Date.now() + 900;
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
 
   if (!node) return null;
 
@@ -102,6 +169,10 @@ export default function CategoryPage({
         onStuckChange={onStripStuck}
         onMenu={onMenu}
         menuLabel={strings.openMenu}
+        subNodes={subNodes}
+        activeSub={activeSub}
+        onSelectSub={handleSelectSub}
+        allLabel={strings.all}
       />
 
       <section className="nr-category">

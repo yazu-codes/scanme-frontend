@@ -6,18 +6,37 @@ import { BurgerIcon } from "./Header";
 // sits on a filled champagne tile and is kept centred; a slim thumb
 // underneath tracks the strip's horizontal scroll position. Once pinned
 // (the header has slid away) it carries the hamburger button, so the
-// full category tree stays one tap away. It's sticky,
-// and once the header has slid away it carries the BG / EN switch too.
+// full category tree stays one tap away.
+//
+// When the current category has sub-categories, a second row of chips
+// sits underneath (and pins with it): "All" plus one chip per
+// sub-category. Tapping one glides to that section; the chip for the
+// section being read is highlighted and kept in view (CategoryPage
+// drives activeSub from the scroll position).
 //
 // Pinning uses position: fixed + a placeholder of the same height rather
 // than position: sticky: the shared useBodyBackgroundSync hook puts
 // overflow-x: hidden on <html> and <body>, which turns <body> into a
 // scroll container and silently breaks sticky positioning.
-export default function CategoryStrip({ nodes, iconKeyOf = {}, activeIndex, onSelect, onStuckChange, onMenu, menuLabel }) {
+export default function CategoryStrip({
+  nodes,
+  iconKeyOf = {},
+  activeIndex,
+  onSelect,
+  onStuckChange,
+  onMenu,
+  menuLabel,
+  subNodes = [],
+  activeSub = null,
+  onSelectSub,
+  allLabel,
+}) {
   const holderRef = useRef(null);
   const navRef = useRef(null);
   const scrollerRef = useRef(null);
   const tileRefs = useRef([]);
+  const subScrollerRef = useRef(null);
+  const chipRefs = useRef({});
   const [thumb, setThumb] = useState({ width: 100, left: 0 });
   const [stuck, setStuck] = useState(false);
   const [height, setHeight] = useState(null);
@@ -49,7 +68,7 @@ export default function CategoryStrip({ nodes, iconKeyOf = {}, activeIndex, onSe
       }
       schedule();
     }
-    measureHeight();
+    schedule();
     document.addEventListener("scroll", schedule, true);
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", measureHeight);
@@ -61,6 +80,17 @@ export default function CategoryStrip({ nodes, iconKeyOf = {}, activeIndex, onSe
       if (onStuckChange) onStuckChange(false);
     };
   }, [onStuckChange]);
+
+  // Measure before the parent's layout effects run (children's layout
+  // effects fire first), so a sub-category landing on mount already knows
+  // how tall the pinned strip will be.
+  useLayoutEffect(() => {
+    if (!navRef.current) return;
+    const h = navRef.current.offsetHeight;
+    setHeight(h);
+    const page = holderRef.current && holderRef.current.parentElement;
+    if (page) page.style.setProperty("--nr-strip-h", `${h}px`);
+  }, []);
 
   function measure() {
     const el = scrollerRef.current;
@@ -85,6 +115,16 @@ export default function CategoryStrip({ nodes, iconKeyOf = {}, activeIndex, onSe
     window.addEventListener("resize", measure);
     return () => window.removeEventListener("resize", measure);
   }, []);
+
+  // Keep the highlighted sub-category chip centred in its row.
+  useEffect(() => {
+    const row = subScrollerRef.current;
+    const chip = chipRefs.current[activeSub == null ? "" : activeSub];
+    if (!row || !chip) return;
+    const left = chip.offsetLeft - (row.clientWidth - chip.offsetWidth) / 2;
+    if (typeof row.scrollTo === "function") row.scrollTo({ left, behavior: "smooth" });
+    else row.scrollLeft = left;
+  }, [activeSub]);
 
   return (
     <div className="nr-strip-holder" ref={holderRef} style={height ? { height } : undefined}>
@@ -123,6 +163,34 @@ export default function CategoryStrip({ nodes, iconKeyOf = {}, activeIndex, onSe
           <span className="nr-strip-thumb" style={{ width: `${thumb.width}%`, left: `${thumb.left}%` }} />
         ) : null}
       </div>
+
+      {subNodes.length > 0 ? (
+        <div className="nr-subnav" ref={subScrollerRef} role="tablist" aria-label="Sub-categories">
+          <button
+            type="button"
+            ref={(el) => (chipRefs.current[""] = el)}
+            className={"nr-subchip" + (activeSub == null ? " nr-subchip-active" : "")}
+            aria-selected={activeSub == null}
+            role="tab"
+            onClick={() => onSelectSub(null)}
+          >
+            {allLabel}
+          </button>
+          {subNodes.map((sub) => (
+            <button
+              key={sub.label}
+              type="button"
+              ref={(el) => (chipRefs.current[sub.label] = el)}
+              className={"nr-subchip" + (activeSub === sub.label ? " nr-subchip-active" : "")}
+              aria-selected={activeSub === sub.label}
+              role="tab"
+              onClick={() => onSelectSub(sub.label)}
+            >
+              {sub.label}
+            </button>
+          ))}
+        </div>
+      ) : null}
     </nav>
     </div>
   );
