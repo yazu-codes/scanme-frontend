@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import Ornament, { PageTitle } from "./Ornament";
 import CategoryStrip from "./CategoryStrip";
 import DishCard, { DishRow } from "./DishCard";
@@ -83,7 +83,7 @@ export default function CategoryPage({
 }) {
   const pageRef = useRef(null);
   const node = nodes[index];
-  const subNodes = node ? node.children : [];
+  const subNodes = useMemo(() => (node ? node.children : []), [node]);
 
   // Which direct sub-category is being read: the last one whose heading
   // has scrolled up to just below the pinned strip. null = above the
