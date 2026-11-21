@@ -80,6 +80,10 @@ Changes from Noir:
 - `formatEuro` uses core's `formatPrice` + " €", as the guide asks (for example `14 €`, `8.50 €`).
 - `nodePathMap()` added for the hash paths.
 
+## Fixed after the first delivery
+
+- **Closed drawer could swallow taps.** An expanded category branch kept `visibility: visible`, which overrides the closed drawer's `visibility: hidden`. The branch stayed invisible but clickable over the page. It is now `visibility: inherit` (`lantern-theme.css`, `.ln-tree-panel-open > .ln-tree-sub`).
+
 ## Fonts
 
 - **Rubik 900** for the restaurant name, and **Oswald 500–700** for tabs, headings and labels. Both support Cyrillic and load from Google Fonts in `lantern-theme.css`.

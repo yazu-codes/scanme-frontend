@@ -1,0 +1,384 @@
+/* =====================================================================
+   Trattoria theme. Classes tr- (own) and mk- (shared menuKit pieces,
+   restyled here under .tr-root). Colours only from variables set in
+   palette.js from the OWNER colours. Sizes in em. Display fonts with
+   Cyrillic: Playfair Display (headings), Lora (descriptions, notes).
+   ===================================================================== */
+@import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&display=swap");
+
+.mk-root.tr-root {
+  background-color: var(--tr-bg);
+  background-image: radial-gradient(var(--tr-grain) 1px, transparent 1.3px);
+  background-size: 0.9em 0.9em;
+  color: var(--tr-ink);
+}
+@media (min-width: 760px) {
+  .mk-root.tr-root {
+    padding: 2.5em 1.5em 0;
+  }
+}
+
+/* The menu card: owner paper, a soft vignette toward the edges. */
+.tr-card {
+  max-width: 760px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: radial-gradient(ellipse at 50% 35%, var(--tr-card) 55%, var(--tr-vignette) 100%);
+}
+@media (min-width: 760px) {
+  .tr-card {
+    min-height: calc(100vh - 2.5em);
+    box-shadow: 0 0.4em 2.5em var(--mk-shadow);
+  }
+}
+
+/* --- masthead ------------------------------------------------------------ */
+.tr-header {
+  padding: 2.5em 1.5em 1.75em;
+  text-align: center;
+}
+.tr-logo {
+  width: 4.5em;
+  height: 4.5em;
+  margin: 0 auto 0.9em;
+  object-fit: contain;
+}
+.tr-kicker {
+  font-family: var(--tr-text);
+  font-weight: 600;
+  font-size: 0.72em;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--mk-muted);
+}
+.tr-name {
+  margin-top: 0.3em;
+  font-family: var(--mk-display);
+  font-weight: 800;
+  font-size: clamp(2.2em, 5vw + 1em, 3.6em);
+  line-height: 1.05;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+.tr-tagline {
+  margin-top: 0.45em;
+  font-family: var(--tr-text);
+  font-style: italic;
+  font-size: 1em;
+  color: var(--mk-muted);
+  text-wrap: balance;
+}
+
+/* --- pinned bar (shared, restyled) --------------------------------------- */
+.tr-root .mk-pin-bar {
+  background: var(--tr-card);
+  border-top: 1px solid var(--tr-rule);
+  border-bottom: 1px solid var(--tr-rule);
+}
+/* Keep the border (transparent) so the bar's height, and with it every
+   landing position, doesn't change when it pins. */
+.tr-root .mk-pin-stuck {
+  border-top-color: transparent;
+}
+.tr-root .mk-pin-stuck .mk-pin-inner {
+  max-width: 760px;
+}
+.tr-root .mk-tab {
+  font-weight: 700;
+  font-size: 1.1em;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.tr-root .mk-tab-active::after {
+  height: 1px;
+  bottom: 0.25em;
+  box-shadow: 0 3px 0 currentColor;
+}
+.tr-root .mk-burger {
+  border-left: 1px solid var(--tr-rule);
+}
+.tr-root .mk-chip {
+  font-family: var(--tr-text);
+  font-style: italic;
+  font-weight: 400;
+  border-width: 1px;
+}
+.tr-root .mk-chip-active {
+  background: var(--tr-board);
+  border-color: var(--tr-board);
+  color: var(--tr-on-board);
+}
+.tr-root .mk-chips {
+  border-top: 1px solid var(--mk-line);
+}
+.tr-root .mk-chips-note {
+  font-family: var(--tr-text);
+  font-style: italic;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 0.9em;
+}
+
+/* --- sections ------------------------------------------------------------ */
+.tr-board {
+  padding: 0.5em 1.4em 1em;
+}
+@media (min-width: 600px) {
+  .tr-board {
+    padding: 0.75em 2.75em 1.5em;
+  }
+}
+.tr-branch {
+  scroll-margin-top: var(--mk-pin-h, 0px);
+}
+.tr-branch-0 {
+  padding-top: 2.25em;
+}
+.tr-branch-1 {
+  padding-top: 1.4em;
+}
+.tr-branch-2 {
+  padding-top: 1em;
+}
+.tr-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  padding-bottom: 0.4em;
+  margin-bottom: 0.5em;
+}
+.tr-head-0 {
+  border-bottom: 3px double var(--tr-rule);
+}
+.tr-head-1 {
+  border-bottom: 1px solid var(--tr-rule);
+}
+.tr-head-2 {
+  border-bottom: 1px dotted var(--tr-rule);
+}
+.tr-seal {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2.4em;
+  height: 2.4em;
+  border: 1.5px solid var(--tr-ink);
+  border-radius: 50%;
+}
+.tr-head-1 .tr-seal {
+  width: 2em;
+  height: 2em;
+  border-width: 1px;
+}
+.tr-seal-big {
+  width: 5em;
+  height: 5em;
+}
+.tr-title {
+  min-width: 0;
+  font-family: var(--mk-display);
+  font-weight: 800;
+  line-height: 1.1;
+  overflow-wrap: break-word;
+}
+.tr-head-0 .tr-title {
+  font-size: 1.75em;
+}
+.tr-head-1 .tr-title {
+  font-size: 1.3em;
+  font-weight: 700;
+}
+.tr-head-2 .tr-title {
+  font-size: 1.05em;
+  font-weight: 700;
+  font-style: italic;
+}
+.tr-note {
+  margin-left: auto;
+  padding-left: 0.5em;
+  flex: none;
+  max-width: 45%;
+  font-family: var(--tr-text);
+  font-style: italic;
+  font-size: 0.85em;
+  text-align: right;
+  color: var(--mk-muted);
+}
+
+/* --- dishes -------------------------------------------------------------- */
+.tr-dish {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9em;
+  padding: 0.5em 0;
+  cursor: pointer;
+}
+.tr-dish-body {
+  flex: 1;
+  min-width: 0;
+}
+.tr-dish-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1em;
+}
+.tr-dish-name {
+  min-width: 0;
+  font-family: var(--tr-text);
+  font-weight: 600;
+  font-size: 1em;
+  line-height: 1.3;
+  overflow-wrap: break-word;
+}
+.tr-dish:hover .tr-dish-name {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+.tr-price {
+  flex: none;
+  font-family: var(--tr-text);
+  font-weight: 600;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+.tr-orig {
+  font-size: 0.82em;
+  color: var(--mk-muted);
+}
+.tr-dish-desc {
+  margin-top: 0.1em;
+  font-family: var(--tr-text);
+  font-style: italic;
+  font-size: 0.85em;
+  line-height: 1.4;
+  color: var(--mk-muted);
+}
+.tr-allergens {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2em 0.6em;
+  margin-top: 0.2em;
+  font-family: var(--tr-text);
+  font-size: 0.72em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mk-faint);
+}
+.tr-allergens > span + span::before {
+  content: "· ";
+}
+.tr-thumb {
+  flex: none;
+  position: relative;
+  width: 5.2em;
+  aspect-ratio: 4 / 3;
+  border: 1px solid var(--tr-rule);
+  background: var(--tr-bg);
+}
+.tr-thumb img {
+  position: absolute;
+  inset: 0.2em;
+  width: calc(100% - 0.4em);
+  height: calc(100% - 0.4em);
+  object-fit: contain;
+}
+
+/* --- wooden sign footer -------------------------------------------------- */
+.tr-footer {
+  padding: 2em 1.4em 7em;
+  text-align: center;
+}
+.tr-board-sign {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  padding: 0.85em 3.2em 0.85em 1.4em;
+  border-radius: 0.9em 2.2em 2.2em 0.9em;
+  background: var(--tr-board);
+  color: var(--tr-on-board);
+  box-shadow: 0 0.3em 0 var(--mk-shadow);
+}
+.tr-board-text {
+  font-family: var(--tr-text);
+  font-style: italic;
+  text-align: center;
+}
+.tr-board-hours {
+  font-size: 0.9em;
+  font-weight: 600;
+  white-space: pre-line;
+}
+.tr-board-phone {
+  display: inline-block;
+  margin-top: 0.25em;
+  font-weight: 600;
+  text-decoration: none;
+}
+/* The board's handle hole. */
+.tr-board-handle {
+  position: absolute;
+  right: 1.05em;
+  top: 50%;
+  width: 1.1em;
+  height: 1.1em;
+  margin-top: -0.55em;
+  border-radius: 50%;
+  background: var(--tr-card);
+  box-shadow: inset 0 0.1em 0.2em var(--mk-shadow);
+}
+.tr-wifi {
+  margin-top: 1.2em;
+  font-family: var(--tr-text);
+  font-style: italic;
+  font-size: 0.9em;
+  color: var(--mk-muted);
+}
+.tr-footer-reviews {
+  display: flex;
+  justify-content: center;
+  margin-top: 1em;
+}
+.tr-legal {
+  margin-top: 1.4em;
+  font-size: 0.74em;
+  color: var(--mk-faint);
+}
+
+/* --- shared pieces in trattoria dress ------------------------------------ */
+.tr-root .mk-sheet-name,
+.tr-root .mk-drawer-name,
+.tr-root .mk-tree-top > .mk-tree-row .mk-tree-label {
+  text-transform: none;
+  font-weight: 800;
+}
+.tr-root .mk-sheet,
+.tr-root .mk-sheet-price,
+.tr-root .mk-drawer-top {
+  border-width: 1px;
+}
+.tr-root .mk-sheet-desc,
+.tr-root .mk-staff-desc {
+  font-family: var(--tr-text);
+  font-style: italic;
+}
+.tr-root .mk-kicker,
+.tr-root .mk-staff-label,
+.tr-root .mk-facts dt,
+.tr-root .mk-drawer-heading {
+  font-family: var(--tr-text);
+}
+.tr-root .mk-staff {
+  border-width: 1px;
+  border-style: solid;
+}
+.tr-root .mk-close {
+  border-width: 1px;
+}
+.tr-root .mk-top {
+  background: var(--tr-board);
+  color: var(--tr-on-board);
+  border-color: var(--tr-card);
+}

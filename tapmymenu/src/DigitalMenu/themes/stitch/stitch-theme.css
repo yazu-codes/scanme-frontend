@@ -1,0 +1,412 @@
+/* =====================================================================
+   Stitch theme. Classes st- (own) and mk- (shared menuKit pieces,
+   restyled here under .st-root). Colours only from variables set in
+   palette.js from the OWNER colours (three thread shades of the owner's
+   text colour). Sizes in em. Display font with Cyrillic: Tiny5 (one weight,
+   so display text is never set bold: browsers would fake it).
+   ===================================================================== */
+@import url("https://fonts.googleapis.com/css2?family=Tiny5&display=swap");
+
+/* Aida-cloth weave: a faint grid over the owner background. */
+.mk-root.st-root {
+  background-color: var(--st-bg);
+  background-image: linear-gradient(var(--st-weave) 1px, transparent 1px),
+    linear-gradient(90deg, var(--st-weave) 1px, transparent 1px);
+  background-size: 0.5em 0.5em;
+  color: var(--st-ink);
+}
+.st-thread-1 {
+  color: var(--st-t1);
+}
+.st-thread-2 {
+  color: var(--st-t2);
+}
+.st-thread-3 {
+  color: var(--st-t3);
+}
+
+/* A row of × stitches, masked out of a thread-coloured strip. */
+.st-xrow {
+  height: 0.85em;
+  margin: 0.6em auto;
+  max-width: 1040px;
+  background: linear-gradient(90deg, var(--st-t1) 0 33.3%, var(--st-t2) 33.3% 66.6%, var(--st-t3) 66.6%);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M2 2l6 6M8 2l-6 6' stroke='black' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E")
+    left center / 0.85em 0.85em repeat-x;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M2 2l6 6M8 2l-6 6' stroke='black' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E")
+    left center / 0.85em 0.85em repeat-x;
+}
+.st-xrow-short {
+  max-width: 12em;
+}
+
+/* --- header ------------------------------------------------------------ */
+.st-header {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 1.75em 1.1em 1em;
+  text-align: center;
+}
+.st-sampler {
+  font-family: var(--mk-display);
+  font-weight: 400;
+  font-size: clamp(0.85em, 3.2vw, 1.45em);
+  letter-spacing: 0.08em;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
+}
+.st-logo {
+  width: 4.25em;
+  height: 4.25em;
+  margin: 1em auto 0;
+  object-fit: contain;
+  border-radius: 50%;
+  border: 3px dashed var(--st-t1);
+  padding: 0.25em;
+}
+.st-title {
+  margin-top: 0.35em;
+  font-family: var(--mk-display);
+  font-weight: 400;
+  font-size: clamp(2.3em, 6vw + 1em, 4.6em);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+  text-shadow: 0.06em 0.06em 0 var(--st-hole);
+}
+.st-slogan {
+  margin-top: 0.55em;
+  font-size: 0.8em;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--mk-muted);
+  text-wrap: balance;
+}
+
+/* --- pinned bar (shared, restyled) -------------------------------------- */
+.st-root .mk-pin-bar {
+  background: var(--st-bg);
+  border-top: 3px dashed var(--st-t2);
+  border-bottom: 3px dashed var(--st-t2);
+}
+/* Keep the border (transparent) so the bar's height, and with it every
+   landing position, doesn't change when it pins. */
+.st-root .mk-pin-stuck {
+  border-top-color: transparent;
+}
+.st-root .mk-tab {
+  font-weight: 400;
+  font-size: 1.15em;
+  letter-spacing: 0.02em;
+}
+.st-root .mk-tab-active {
+  color: var(--st-t1);
+}
+.st-root .mk-tab-active::after {
+  height: 0;
+  border-bottom: 3px dashed currentColor;
+  background: none;
+}
+.st-root .mk-burger {
+  border-left: 3px dashed var(--st-t2);
+}
+.st-root .mk-chip {
+  border-style: dashed;
+  border-radius: 0.2em;
+}
+.st-root .mk-chip-active {
+  background: var(--st-t1);
+  border-color: var(--st-t1);
+  color: var(--st-on-t1);
+}
+
+/* --- board ------------------------------------------------------------- */
+.st-board {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 1em 1em;
+}
+.st-category {
+  padding-top: 2.4em;
+  scroll-margin-top: var(--mk-pin-h, 0px);
+}
+.st-cat-head {
+  margin-bottom: 1.2em;
+  text-align: center;
+}
+.st-cat-title {
+  font-family: var(--mk-display);
+  font-weight: 400;
+  font-size: clamp(1.8em, 3vw + 1.1em, 2.5em);
+  line-height: 1.05;
+  text-transform: uppercase;
+  overflow-wrap: break-word;
+}
+.st-count {
+  margin-top: 0.3em;
+  font-family: var(--mk-display);
+  font-size: 0.8em;
+  color: var(--mk-muted);
+}
+.st-frames {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.1em;
+  align-items: start;
+}
+@media (min-width: 760px) {
+  .st-frames {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.4em;
+  }
+  .st-frames-single {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .st-frames-single .st-dishes {
+    columns: 2;
+    column-gap: 2.5em;
+  }
+}
+/* Double stitched frame: dashed border + dashed outline inside it. */
+.st-frame {
+  --st-thread: var(--st-t1);
+  min-width: 0;
+  padding: 1.1em 1.1em 1em;
+  border: 3px dashed var(--st-thread);
+  outline: 2px dashed var(--st-thread);
+  outline-offset: -0.55em;
+  background: var(--mk-glass);
+  scroll-margin-top: var(--mk-pin-h, 0px);
+}
+.st-frame-2 {
+  --st-thread: var(--st-t2);
+}
+.st-frame-3 {
+  --st-thread: var(--st-t3);
+}
+.st-frame-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  margin-bottom: 0.7em;
+  padding: 0 0.2em;
+  color: var(--st-thread);
+}
+.st-frame-icon {
+  flex: none;
+  display: grid;
+}
+.st-frame-titles {
+  min-width: 0;
+}
+.st-frame-title {
+  font-family: var(--mk-display);
+  font-weight: 400;
+  font-size: 1.45em;
+  line-height: 1.1;
+  text-transform: uppercase;
+  overflow-wrap: break-word;
+}
+.st-frame-head .st-orig {
+  color: var(--mk-muted);
+}
+.st-nested {
+  margin-top: 1em;
+  padding: 0 0.2em;
+  scroll-margin-top: var(--mk-pin-h, 0px);
+}
+.st-nested-title {
+  margin-bottom: 0.3em;
+  padding-bottom: 0.2em;
+  border-bottom: 2px dashed var(--st-thread, var(--st-t1));
+  font-family: var(--mk-display);
+  font-weight: 400;
+  font-size: 1.08em;
+  text-transform: uppercase;
+  color: var(--st-thread, var(--st-t1));
+}
+.st-nested .st-nested-title {
+  font-size: 0.95em;
+}
+.st-orig-inline {
+  font-family: var(--mk-body);
+  font-weight: 400;
+  font-size: 0.85em;
+  text-transform: none;
+  color: var(--mk-muted);
+}
+
+/* --- dishes ------------------------------------------------------------- */
+.st-dishes {
+  padding: 0 0.2em;
+}
+.st-dish {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75em;
+  padding: 0.55em 0;
+  cursor: pointer;
+  break-inside: avoid;
+}
+.st-dish-body {
+  flex: 1;
+  min-width: 0;
+}
+.st-dish-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75em;
+}
+.st-dish-name {
+  min-width: 0;
+  font-size: 1em;
+  font-weight: 700;
+  line-height: 1.25;
+  overflow-wrap: break-word;
+}
+.st-dish:hover .st-dish-name {
+  text-decoration: underline dashed;
+  text-underline-offset: 0.2em;
+}
+.st-price {
+  flex: none;
+  font-family: var(--mk-display);
+  font-weight: 400;
+  font-size: 1.08em;
+  white-space: nowrap;
+  color: var(--st-thread, var(--st-t1));
+  font-variant-numeric: tabular-nums;
+}
+.st-orig {
+  font-size: 0.82em;
+  color: var(--mk-muted);
+}
+.st-dish-desc {
+  margin-top: 0.12em;
+  font-size: 0.84em;
+  font-style: italic;
+  line-height: 1.35;
+  color: var(--mk-muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.st-allergens {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25em;
+  margin-top: 0.3em;
+}
+.st-allergens > span {
+  padding: 0 0.45em;
+  border: 1.5px dashed var(--st-thread, var(--st-t1));
+  font-family: var(--mk-display);
+  font-size: 0.68em;
+  color: var(--mk-muted);
+}
+.st-thumb {
+  flex: none;
+  position: relative;
+  width: 4.6em;
+  aspect-ratio: 4 / 3;
+  border: 2px dashed var(--st-thread, var(--st-t1));
+  background: var(--mk-surface);
+}
+.st-thumb img {
+  position: absolute;
+  inset: 0.15em;
+  width: calc(100% - 0.3em);
+  height: calc(100% - 0.3em);
+  object-fit: contain;
+}
+
+/* --- footer ------------------------------------------------------------- */
+.st-footer {
+  max-width: 1040px;
+  margin: 2em auto 0;
+  padding: 0.5em 1em 7em;
+  text-align: center;
+}
+.st-footer-phone {
+  display: inline-block;
+  margin-top: 0.6em;
+  font-family: var(--mk-display);
+  font-weight: 400;
+  font-size: 1.7em;
+  text-decoration: none;
+}
+.st-footer-hours {
+  margin-top: 0.3em;
+  font-family: var(--mk-display);
+  font-size: 1.15em;
+  line-height: 1.3;
+  white-space: pre-line;
+}
+.st-footer-wifi {
+  margin-top: 0.75em;
+  font-size: 0.9em;
+  color: var(--mk-muted);
+}
+.st-footer-reviews {
+  display: flex;
+  justify-content: center;
+  margin: 1em 0 0.5em;
+}
+.st-legal {
+  margin-top: 0.75em;
+  font-size: 0.74em;
+  color: var(--mk-faint);
+}
+
+/* --- shared pieces in stitch dress --------------------------------------- */
+/* Shared pieces set in the display face: Tiny5 has one weight. */
+.st-root .mk-tab,
+.st-root .mk-chips-note,
+.st-root .mk-kicker,
+.st-root .mk-sheet-name,
+.st-root .mk-staff-label,
+.st-root .mk-facts dt,
+.st-root .mk-sheet-price-value,
+.st-root .mk-drawer-name,
+.st-root .mk-drawer-heading,
+.st-root .mk-tree-top > .mk-tree-row .mk-tree-label,
+.st-root .mk-tree-count,
+.st-root .mk-status {
+  font-weight: 400;
+}
+.st-root .mk-sheet,
+.st-root .mk-drawer {
+  background-image: linear-gradient(var(--st-weave) 1px, transparent 1px),
+    linear-gradient(90deg, var(--st-weave) 1px, transparent 1px);
+  background-size: 0.5em 0.5em;
+  background-color: var(--st-bg);
+}
+.st-root .mk-sheet {
+  border-style: dashed;
+  border-width: 3px;
+}
+.st-root .mk-sheet-name,
+.st-root .mk-drawer-name {
+  color: var(--st-t1);
+}
+.st-root .mk-drawer-top,
+.st-root .mk-sheet-price,
+.st-root .mk-close {
+  border-style: dashed;
+}
+.st-root .mk-top {
+  background: var(--st-t1);
+  color: var(--st-on-t1);
+  border-style: dashed;
+  border-color: var(--st-bg);
+}
+.st-status {
+  color: var(--st-t1);
+}

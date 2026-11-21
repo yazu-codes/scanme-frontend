@@ -1,0 +1,477 @@
+/* =====================================================================
+   Flame theme. Classes fl- (own) and mk- (shared menuKit pieces,
+   restyled here under .fl-root). Colours only from variables set in
+   palette.js from the OWNER colours. Sizes in em. Display fonts with
+   Cyrillic: Rubik 900 italic (MENU, banners), Oswald (names, tabs).
+   ===================================================================== */
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Rubik:ital,wght@0,400;0,700;1,800;1,900&display=swap");
+
+/* Fire glow: owner bg, lit toward the owner ink at the top centre and
+   burnt darker at the edges. */
+.mk-root.fl-root {
+  position: relative;
+  isolation: isolate;
+  background-color: var(--fl-bg);
+  background-image: radial-gradient(ellipse 70% 38em at 50% 12em, var(--fl-glow), transparent 70%),
+    radial-gradient(ellipse 120% 100% at 50% 50%, transparent 55%, var(--fl-deep) 100%);
+  color: var(--fl-text);
+}
+/* Embers: scattered sparks that drift up slowly (static when the guest
+   prefers reduced motion). */
+.fl-embers {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: radial-gradient(circle, var(--fl-ember) 0 1.5px, transparent 2.5px),
+    radial-gradient(circle, var(--fl-ember-soft) 0 3px, transparent 5px),
+    radial-gradient(circle, var(--fl-ember) 0 1px, transparent 2px);
+  background-size: 13em 17em, 21em 23em, 9em 11em;
+  background-position: 2em 3em, 9em 14em, 5em 1em;
+  animation: fl-drift 18s linear infinite;
+}
+@keyframes fl-drift {
+  from {
+    background-position: 2em 3em, 9em 14em, 5em 1em;
+  }
+  to {
+    background-position: 3em -14em, 8em -9em, 6em -10em;
+  }
+}
+
+/* --- brush strokes ------------------------------------------------------- */
+.fl-brush {
+  position: relative;
+  display: inline-block;
+  padding: 0.35em 1.1em 0.4em;
+  font-family: var(--fl-heavy);
+  font-style: italic;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: var(--fl-on-accent);
+  isolation: isolate;
+}
+.fl-brush::before {
+  content: "";
+  position: absolute;
+  inset: 0 -0.4em;
+  z-index: -1;
+  background: var(--fl-accent);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M3 18 7 12 4 9l14 1C40 6 70 5 100 7s70-3 92 1l-4 3 8 3-3 4 5 3-6 4 4 4-7 2c-22 5-60 4-92 5S30 35 12 33l-9-1 5-4-6-3 6-3z'/%3E%3C/svg%3E")
+    center / 100% 100% no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M3 18 7 12 4 9l14 1C40 6 70 5 100 7s70-3 92 1l-4 3 8 3-3 4 5 3-6 4 4 4-7 2c-22 5-60 4-92 5S30 35 12 33l-9-1 5-4-6-3 6-3z'/%3E%3C/svg%3E")
+    center / 100% 100% no-repeat;
+}
+.fl-brush-text {
+  position: relative;
+  overflow-wrap: break-word;
+}
+
+/* --- hero ---------------------------------------------------------------- */
+.fl-hero {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 2.25em 1.1em 2em;
+  text-align: center;
+}
+.fl-logo {
+  width: 4.5em;
+  height: 4.5em;
+  margin: 0 auto 0.75em;
+  object-fit: contain;
+  border-radius: 50%;
+  box-shadow: 0 0 1.5em var(--fl-halo);
+}
+.fl-name {
+  font-family: var(--mk-display);
+  font-weight: 700;
+  font-size: clamp(1.4em, 3vw + 0.9em, 2.4em);
+  line-height: 1.05;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+.fl-menu-word {
+  margin-top: -0.04em;
+  font-family: var(--fl-heavy);
+  font-style: italic;
+  font-weight: 900;
+  font-size: clamp(3.6em, 14vw + 1em, 7.5em);
+  line-height: 0.95;
+  text-transform: uppercase;
+  color: var(--fl-accent);
+  text-shadow: 0.04em 0.05em 0 var(--fl-deep), 0 0 0.4em var(--fl-halo);
+  overflow-wrap: break-word;
+}
+.fl-slogan {
+  margin-top: 0.4em;
+  font-size: 0.95em;
+  color: var(--mk-muted);
+  text-wrap: balance;
+}
+.fl-featured {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1em;
+  margin-top: 1.6em;
+}
+.fl-featured-one {
+  grid-template-columns: minmax(0, 22em);
+  justify-content: center;
+}
+.fl-feature {
+  display: grid;
+  justify-items: center;
+  gap: 0;
+  min-width: 0;
+}
+.fl-feature-photo {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: radial-gradient(closest-side, var(--fl-halo), transparent);
+}
+.fl-feature-photo img {
+  position: absolute;
+  inset: 6%;
+  width: 88%;
+  height: 88%;
+  object-fit: contain;
+  filter: drop-shadow(0 0.6em 0.8em var(--mk-shadow));
+  transition: transform 0.3s ease;
+}
+.fl-feature:hover .fl-feature-photo img {
+  transform: scale(1.04);
+}
+.fl-feature-label {
+  margin-top: -0.6em;
+  max-width: 100%;
+  font-size: clamp(1em, 2.5vw + 0.6em, 1.6em);
+  line-height: 1.1;
+}
+
+/* --- pinned bar (shared, restyled) --------------------------------------- */
+.fl-root .mk-pin-bar {
+  background: var(--fl-bg);
+  border-bottom: 2px solid var(--fl-accent);
+}
+.fl-root .mk-tab {
+  font-weight: 700;
+  font-size: 1.2em;
+  letter-spacing: 0.02em;
+}
+.fl-root .mk-tab-active {
+  color: var(--fl-accent);
+}
+.fl-root .mk-tab-active::after {
+  height: 0.2em;
+  transform: skewX(-14deg);
+}
+.fl-root .mk-burger {
+  border-left: 2px solid var(--fl-accent);
+  color: var(--fl-accent);
+}
+.fl-root .mk-chip {
+  font-family: var(--mk-display);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.fl-root .mk-chip-active {
+  background: var(--fl-accent);
+  border-color: var(--fl-accent);
+  color: var(--fl-on-accent);
+}
+
+/* --- board --------------------------------------------------------------- */
+.fl-board {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 1.1em 1em;
+}
+.fl-category {
+  padding-top: 2.75em;
+  scroll-margin-top: var(--mk-pin-h, 0px);
+}
+.fl-cat-head {
+  margin-bottom: 1.4em;
+  text-align: center;
+}
+.fl-cat-title {
+  max-width: 100%;
+  font-size: clamp(1.6em, 3vw + 1em, 2.4em);
+  line-height: 1.05;
+}
+.fl-count {
+  margin-top: 0.5em;
+  font-family: var(--mk-display);
+  font-weight: 500;
+  font-size: 0.75em;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mk-muted);
+}
+.fl-sub {
+  padding-top: 1.6em;
+  scroll-margin-top: var(--mk-pin-h, 0px);
+}
+.fl-sub-title {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0 0.4em;
+  margin-bottom: 0.7em;
+  padding-bottom: 0.25em;
+  border-bottom: 2px solid var(--fl-accent);
+  font-family: var(--fl-heavy);
+  font-style: italic;
+  font-weight: 800;
+  font-size: 1.35em;
+  line-height: 1.1;
+  text-transform: uppercase;
+  color: var(--fl-accent);
+}
+.fl-sub-2 > .fl-sub-title {
+  font-size: 1.1em;
+  border-bottom-style: dashed;
+}
+.fl-orig-inline {
+  font-family: var(--mk-body);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 0.65em;
+  text-transform: none;
+  color: var(--mk-muted);
+}
+.fl-orig {
+  margin-top: 0.1em;
+  font-size: 0.82em;
+  color: var(--mk-muted);
+}
+
+/* --- photo cards ---------------------------------------------------------- */
+.fl-cards {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.1em;
+}
+@media (min-width: 480px) {
+  .fl-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 900px) {
+  .fl-cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+.fl-card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0.6em;
+  background: var(--mk-glass);
+  border: 1px solid var(--mk-line);
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+.fl-card:hover {
+  border-color: var(--fl-accent);
+}
+.fl-card-photo {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  margin: 0.6em 0.6em 0;
+  background: radial-gradient(closest-side, var(--fl-ember-soft), transparent);
+}
+.fl-card-photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0.4em 0.5em var(--mk-shadow));
+}
+.fl-card-body {
+  padding: 0.75em 1em 1em;
+}
+.fl-card-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75em;
+}
+.fl-dish-name {
+  min-width: 0;
+  font-family: var(--mk-display);
+  font-weight: 600;
+  font-size: 1.12em;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  overflow-wrap: break-word;
+}
+.fl-price {
+  flex: none;
+  font-family: var(--fl-heavy);
+  font-style: italic;
+  font-weight: 800;
+  font-size: 1.15em;
+  white-space: nowrap;
+  color: var(--fl-accent);
+  font-variant-numeric: tabular-nums;
+}
+.fl-dish-desc {
+  margin-top: 0.2em;
+  font-size: 0.85em;
+  line-height: 1.35;
+  color: var(--mk-muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.fl-allergens {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25em;
+  margin-top: 0.35em;
+}
+.fl-allergens > span {
+  padding: 0.08em 0.55em;
+  border-radius: 0.2em;
+  background: var(--fl-accent);
+  color: var(--fl-on-accent);
+  font-size: 0.64em;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* --- caps price lines ------------------------------------------------------ */
+.fl-lines {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  column-gap: 3em;
+}
+@media (min-width: 760px) {
+  .fl-lines {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.fl-line {
+  min-width: 0;
+  padding: 0.6em 0;
+  cursor: pointer;
+}
+.fl-line:hover .fl-dish-name {
+  color: var(--fl-accent);
+}
+.fl-line-tail {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35em;
+  margin-top: 0.1em;
+  font-size: 0.86em;
+  color: var(--mk-muted);
+}
+.fl-line-desc {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.fl-line-dots {
+  flex: 1;
+  min-width: 1em;
+  border-bottom: 2px dotted var(--fl-dots);
+  transform: translateY(-0.25em);
+}
+.fl-line .fl-price {
+  font-size: 1.25em;
+}
+
+/* --- footer ---------------------------------------------------------------- */
+.fl-footer {
+  max-width: 980px;
+  margin: 2em auto 0;
+  padding: 2em 1.25em 7em;
+  text-align: center;
+  border-top: 2px solid var(--fl-accent);
+}
+.fl-call {
+  display: inline-grid;
+  gap: 0.1em;
+  padding: 0.6em 1.6em;
+  border-radius: 999px;
+  background: var(--fl-accent);
+  color: var(--fl-on-accent);
+  text-decoration: none;
+  box-shadow: 0 0 1.4em var(--fl-halo);
+}
+.fl-call-label {
+  font-family: var(--mk-display);
+  font-weight: 600;
+  font-size: 0.72em;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.fl-call-number {
+  font-family: var(--fl-heavy);
+  font-style: italic;
+  font-weight: 900;
+  font-size: 1.4em;
+}
+.fl-footer .mk-contacts {
+  display: inline-block;
+  margin-top: 1.2em;
+  text-align: left;
+}
+.fl-footer-reviews {
+  display: flex;
+  justify-content: center;
+  margin-top: 1em;
+}
+.fl-legal {
+  margin-top: 1.4em;
+  font-size: 0.74em;
+  color: var(--mk-faint);
+}
+
+/* --- shared pieces in flame dress ------------------------------------------ */
+.fl-root .mk-sheet-name,
+.fl-root .mk-drawer-name {
+  color: var(--fl-accent);
+}
+.fl-root .mk-sheet-price-value {
+  font-family: var(--fl-heavy);
+  font-style: italic;
+  font-weight: 900;
+  color: var(--fl-accent);
+}
+.fl-root .mk-sheet,
+.fl-root .mk-sheet-price,
+.fl-root .mk-close,
+.fl-root .mk-drawer-top,
+.fl-root .mk-staff {
+  border-color: var(--fl-accent);
+}
+.fl-root .mk-tree-top > .mk-tree-row .mk-tree-label {
+  font-family: var(--fl-heavy);
+  font-style: italic;
+  font-weight: 900;
+}
+.fl-root .mk-top {
+  background: var(--fl-accent);
+  color: var(--fl-on-accent);
+  border-color: var(--fl-bg);
+}
+.fl-status {
+  color: var(--fl-accent);
+}
+@media (prefers-reduced-motion: reduce) {
+  .fl-embers {
+    animation: none;
+  }
+}

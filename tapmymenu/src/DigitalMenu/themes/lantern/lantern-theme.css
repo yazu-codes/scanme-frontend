@@ -948,8 +948,11 @@
 .ln-tree-panel-open {
   grid-template-rows: 1fr;
 }
+/* inherit, NOT visible: an explicit "visible" would override the closed
+   drawer's visibility:hidden, leaving an invisible expanded branch that
+   swallows taps on the page underneath. */
 .ln-tree-panel-open > .ln-tree-sub {
-  visibility: visible;
+  visibility: inherit;
   transition: none;
 }
 .ln-tree-sub {

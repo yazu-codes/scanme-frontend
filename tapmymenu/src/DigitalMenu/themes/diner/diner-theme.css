@@ -1,0 +1,508 @@
+/* =====================================================================
+   Diner theme. Classes dn- (own) and mk- (shared menuKit pieces,
+   restyled here under .dn-root). Colours only from variables set in
+   palette.js from the OWNER colours. Sizes in em, so font_size scales
+   everything. Display fonts with Cyrillic: Oswald, Lobster.
+   ===================================================================== */
+@import url("https://fonts.googleapis.com/css2?family=Lobster&family=Oswald:wght@500;600;700&display=swap");
+
+/* --- page: checkerboard around a rounded menu card -------------------- */
+.mk-root.dn-root {
+  background-color: var(--dn-bg);
+  background-image: conic-gradient(
+    var(--dn-check) 25%,
+    transparent 0 50%,
+    var(--dn-check) 0 75%,
+    transparent 0
+  );
+  background-size: 3em 3em;
+  padding: 2.2em 0.55em 0;
+  color: var(--dn-text);
+}
+@media (min-width: 720px) {
+  .mk-root.dn-root {
+    padding: 3em 1.5em 0;
+  }
+}
+.dn-panel {
+  max-width: 1120px;
+  margin: 0 auto;
+  min-height: calc(100vh - 2.2em);
+  background: var(--dn-panel);
+  border: 0.45em solid var(--dn-rim);
+  border-bottom: 0;
+  border-radius: 1.6em 1.6em 0 0;
+}
+@media (min-width: 720px) {
+  .dn-panel {
+    border-width: 0.6em;
+    border-radius: 2.2em 2.2em 0 0;
+  }
+}
+
+/* --- the sign --------------------------------------------------------- */
+.dn-header {
+  padding: 0 0 1.6em;
+  text-align: center;
+}
+.dn-header > :not(.dn-sign) {
+  margin-left: 0.9em;
+  margin-right: 0.9em;
+}
+.dn-logo {
+  width: 4.5em;
+  height: 4.5em;
+  margin-top: 1.2em;
+  margin-bottom: 0.6em;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  object-fit: contain;
+  border-radius: 50%;
+  background: var(--dn-panel);
+  border: 0.2em solid var(--dn-accent);
+}
+.dn-sign {
+  display: flex;
+  align-items: center;
+  margin-top: -1.6em;
+}
+.dn-logo + .dn-sign {
+  margin-top: 0;
+}
+.dn-stripes {
+  flex: 1;
+  min-width: 0.75em;
+  height: 1.7em;
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--dn-accent) 0 0.22em,
+    transparent 0.22em 0.46em
+  );
+}
+/* Racing stripes run out to the card's edge on both sides. */
+.dn-stripes-left {
+  margin-right: -0.2em;
+}
+.dn-stripes-right {
+  margin-left: -0.2em;
+}
+.dn-badge {
+  flex: 0 1 auto;
+  max-width: 86%;
+  padding: 0.55em 1.5em 0.75em;
+  border-radius: 1.1em;
+  background: var(--dn-accent);
+  color: var(--dn-on-accent);
+  box-shadow: inset 0 0 0 0.22em var(--dn-accent), inset 0 0 0 0.36em var(--dn-on-accent),
+    0 0.35em 0 var(--dn-dash);
+}
+.dn-script {
+  font-family: var(--dn-script);
+  font-size: 1.15em;
+  line-height: 1.1;
+}
+.dn-name {
+  font-family: var(--mk-display);
+  font-weight: 700;
+  font-size: clamp(2.1em, 6vw + 1em, 4.4em);
+  line-height: 0.95;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  text-shadow: 0.05em 0.05em 0 var(--dn-dash);
+  overflow-wrap: break-word;
+  hyphens: auto;
+  text-wrap: balance;
+}
+.dn-slogan {
+  margin-top: 1em;
+  font-family: var(--mk-display);
+  font-weight: 600;
+  font-size: 0.8em;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--dn-accent);
+  text-wrap: balance;
+}
+
+/* --- pinned bar (shared, restyled) -------------------------------------- */
+.dn-root .mk-pin-bar {
+  background: var(--dn-panel);
+  border-top: 2px dashed var(--dn-dash);
+  border-bottom: 2px dashed var(--dn-dash);
+}
+/* Keep the border (transparent) so the bar's height, and with it every
+   landing position, doesn't change when it pins. */
+.dn-root .mk-pin-stuck {
+  border-top-color: transparent;
+}
+.dn-root .mk-tab {
+  font-weight: 600;
+  font-size: 1.2em;
+  letter-spacing: 0.04em;
+}
+.dn-root .mk-tab-active {
+  color: var(--dn-accent);
+}
+.dn-root .mk-burger {
+  border-left: 2px dashed var(--dn-dash);
+  color: var(--dn-accent);
+}
+.dn-root .mk-chips {
+  border-top: 1px dashed var(--dn-dash);
+}
+.dn-root .mk-chip {
+  border-color: var(--dn-dash);
+}
+.dn-root .mk-chip-active {
+  background: var(--dn-accent);
+  border-color: var(--dn-accent);
+  color: var(--dn-on-accent);
+}
+
+/* --- board ------------------------------------------------------------ */
+.dn-board {
+  padding: 0.25em 1.1em 1em;
+}
+@media (min-width: 720px) {
+  .dn-board {
+    padding: 0.5em 2.25em 1.5em;
+  }
+}
+.dn-category {
+  padding-top: 2.25em;
+  scroll-margin-top: var(--mk-pin-h, 0px);
+}
+.dn-banner {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  margin-bottom: 1em;
+  text-align: center;
+}
+.dn-banner-rule {
+  flex: 1;
+  min-width: 1.5em;
+  height: 0.55em;
+  border-top: 0.18em solid var(--dn-accent);
+  border-bottom: 0.08em solid var(--dn-accent);
+}
+.dn-banner-text {
+  min-width: 0;
+  max-width: 78%;
+}
+.dn-banner-title {
+  font-family: var(--mk-display);
+  font-weight: 700;
+  font-size: clamp(1.9em, 3vw + 1.2em, 2.8em);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--dn-accent);
+  overflow-wrap: break-word;
+}
+.dn-count {
+  margin-top: 0.35em;
+  font-family: var(--mk-display);
+  font-weight: 500;
+  font-size: 0.72em;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mk-muted);
+}
+.dn-boxes {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+}
+@media (min-width: 760px) {
+  .dn-boxes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 2.75em;
+  }
+  .dn-boxes-single {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .dn-boxes-single .dn-lines {
+    columns: 2;
+    column-gap: 2.75em;
+  }
+}
+.dn-box {
+  min-width: 0;
+  padding: 1em 0 1.25em;
+  border-top: 2px dashed var(--dn-dash);
+  scroll-margin-top: var(--mk-pin-h, 0px);
+}
+.dn-box-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75em;
+  margin-bottom: 0.5em;
+}
+.dn-box-titles {
+  min-width: 0;
+}
+.dn-box-title {
+  font-family: var(--mk-display);
+  font-weight: 600;
+  font-size: 1.45em;
+  line-height: 1.1;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--dn-accent);
+  overflow-wrap: break-word;
+}
+.dn-icon {
+  flex: none;
+  width: 2.6em;
+  height: 2.6em;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--dn-accent);
+  color: var(--dn-on-accent);
+}
+.dn-nested {
+  margin-top: 1.1em;
+  scroll-margin-top: var(--mk-pin-h, 0px);
+}
+.dn-nested-title {
+  margin-bottom: 0.3em;
+  padding-bottom: 0.25em;
+  border-bottom: 2px dotted var(--dn-dash);
+  font-family: var(--mk-display);
+  font-weight: 600;
+  font-size: 1.02em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dn-accent);
+}
+.dn-nested .dn-nested-title {
+  font-size: 0.92em;
+}
+.dn-orig-inline {
+  font-family: var(--mk-body);
+  font-weight: 400;
+  font-size: 0.85em;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--mk-muted);
+}
+
+/* --- price-list lines --------------------------------------------------- */
+.dn-line {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75em;
+  padding: 0.45em 0.15em;
+  border-radius: 0.3em;
+  cursor: pointer;
+  break-inside: avoid;
+}
+.dn-line:hover .dn-line-name {
+  color: var(--dn-accent);
+}
+.dn-thumb {
+  flex: none;
+  position: relative;
+  width: 4.4em;
+  aspect-ratio: 4 / 3;
+  border-radius: 0.35em;
+  overflow: hidden;
+  background: var(--mk-surface-2);
+}
+.dn-thumb img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.dn-line-body {
+  flex: 1;
+  min-width: 0;
+}
+.dn-line-main {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45em;
+}
+.dn-line-name {
+  min-width: 0;
+  font-size: 0.98em;
+  font-weight: 600;
+  line-height: 1.3;
+  overflow-wrap: break-word;
+  transition: color 0.15s ease;
+}
+.dn-dots {
+  flex: 1;
+  min-width: 1.2em;
+  border-bottom: 2px dotted var(--dn-dash);
+  transform: translateY(-0.28em);
+}
+.dn-price {
+  flex: none;
+  font-family: var(--mk-display);
+  font-weight: 600;
+  font-size: 1.05em;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.dn-orig {
+  margin-top: 0.1em;
+  font-size: 0.8em;
+  font-style: italic;
+  color: var(--mk-muted);
+}
+.dn-line-sub {
+  display: flex;
+  align-items: baseline;
+  gap: 0.55em;
+  margin-top: 0.1em;
+  font-size: 0.82em;
+  color: var(--mk-muted);
+}
+.dn-weight {
+  flex: none;
+  font-family: var(--mk-display);
+  letter-spacing: 0.04em;
+}
+.dn-desc {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.dn-allergens {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25em;
+  margin-top: 0.3em;
+}
+.dn-allergens > span {
+  padding: 0.1em 0.55em;
+  border: 1.5px solid var(--dn-accent);
+  border-radius: 999px;
+  font-size: 0.62em;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--dn-accent);
+}
+
+/* --- info strip / footer ------------------------------------------------ */
+.dn-footer {
+  padding: 1.25em 1.1em 6.5em;
+}
+@media (min-width: 720px) {
+  .dn-footer {
+    padding: 1.5em 2.25em 6.5em;
+  }
+}
+.dn-strip {
+  display: none;
+  justify-content: space-around;
+  gap: 0.4em 1.2em;
+  padding: 0.45em 1em;
+  background: var(--dn-accent);
+  color: var(--dn-on-accent);
+  font-family: var(--mk-display);
+  font-weight: 600;
+  font-size: 0.8em;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.dn-info {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  margin: 0;
+  text-align: center;
+  border-top: 0.3em solid var(--dn-accent);
+}
+.dn-info-col {
+  padding: 0.9em 0.75em;
+}
+.dn-info-col + .dn-info-col {
+  border-top: 2px dashed var(--dn-dash);
+}
+.dn-info-label {
+  margin-bottom: 0.2em;
+  font-family: var(--mk-display);
+  font-weight: 600;
+  font-size: 0.75em;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dn-accent);
+}
+.dn-info dd {
+  font-size: 0.92em;
+}
+@media (min-width: 640px) {
+  .dn-strip {
+    display: flex;
+  }
+  .dn-info {
+    grid-template-columns: repeat(var(--dn-cols, 3), minmax(0, 1fr));
+    border-top: 0;
+  }
+  .dn-info-col + .dn-info-col {
+    border-top: 0;
+    border-left: 2px dashed var(--dn-dash);
+  }
+  .dn-info-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+}
+.dn-prewrap {
+  white-space: pre-line;
+}
+.dn-footer-reviews {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.75em;
+}
+.dn-legal {
+  margin-top: 1.4em;
+  text-align: center;
+  font-size: 0.74em;
+  color: var(--mk-faint);
+}
+
+/* --- shared pieces in diner dress --------------------------------------- */
+.dn-root .mk-sheet-name,
+.dn-root .mk-drawer-name,
+.dn-root .mk-tree-top > .mk-tree-row .mk-tree-label {
+  color: var(--dn-accent);
+}
+.dn-root .mk-sheet,
+.dn-root .mk-sheet-price,
+.dn-root .mk-close,
+.dn-root .mk-drawer-top {
+  border-color: var(--dn-accent);
+}
+.dn-root .mk-staff {
+  border-color: var(--dn-accent);
+}
+.dn-root .mk-top {
+  background: var(--dn-accent);
+  border-color: var(--dn-panel);
+  color: var(--dn-on-accent);
+}
+.dn-status-badge {
+  width: 5em;
+  height: 5em;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--dn-accent);
+  color: var(--dn-on-accent);
+}
+.dn-root .mk-status {
+  background: var(--dn-panel);
+}

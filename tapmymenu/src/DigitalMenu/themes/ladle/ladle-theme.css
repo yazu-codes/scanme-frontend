@@ -1,0 +1,451 @@
+/* =====================================================================
+   Ladle theme. Classes tl- (own) and mk- (shared menuKit pieces,
+   restyled here under .tl-root). Colours only from variables set in
+   palette.js from the OWNER colours. Sizes in em. Display fonts with
+   Cyrillic: Balsamiq Sans (headings), Caveat (script notes).
+   ===================================================================== */
+@import url("https://fonts.googleapis.com/css2?family=Balsamiq+Sans:wght@400;700&family=Caveat:wght@500;700&display=swap");
+
+/* Chalk dust: a faint dotted grain over the slate. */
+.mk-root.tl-root {
+  background-color: var(--tl-bg);
+  background-image: radial-gradient(var(--tl-dust) 1px, transparent 1.2px);
+  background-size: 1.4em 1.4em;
+  color: var(--tl-ink);
+}
+
+/* --- header ------------------------------------------------------------ */
+.tl-header {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2.25em 1.25em 1.75em;
+  text-align: center;
+}
+.tl-topline {
+  font-family: var(--mk-display);
+  font-weight: 700;
+  font-size: 0.72em;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--mk-muted);
+}
+.tl-title-wrap {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  margin-top: 0.6em;
+  padding: 0 1.6em;
+}
+.tl-logo {
+  width: 4.25em;
+  height: 4.25em;
+  margin: 0 auto 0.5em;
+  object-fit: contain;
+  border-radius: 50%;
+  border: 2px solid var(--tl-chalk);
+}
+.tl-title {
+  font-family: var(--mk-display);
+  font-weight: 700;
+  font-size: clamp(2.4em, 6vw + 1em, 4.6em);
+  line-height: 1.02;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+.tl-doodle {
+  position: absolute;
+  width: 1.5em;
+  height: 1.5em;
+  color: var(--tl-chalk);
+}
+.tl-doodle-star {
+  top: -0.2em;
+  left: 0;
+  transform: rotate(-14deg);
+}
+.tl-doodle-heart {
+  top: 0.1em;
+  right: 0;
+  transform: rotate(12deg);
+}
+.tl-squiggle {
+  display: block;
+  width: 7em;
+  height: 0.6em;
+  margin: 0.4em auto 0;
+  color: var(--tl-chalk);
+}
+.tl-squiggle-head {
+  width: 9em;
+  margin-top: 0.7em;
+}
+.tl-subtitle {
+  margin-top: 0.6em;
+  font-family: var(--tl-script);
+  font-weight: 500;
+  font-size: 1.35em;
+  line-height: 1.2;
+  color: var(--mk-muted);
+  text-wrap: balance;
+}
+
+/* --- pinned bar (shared, restyled) -------------------------------------- */
+.tl-root .mk-pin-bar {
+  background: var(--tl-bg);
+  border-top: 2px solid var(--tl-chalk);
+  border-bottom: 2px solid var(--tl-chalk);
+}
+/* Keep the border (transparent) so the bar's height, and with it every
+   landing position, doesn't change when it pins. */
+.tl-root .mk-pin-stuck {
+  border-top-color: transparent;
+}
+.tl-root .mk-tab {
+  font-size: 1.15em;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.tl-root .mk-tab-active::after {
+  height: 0.16em;
+  border-radius: 1em;
+}
+.tl-root .mk-burger {
+  border-left: 2px solid var(--tl-chalk);
+}
+.tl-root .mk-chip {
+  font-family: var(--mk-display);
+  border-color: var(--tl-chalk);
+}
+.tl-root .mk-chip-active {
+  background: var(--tl-accent);
+  border-color: var(--tl-accent);
+  color: var(--tl-on-accent);
+}
+.tl-root .mk-chips-note {
+  text-transform: none;
+  letter-spacing: 0;
+  font-family: var(--tl-script);
+  font-size: 1.05em;
+}
+
+/* --- board ------------------------------------------------------------- */
+.tl-board {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 1.1em 1em;
+}
+.tl-category {
+  padding-top: 2.5em;
+  scroll-margin-top: var(--mk-pin-h, 0px);
+}
+.tl-cat-head {
+  position: relative;
+  margin-bottom: 1.25em;
+  text-align: center;
+}
+.tl-cat-title {
+  font-family: var(--mk-display);
+  font-weight: 700;
+  font-size: clamp(1.9em, 3vw + 1.1em, 2.6em);
+  line-height: 1.1;
+  overflow-wrap: break-word;
+  padding: 0 2.5em;
+}
+.tl-cat-orig {
+  margin-top: 0.1em;
+}
+.tl-sticker {
+  position: absolute;
+  top: 0.2em;
+  left: 0;
+  padding: 0.3em 0.75em;
+  border-radius: 0.4em;
+  background: var(--tl-accent);
+  color: var(--tl-on-accent);
+  font-family: var(--mk-display);
+  font-weight: 700;
+  font-size: 0.72em;
+  line-height: 1.2;
+  transform: rotate(-6deg);
+  box-shadow: 0 0.2em 0 var(--mk-shadow);
+  max-width: 6.5em;
+}
+.tl-sticker-right {
+  left: auto;
+  right: 0;
+  transform: rotate(5deg);
+}
+@media (max-width: 559px) {
+  .tl-cat-title {
+    padding: 0;
+  }
+  .tl-sticker {
+    position: static;
+    display: inline-block;
+    margin-top: 0.6em;
+    max-width: none;
+  }
+}
+.tl-groups {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.5em 3em;
+  align-items: start;
+}
+@media (min-width: 760px) {
+  .tl-groups {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .tl-groups-single {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .tl-groups-single .tl-dishes {
+    columns: 2;
+    column-gap: 3em;
+  }
+}
+.tl-group {
+  min-width: 0;
+  padding: 0.75em 0 1em;
+  scroll-margin-top: var(--mk-pin-h, 0px);
+}
+.tl-group-head {
+  display: flex;
+  align-items: center;
+  gap: 0.75em;
+  margin-bottom: 0.6em;
+}
+.tl-icon {
+  flex: none;
+  width: 2.9em;
+  height: 2.9em;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--tl-accent);
+  color: var(--tl-on-accent);
+  box-shadow: 0 0 0 0.22em var(--tl-bg), 0 0 0 0.34em var(--tl-chalk);
+}
+.tl-icon-big {
+  width: 5em;
+  height: 5em;
+}
+.tl-group-titles {
+  min-width: 0;
+}
+.tl-group-title {
+  font-family: var(--mk-display);
+  font-weight: 700;
+  font-size: 1.4em;
+  line-height: 1.1;
+  overflow-wrap: break-word;
+}
+.tl-note {
+  font-family: var(--tl-script);
+  font-weight: 500;
+  font-size: 1.12em;
+  line-height: 1.15;
+  color: var(--mk-muted);
+}
+.tl-nested {
+  margin-top: 1em;
+  scroll-margin-top: var(--mk-pin-h, 0px);
+}
+.tl-nested-title {
+  margin-bottom: 0.25em;
+  padding-bottom: 0.2em;
+  border-bottom: 2px dashed var(--tl-chalk);
+  font-family: var(--mk-display);
+  font-weight: 700;
+  font-size: 1.1em;
+}
+.tl-nested .tl-nested-title {
+  font-size: 0.98em;
+}
+.tl-nested-title .tl-note {
+  font-weight: 500;
+  font-size: 1.05em;
+}
+
+/* --- dishes ------------------------------------------------------------- */
+.tl-dish {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85em;
+  padding: 0.55em 0;
+  cursor: pointer;
+  break-inside: avoid;
+}
+.tl-dish + .tl-dish {
+  border-top: 1px dashed var(--mk-line);
+}
+.tl-dish-body {
+  flex: 1;
+  min-width: 0;
+}
+.tl-dish-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75em;
+}
+.tl-dish-name {
+  min-width: 0;
+  font-family: var(--mk-display);
+  font-weight: 700;
+  font-size: 1em;
+  line-height: 1.25;
+  overflow-wrap: break-word;
+}
+.tl-dish:hover .tl-dish-name {
+  text-decoration: underline;
+  text-decoration-style: wavy;
+  text-decoration-color: var(--tl-chalk);
+  text-underline-offset: 0.2em;
+}
+.tl-price {
+  flex: none;
+  font-family: var(--mk-display);
+  font-weight: 700;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.tl-orig {
+  font-family: var(--tl-script);
+  font-size: 1.05em;
+  line-height: 1.1;
+  color: var(--mk-muted);
+}
+.tl-dish-desc {
+  margin-top: 0.15em;
+  font-size: 0.84em;
+  line-height: 1.35;
+  color: var(--mk-muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.tl-weight {
+  white-space: nowrap;
+}
+.tl-allergens {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25em;
+  margin-top: 0.3em;
+}
+.tl-allergens > span {
+  padding: 0.05em 0.5em;
+  border: 1.5px dashed var(--tl-chalk);
+  border-radius: 999px;
+  font-size: 0.68em;
+  color: var(--mk-muted);
+}
+.tl-thumb {
+  flex: none;
+  position: relative;
+  width: 5em;
+  aspect-ratio: 4 / 3;
+  border-radius: 0.5em;
+  overflow: hidden;
+  background: var(--tl-card);
+  border: 2px solid var(--tl-chalk);
+}
+.tl-thumb img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* --- footer ------------------------------------------------------------- */
+.tl-footer {
+  max-width: 900px;
+  margin: 1.5em auto 0;
+  padding: 2em 1.25em 7em;
+  border-top: 2px dashed var(--tl-chalk);
+  text-align: center;
+}
+.tl-footer-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5em 2.5em;
+}
+.tl-badge {
+  width: 11em;
+  height: 11em;
+  padding: 1.2em;
+  display: grid;
+  place-content: center;
+  gap: 0.35em;
+  border-radius: 50%;
+  background: var(--tl-accent);
+  color: var(--tl-on-accent);
+  box-shadow: 0 0 0 0.3em var(--tl-bg), 0 0 0 0.45em var(--tl-chalk);
+}
+.tl-badge-phone {
+  font-family: var(--mk-display);
+  font-weight: 700;
+  font-size: 1.02em;
+  text-decoration: none;
+}
+.tl-badge-hours {
+  font-size: 0.76em;
+  line-height: 1.3;
+  white-space: pre-line;
+}
+.tl-footer-ladle {
+  max-width: 16em;
+}
+.tl-ladle {
+  width: 10em;
+  height: auto;
+  color: var(--tl-ink);
+}
+.tl-wifi {
+  margin-top: 1.5em;
+  font-size: 0.9em;
+  color: var(--mk-muted);
+}
+.tl-footer-reviews {
+  display: flex;
+  justify-content: center;
+  margin-top: 1em;
+}
+.tl-legal {
+  margin-top: 1.4em;
+  font-size: 0.74em;
+  color: var(--mk-faint);
+}
+
+/* --- shared pieces in chalk dress ---------------------------------------- */
+.tl-root .mk-sheet-name,
+.tl-root .mk-drawer-name,
+.tl-root .mk-tree-top > .mk-tree-row .mk-tree-label {
+  text-transform: none;
+}
+.tl-root .mk-sheet,
+.tl-root .mk-drawer {
+  background-image: radial-gradient(var(--tl-dust) 1px, transparent 1.2px);
+  background-size: 1.4em 1.4em;
+}
+.tl-root .mk-staff,
+.tl-root .mk-close {
+  border-color: var(--tl-chalk);
+}
+.tl-root .mk-staff-label,
+.tl-root .mk-kicker {
+  font-family: var(--tl-script);
+  font-size: 1.05em;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.tl-root .mk-top {
+  background: var(--tl-accent);
+  color: var(--tl-on-accent);
+  border-color: var(--tl-bg);
+}

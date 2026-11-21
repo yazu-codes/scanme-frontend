@@ -4,6 +4,11 @@ import LuxuryTheme from "./luxury/Theme";
 import ModernTheme from "./modern/Theme";
 import NoirTheme from "./noir/Theme";
 import LanternTheme from "./lantern/Theme";
+import DinerTheme from "./diner/Theme";
+import LadleTheme from "./ladle/Theme";
+import StitchTheme from "./stitch/Theme";
+import TrattoriaTheme from "./trattoria/Theme";
+import FlameTheme from "./flame/Theme";
 
 // To add a new style: create themes/<name>/Theme.jsx (+ its own
 // components/ and theme.css, following classic/ or minimal/ as a
@@ -17,6 +22,11 @@ const themes = {
   modern: ModernTheme,
   noir: NoirTheme,
   lantern: LanternTheme,
+  diner: DinerTheme,
+  ladle: LadleTheme,
+  stitch: StitchTheme,
+  trattoria: TrattoriaTheme,
+  flame: FlameTheme,
 };
 
 export default themes;
