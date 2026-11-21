@@ -1,4 +1,4 @@
-# menuKit: shared layer for the diner, ladle, stitch, trattoria and flame themes
+# menuKit: shared layer for the diner, ladle, stitch, trattoria, flame and crave themes
 
 Five themes would otherwise copy the same ~1,500 lines of navigation,
 translation fixes and dish/drawer UI. menuKit holds that once. Each theme
@@ -12,7 +12,7 @@ here can affect them.
 
 | File | What it does |
 |---|---|
-| `useMenuKit.js` | One hook: category tree, original-language pairing, hash navigation (`#c-<path>`), scroll-spy, dish sheet + drawer state with back-gesture closing, analytics, YummGPT `itemSelect`. |
+| `useMenuKit.js` | One hook (also `trackItem` / `trackCategory` for themes that open dishes their own way): category tree, original-language pairing, hash navigation (`#c-<path>`), scroll-spy, dish sheet + drawer state with back-gesture closing, analytics, YummGPT `itemSelect`. |
 | `useOwnerTheme.js` | Owner font (`useGoogleFont`), owner colours + theme fallbacks, contrast report, CSS variables, body background. |
 | `colors.js` | `validHex`, `mix`, `rgba`, `strengthen`, `contrastRatio`, `bestOn`, `ownerPalette`, `kitTone` (the `--mk-*` variables), `useContrastReport`. |
 | `menuData.js` | Noir's `utils.js` (tree, loose matching, leftovers, bilingual-prefix fix, pairing, icons, `splitWeight`) + `formatEuro` + `nodePathMap` + the Jaccard fix for parent-group originals. |
@@ -37,3 +37,5 @@ here can affect them.
 
 1. **Drawer swallowed taps after closing.** An expanded branch had `visibility: visible`, which overrides the closed drawer's `visibility: hidden`: the branch stayed invisible but clickable over the page. Now `visibility: inherit`. Lantern had it too and is fixed in this delivery. **Noir has the same CSS pattern** (`.nr-tree-panel-open > ul { visibility: visible; }` in `noir-theme.css`) and was not changed; changing `visible` to `inherit` there should fix it.
 2. **Wrong original for parent groups** (Noir): "Wine" showed "Алкохолни Напитки". Fixed with overlap ratio.
+3. **Tapping one dish could open another.** The guide's handler looked every opened dish up by `pairKey` (position + price), but two dishes can share it: in English, tapping "Crème caramel" opened "Troyan apricot rakia". Now a dish tapped in the menu is used as is, and only items from outside (YummGPT) are looked up, by key AND cleaned name (`makeDishResolver`). Lantern is fixed the same way. **Noir's `Theme.jsx` has the same lookup (`displayByKey.get(pairKey(item))`) and was not changed.**
+4. **Stacked layers closed together.** With a dish sheet open over another layer (Crave's feed), closing the sheet also closed the layer below. `useBackToClose` now records the open layers in the history state, and each layer only closes when its own entry is popped.

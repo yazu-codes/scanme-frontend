@@ -84,6 +84,8 @@ Changes from Noir:
 
 - **Closed drawer could swallow taps.** An expanded category branch kept `visibility: visible`, which overrides the closed drawer's `visibility: hidden`. The branch stayed invisible but clickable over the page. It is now `visibility: inherit` (`lantern-theme.css`, `.ln-tree-panel-open > .ln-tree-sub`).
 
+- **Tapping one dish could open another.** Dishes were looked up by `pairKey` (position + price), which two dishes can share; in English, tapping "Crème caramel" opened "Troyan apricot rakia". A dish tapped in the menu is now used as is; only YummGPT items are looked up, by key AND cleaned name (`makeDishResolver` in `utils.js`).
+
 ## Fonts
 
 - **Rubik 900** for the restaurant name, and **Oswald 500–700** for tabs, headings and labels. Both support Cyrillic and load from Google Fonts in `lantern-theme.css`.

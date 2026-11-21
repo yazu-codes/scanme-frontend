@@ -9,6 +9,7 @@ import LadleTheme from "./ladle/Theme";
 import StitchTheme from "./stitch/Theme";
 import TrattoriaTheme from "./trattoria/Theme";
 import FlameTheme from "./flame/Theme";
+import CraveTheme from "./crave/Theme";
 
 // To add a new style: create themes/<name>/Theme.jsx (+ its own
 // components/ and theme.css, following classic/ or minimal/ as a
@@ -27,6 +28,7 @@ const themes = {
   stitch: StitchTheme,
   trattoria: TrattoriaTheme,
   flame: FlameTheme,
+  crave: CraveTheme,
 };
 
 export default themes;

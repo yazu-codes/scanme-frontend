@@ -336,6 +336,31 @@ export function splitWeight(text) {
   return { description, weight: match[1].trim() };
 }
 
+// Display items, indexed for resolving a dish that comes from OUTSIDE the
+// rendered menu (YummGPT hands over raw API items, translated names still
+// glued). pairKey is not always unique: two dishes can share position +
+// price, so a raw item is matched by key AND cleaned name, and a dish
+// tapped in the menu (already a display item) is used as is.
+export function makeDishResolver(itemsByLabel) {
+  const shown = new Set();
+  const byKey = new Map();
+  Object.values(itemsByLabel).forEach((list) =>
+    list.forEach((item) => {
+      shown.add(item);
+      const k = pairKey(item);
+      if (!byKey.has(k)) byKey.set(k, []);
+      byKey.get(k).push(item);
+    })
+  );
+  return function resolve(item) {
+    if (!item || shown.has(item)) return item;
+    const list = byKey.get(pairKey(item)) || [];
+    if (list.length <= 1) return list[0] || item;
+    const names = [item.name, stripBilingualPrefix(item.name)].map((n) => String(n || "").trim());
+    return list.find((d) => names.includes(String(d.name).trim()) || names.includes(String(d.original_name || "").trim())) || list[0];
+  };
+}
+
 export function formatEuro(price) {
   const formatted = formatPrice(price);
   if (formatted === undefined || formatted === null || formatted === "") return "";

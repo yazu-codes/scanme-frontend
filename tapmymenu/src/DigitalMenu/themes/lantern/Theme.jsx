@@ -11,7 +11,7 @@ import useHashNavigation from "./hooks/useHashNavigation";
 import useScrollSpy from "./hooks/useScrollSpy";
 import useBackToClose from "./hooks/useBackToClose";
 import getStrings from "./strings";
-import { buildCategoryTree, countItems, nodePathMap, pairKey } from "./utils";
+import { buildCategoryTree, countItems, makeDishResolver, nodePathMap } from "./utils";
 
 import Hero from "./components/Hero";
 import ActionBar from "./components/ActionBar";
@@ -65,13 +65,10 @@ export default function LanternTheme({ urlname, status, owner, config, categorie
     [nodes, itemsByLabel]
   );
 
-  // Display-ready items by pairing key, so a dish opened from YummGPT
-  // shows the same cleaned name + original as one tapped in the menu.
-  const displayByKey = useMemo(() => {
-    const m = new Map();
-    Object.values(itemsByLabel).forEach((list) => list.forEach((i) => m.set(pairKey(i), i)));
-    return m;
-  }, [itemsByLabel]);
+  // A dish opened from YummGPT resolves to the same display item (cleaned
+  // name + original) as one tapped in the menu. A dish tapped in the menu
+  // is used as is: pairKey alone can collide (see makeDishResolver).
+  const resolveDish = useMemo(() => makeDishResolver(itemsByLabel), [itemsByLabel]);
 
   // --- layers -----------------------------------------------------------
   const [selectedItem, setSelectedItem] = useState(null);
@@ -140,12 +137,12 @@ export default function LanternTheme({ urlname, status, owner, config, categorie
   const handleSelectItem = useCallback(
     (item) => {
       if (!item) return;
-      const shown = displayByKey.get(pairKey(item)) || item;
+      const shown = resolveDish(item);
       track("item_click", `${urlname}/${shown.slug ?? shown.name}`);
       setSelectedItem(shown);
       setModalOpen(true);
     },
-    [displayByKey, track, urlname]
+    [resolveDish, track, urlname]
   );
 
   const scrollTop = useCallback(() => scrollToPath(null, true), [scrollToPath]);

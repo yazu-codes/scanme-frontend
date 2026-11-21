@@ -12,6 +12,9 @@ import { useEffect } from "react";
 // caller REPLACES the layer's entry itself (e.g. the drawer navigating to
 // a category with history.replaceState). Then no step back is taken.
 //
+// Layers may stack: each entry records the open layers (mkLayers), and a
+// layer only closes when its own entry has been popped.
+//
 // `close` must be stable (useCallback) or the entry is re-pushed.
 let counter = 0;
 
@@ -20,13 +23,18 @@ export default function useBackToClose(open, close, skipRef) {
     if (!open) return undefined;
     counter += 1;
     const token = `mk-layer-${counter}`;
+    const base = window.history.state || {};
     window.history.pushState(
-      { ...(window.history.state || {}), lnLayer: token },
+      { ...base, lnLayer: token, mkLayers: [...(base.mkLayers || []), token] },
       "",
       window.location.href
     );
     let popped = false;
+    // Layers can stack (dish sheet over a feed). A popstate closes this
+    // layer only when ITS entry is gone, not when a layer above it closes.
     function onPop() {
+      const layers = (window.history.state && window.history.state.mkLayers) || [];
+      if (layers.includes(token)) return;
       popped = true;
       close();
     }

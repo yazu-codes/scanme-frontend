@@ -6,7 +6,7 @@ import useOriginalMenu from "./hooks/useOriginalMenu";
 import useHashNavigation from "./hooks/useHashNavigation";
 import useScrollSpy from "./hooks/useScrollSpy";
 import useBackToClose from "./hooks/useBackToClose";
-import { buildCategoryTree, countItems, nodePathMap, pairKey } from "./menuData";
+import { buildCategoryTree, countItems, makeDishResolver, nodePathMap } from "./menuData";
 
 // Everything a menuKit theme needs that ISN'T its look: the category tree
 // (with the translated-menu fixes), the original-language pairing,
@@ -37,13 +37,9 @@ export default function useMenuKit(
     [nodes, itemsByLabel]
   );
 
-  // Display-ready items by pairing key, so a dish opened from YummGPT
-  // shows the same cleaned name + original as one tapped in the menu.
-  const displayByKey = useMemo(() => {
-    const m = new Map();
-    Object.values(itemsByLabel).forEach((list) => list.forEach((i) => m.set(pairKey(i), i)));
-    return m;
-  }, [itemsByLabel]);
+  // A dish opened from YummGPT resolves to the same display item (cleaned
+  // name + original) as one tapped in the menu; see makeDishResolver.
+  const resolveDish = useMemo(() => makeDishResolver(itemsByLabel), [itemsByLabel]);
 
   // --- layers -----------------------------------------------------------
   const [selectedItem, setSelectedItem] = useState(null);
@@ -102,15 +98,24 @@ export default function useMenuKit(
     setDrawerOpen(true);
   }, []);
 
+  // item_click for a dish a theme opens its own way (e.g. a feed).
+  const trackItem = useCallback(
+    (item) => {
+      const shown = resolveDish(item);
+      track("item_click", `${urlname}/${shown.slug ?? shown.name}`);
+    },
+    [resolveDish, track, urlname]
+  );
+
   const selectItem = useCallback(
     (item) => {
       if (!item) return;
-      const shown = displayByKey.get(pairKey(item)) || item;
-      track("item_click", `${urlname}/${shown.slug ?? shown.name}`);
+      const shown = resolveDish(item);
+      trackItem(shown);
       setSelectedItem(shown);
       setModalOpen(true);
     },
-    [displayByKey, track, urlname]
+    [resolveDish, trackItem]
   );
 
   const scrollTop = useCallback(() => scrollToPath(null, true), [scrollToPath]);
@@ -133,6 +138,8 @@ export default function useMenuKit(
     pastHero: spy.pastHero,
     selectPath,
     selectFromDrawer,
+    trackItem,
+    trackCategory,
     openMenu,
     openInfo,
     scrollTop,
