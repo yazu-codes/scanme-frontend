@@ -14,7 +14,8 @@
 .mk-root.em-root {
   position: relative;
   isolation: isolate;
-  background: var(--em-bg);
+  background: radial-gradient(ellipse 120% 70% at 50% 0%, var(--em-c1), var(--em-bg) 70%);
+  background-color: var(--em-bg);
   color: var(--em-ink);
   font-weight: 300;
 }
@@ -133,6 +134,7 @@
   place-items: center;
   border: 1px solid var(--em-brass);
   border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, var(--em-c2), var(--em-c1));
   box-shadow: 0 0 2.5em var(--em-glow-soft), inset 0 0 1.2em var(--em-glow-soft);
 }
 .em-emblem img {
@@ -439,6 +441,7 @@
 }
 .em-tile:hover,
 .em-tile:focus-visible {
+  background: var(--em-c2-soft);
   border-color: var(--em-brass-strong);
   box-shadow: 0 0 0 1px var(--em-brass), 0 0.8em 2.4em var(--em-glow);
 }
@@ -467,6 +470,9 @@
   border: 1px solid var(--em-brass);
   transform: rotate(45deg);
 }
+.em-explored {
+  background: linear-gradient(160deg, var(--em-c2-soft), var(--em-glass) 60%);
+}
 .em-explored .em-mark {
   background: var(--em-ink);
   border-color: var(--em-ink);
@@ -480,7 +486,7 @@
   display: grid;
   place-items: center;
   border-radius: 0.65em;
-  background: radial-gradient(closest-side, var(--em-glow-soft), transparent);
+  background: radial-gradient(closest-side, var(--em-c2), transparent);
   color: var(--em-ink);
 }
 .em-tile-media img {
@@ -655,7 +661,7 @@
   border: 0;
   border-top: 1px solid var(--em-brass);
   border-radius: 1.6em 1.6em 0 0;
-  background: linear-gradient(180deg, var(--em-c1) 0%, var(--em-c3) 42%, var(--em-bg) 100%);
+  background: linear-gradient(180deg, var(--em-c2) 0%, var(--em-c1) 40%, var(--em-c3) 100%);
   box-shadow: 0 -1.2em 3em var(--em-glow-soft);
   -webkit-overflow-scrolling: touch;
 }
@@ -695,7 +701,7 @@
   aspect-ratio: auto;
   margin: 0.4em 1.25em 0;
   border-radius: 1.1em;
-  background: radial-gradient(ellipse at 50% 60%, var(--em-c2) 0%, var(--em-c2-soft) 45%, transparent 75%);
+  background: radial-gradient(ellipse at 50% 60%, var(--em-c1) 0%, transparent 72%);
 }
 .em-root .mk-sheet-media img {
   inset: 0.6em;
@@ -715,7 +721,7 @@
   width: 5em;
   height: 5em;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, var(--em-c2), var(--em-c1));
+  background: radial-gradient(circle at 35% 30%, var(--em-c2), var(--em-c3));
   border: 1px solid var(--em-brass);
   box-shadow: 0 0.6em 1.6em var(--em-glow-soft);
   color: var(--em-ink);
@@ -733,8 +739,9 @@
 .em-root .mk-kicker {
   align-self: flex-start;
   padding: 0.35em 0.85em;
+  border: 1px solid var(--em-brass);
   border-radius: 999px;
-  background: var(--em-c2);
+  background: var(--em-c3);
   font-family: var(--em-sans);
   font-weight: 400;
   font-size: 0.66em;
@@ -772,7 +779,7 @@
   border: 0;
   border-left: 3px solid var(--em-brass-strong);
   border-radius: 0.4em 0.9em 0.9em 0.4em;
-  background: var(--em-c2-soft);
+  background: var(--em-c3-soft);
 }
 .em-root .mk-staff-label {
   font-family: var(--em-sans);
@@ -826,10 +833,12 @@
   margin: 1.5em -1.5em 0;
   padding: 0.95em 1.5em calc(0.95em + env(safe-area-inset-bottom, 0px));
   border-top: 1px solid var(--em-brass);
-  background: linear-gradient(90deg, var(--em-c1), var(--em-c2));
+  background: var(--em-c3);
+  box-shadow: 0 -0.8em 1.6em var(--em-c3-soft);
 }
 .em-root .mk-sheet-price .mk-kicker {
   padding: 0;
+  border: 0;
   background: none;
   letter-spacing: 0.3em;
 }

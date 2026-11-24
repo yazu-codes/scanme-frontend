@@ -54,15 +54,18 @@ Mobile first:
 - The price is pinned to the bottom, clear of the phone's home bar.
 - On desktop it becomes a centred card.
 
-**Colour from the background:** three richer tones are derived from the
-owner's `background_color` hue (the hue itself, +35°, −35°, with more
-saturation) and used for the sheet's gradient, panels and price bar:
-`--em-c1..3`. Each is darkened (dark page) or lightened (light page) until the
-owner's text reads at least 4.5:1 on it. A near-grey background has no
-hue, so it borrows the text colour's hue. Examples:
-- near-black → burgundy / amber
-- deep green → emerald / teal
-- cream → soft pastels
+**Colour from the background:** three tones close to the owner's
+`background_color` (`--em-c1..3`). Each keeps the same hue, gets slightly more
+saturation, and moves a few lightness steps: lighter on a dark page, darker on a
+light one. They are used across the whole theme, not only in the sheet:
+- the page glow
+- the HUD and drawer glass
+- tiles, their hover state and explored tiles
+- the title emblem
+- the sheet's gradient, panels and price bar
+
+Each tone is walked further if needed until the owner's text reads at least
+4.5:1 on it. A grey background stays grey, and no hue is added.
 
 ## Colours & fonts
 
