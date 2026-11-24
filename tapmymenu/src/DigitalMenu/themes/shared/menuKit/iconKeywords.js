@@ -13,6 +13,7 @@
 
 const RULES = [
   ["promo", ["промо", "оферт", "специалн", "предложени", "promo", "offer", "special", "deal"]],
+  ["hookah", ["наргиле", "шиша", "кальян", "тютюн", "shisha", "hookah", "nargile", "narghile", "tobacco"]],
   ["coffee", ["кафе", "чай", "чаен", "топли напитки", "горещ", "coffee", "tea", "hot drink", "espresso"]],
   ["champagne", ["шампанск", "просеко", "пенлив", "игрист", "champagne", "prosecco", "sparkling", "cava"]],
   ["beer", ["бира", "бири", "пиво", "сайдер", "beer", "cider", "ale", "lager"]],

@@ -4,6 +4,9 @@ import { formatEuro, splitWeight } from "../menuData";
 import { CloseIcon } from "./Icons";
 import CategoryIcon from "./CategoryIcon";
 
+// placeholder: a node, or a function (item) => node, shown when the dish
+// has no photo (defaults to the cloche icon).
+//
 // Shared dish detail for menuKit themes (styled by menu-kit.css and the
 // theme's --mk-* variables). A bottom sheet on phones, a centred card from tablet up.
 // Closes on ✕, backdrop tap, Escape and (through useBackToClose in
@@ -55,7 +58,11 @@ export default function DishModal({ item, open, onClose, strings, placeholder })
               {item.picture_url ? (
                 <img src={item.picture_url} alt={item.name} />
               ) : (
-                <span className="mk-placeholder">{placeholder || <CategoryIcon iconKey="cloche" size={56} />}</span>
+                <span className="mk-placeholder">
+                  {(typeof placeholder === "function" ? placeholder(item) : placeholder) || (
+                    <CategoryIcon iconKey="cloche" size={56} />
+                  )}
+                </span>
               )}
             </div>
 

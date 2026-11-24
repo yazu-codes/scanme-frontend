@@ -1,4 +1,4 @@
-# menuKit: shared layer for the diner, ladle, stitch, trattoria, flame and crave themes
+# menuKit: shared layer for the diner, ladle, stitch, trattoria, flame, crave and ember themes
 
 Five themes would otherwise copy the same ~1,500 lines of navigation,
 translation fixes and dish/drawer UI. menuKit holds that once. Each theme
@@ -16,10 +16,10 @@ here can affect them.
 | `useOwnerTheme.js` | Owner font (`useGoogleFont`), owner colours + theme fallbacks, contrast report, CSS variables, body background. |
 | `colors.js` | `validHex`, `mix`, `rgba`, `strengthen`, `contrastRatio`, `bestOn`, `ownerPalette`, `kitTone` (the `--mk-*` variables), `useContrastReport`. |
 | `menuData.js` | Noir's `utils.js` (tree, loose matching, leftovers, bilingual-prefix fix, pairing, icons, `splitWeight`) + `formatEuro` + `nodePathMap` + the Jaccard fix for parent-group originals. |
-| `iconKeywords.js`, `components/CategoryIcon.jsx` | Noir's category icons, picked from the ORIGINAL title. |
+| `iconKeywords.js`, `components/CategoryIcon.jsx` | Noir's category icons, picked from the ORIGINAL title, plus a **hookah** icon and rule (наргиле / шиша / кальян / тютюн / shisha / hookah / nargile / tobacco). |
 | `hooks/` | `useHashNavigation`, `useScrollSpy`, `useBackToClose`, `useOriginalMenu`, `useReveal` (from Lantern/Noir). |
 | `components/PinnedNav.jsx` | Category tabs + sub-category chips that pin with `position: fixed` + placeholder; publishes `--mk-pin-h`. |
-| `components/MenuChrome.jsx` | Dish sheet, navigation drawer, scroll-to-top (bottom-left) and the three core widgets. |
+| `components/MenuChrome.jsx` | Dish sheet (`placeholder` may be a node or a function `item => node` for photo-less dishes), navigation drawer, scroll-to-top (bottom-left) and the three core widgets. |
 | `components/Dish.jsx` | `pressable()`, `Allergens`, `OriginalName`, `dishKey` for themes' own dish markup. |
 | `strings.js` | bg/en UI copy; `makeStrings({ bg, en })` adds theme keys. |
 | `menu-kit.css` | Styles for the shared pieces. Classes `mk-`, variables `--mk-*`. |
