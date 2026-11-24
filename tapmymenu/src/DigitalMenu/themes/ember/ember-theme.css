@@ -5,7 +5,8 @@
    ink at low alpha). Sizes in em. Fonts with Cyrillic, as in Noir:
    Cormorant Garamond (display serif) and Jost (tracked small caps).
 
-   Motion: slow ambient light/smoke + fades. Transform/opacity only;
+   Motion: slow ambient light/smoke, zoom between levels, tile stagger
+   and selection glow. Transform/opacity only;
    all of it is switched off for prefers-reduced-motion.
    ===================================================================== */
 @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap");
@@ -112,7 +113,7 @@
 .em-header {
   max-width: 900px;
   margin: 0 auto;
-  padding: 3em 1.4em 1.6em;
+  padding: 1.6em 0.3em 1.2em;
   text-align: center;
   animation: em-fade 1.2s ease both;
 }
@@ -188,235 +189,357 @@
   transform: rotate(45deg);
 }
 
-/* --- category rail ---------------------------------------------------------- */
-.em-covers {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: 42%;
-  gap: 0.8em;
+/* --- HUD (game top bar) ------------------------------------------------- */
+.em-root {
+  --em-hud-h: 3.9em;
+}
+.em-hud {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 36;
+  height: var(--em-hud-h);
+  background: var(--mk-glass);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--em-brass);
+  box-shadow: 0 0.4em 1.6em var(--em-glow-soft);
+}
+.em-hud-inner {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  height: 100%;
   max-width: 1100px;
-  margin: 0.8em auto 0;
-  padding: 0.4em 1.2em 1em;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-padding: 0 1.2em;
-  scrollbar-width: none;
-  overscroll-behavior-x: contain;
+  margin: 0 auto;
+  padding: 0 0.7em;
 }
-.em-covers::-webkit-scrollbar {
-  display: none;
+.em-hud-btn,
+.em-hud-emblem {
+  flex: none;
+  width: 2.7em;
+  height: 2.7em;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--em-brass);
+  border-radius: 50%;
+  color: var(--em-ink);
+  transition: box-shadow 0.25s ease, transform 0.2s ease;
 }
-@media (min-width: 640px) {
-  .em-covers {
-    grid-auto-columns: 11.5em;
+.em-hud-btn:hover,
+.em-hud-btn:focus-visible {
+  box-shadow: 0 0 1em var(--em-glow);
+}
+.em-hud-btn:active {
+  transform: scale(0.92);
+}
+.em-hud-emblem img {
+  width: 76%;
+  height: 76%;
+  object-fit: contain;
+  border-radius: 50%;
+}
+.em-hud-title {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  line-height: 1.1;
+}
+.em-hud-code,
+.em-hud-parent {
+  max-width: 100%;
+  font-family: var(--em-sans);
+  font-size: 0.6em;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--mk-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.em-hud-name {
+  max-width: 100%;
+  font-family: var(--mk-display);
+  font-weight: 500;
+  font-size: 1.2em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* --- stage: one level per screen, zoom in / out ---------------------------- */
+.em-stage {
+  max-width: 1100px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: calc(var(--em-hud-h) + 0.6em) 1.1em 2em;
+}
+.em-stage-in {
+  animation: em-zoom-in 0.42s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.em-stage-out {
+  animation: em-zoom-out 0.42s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@keyframes em-zoom-in {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
   }
 }
-.em-cover {
-  position: relative;
+@keyframes em-zoom-out {
+  from {
+    opacity: 0;
+    transform: scale(1.06);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+.em-select {
+  margin: 0.4em 0 1em;
+  text-align: center;
+  font-family: var(--em-sans);
+  font-size: 0.72em;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--mk-muted);
+  animation: em-blink 2.4s ease-in-out infinite;
+}
+@keyframes em-blink {
+  50% {
+    opacity: 0.45;
+  }
+}
+
+/* Level header (inside a category) */
+.em-level-head {
+  margin: 1.2em 0 1.3em;
+  text-align: center;
+}
+.em-level-code {
+  font-family: var(--em-sans);
+  font-size: 0.7em;
+  letter-spacing: 0.4em;
+  color: var(--mk-muted);
+}
+.em-level-title {
+  margin-top: 0.15em;
+  font-family: var(--mk-display);
+  font-weight: 400;
+  font-size: clamp(2.2em, 5vw + 1em, 3.4em);
+  line-height: 1.02;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+  text-shadow: 0 0 0.6em var(--em-glow-soft);
+}
+.em-level-orig {
+  margin-top: 0.15em;
+  font-family: var(--mk-display);
+  font-style: italic;
+  font-size: 1.05em;
+  color: var(--mk-muted);
+}
+.em-level-count {
+  margin-top: 0.55em;
+  font-family: var(--em-sans);
+  font-size: 0.64em;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--mk-muted);
+}
+.em-level-count::before,
+.em-level-count::after {
+  content: "";
+  display: inline-block;
+  width: 2.5em;
+  height: 1px;
+  margin: 0 1em;
+  vertical-align: 0.3em;
+  background: var(--em-brass);
+}
+.em-here {
+  margin: 1.8em 0 0.8em;
+  font-family: var(--em-sans);
+  font-size: 0.64em;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--mk-muted);
+}
+
+/* --- tiles ------------------------------------------------------------------ */
+.em-grid {
   display: grid;
-  justify-items: start;
-  align-content: start;
-  gap: 0.35em;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75em;
+}
+@media (min-width: 700px) {
+  .em-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1em;
+  }
+}
+@media (min-width: 1000px) {
+  .em-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+.em-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
   min-width: 0;
-  padding: 0.75em 0.75em 0.9em;
+  padding: 0.7em 0.75em 0.75em;
   border: 1px solid var(--em-edge);
-  border-radius: 0.9em;
+  border-radius: 1em;
   background: var(--em-glass);
   -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
+  color: var(--em-ink);
   text-align: left;
-  scroll-snap-align: start;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+  overflow: hidden;
+  isolation: isolate;
+  animation: em-tile-in 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: calc(min(var(--em-n, 0), 12) * 45ms + 80ms);
+  transition: border-color 0.25s ease, box-shadow 0.3s ease, transform 0.2s ease;
 }
-.em-cover:hover,
-.em-cover:focus-visible {
-  border-color: var(--em-brass);
-  box-shadow: 0 0.6em 2em var(--em-glow-soft);
+@keyframes em-tile-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.8em) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
-.em-cover:active {
-  transform: scale(0.98);
+/* Selection: brass edge, glow, and a light sweep across the tile, like a
+   highlighted option in a game menu. */
+.em-tile::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(105deg, transparent 35%, var(--em-glow-soft) 50%, transparent 65%);
+  transform: translateX(-120%);
+  transition: transform 0.6s ease;
 }
-.em-cover-no {
+.em-tile:hover,
+.em-tile:focus-visible {
+  border-color: var(--em-brass-strong);
+  box-shadow: 0 0 0 1px var(--em-brass), 0 0.8em 2.4em var(--em-glow);
+}
+.em-tile:hover::after,
+.em-tile:focus-visible::after {
+  transform: translateX(120%);
+}
+.em-tile:active {
+  transform: scale(0.96);
+}
+.em-tile-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.em-code {
   font-family: var(--em-sans);
-  font-size: 0.66em;
-  letter-spacing: 0.25em;
+  font-size: 0.64em;
+  letter-spacing: 0.24em;
   color: var(--mk-muted);
 }
-.em-cover-media {
+/* Explored mark: an outlined diamond that fills in once visited. */
+.em-mark {
+  width: 0.55em;
+  height: 0.55em;
+  border: 1px solid var(--em-brass);
+  transform: rotate(45deg);
+}
+.em-explored .em-mark {
+  background: var(--em-ink);
+  border-color: var(--em-ink);
+  box-shadow: 0 0 0.6em var(--em-glow);
+}
+.em-tile-media {
   position: relative;
   width: 100%;
   aspect-ratio: 4 / 3;
+  margin: 0.5em 0 0.6em;
   display: grid;
   place-items: center;
-  border-radius: 0.6em;
+  border-radius: 0.65em;
   background: radial-gradient(closest-side, var(--em-glow-soft), transparent);
   color: var(--em-ink);
 }
-.em-cover-media img {
+.em-tile-media img {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: contain;
+  border-radius: 0.65em;
 }
-.em-cover-title {
+.em-item .em-tile-media {
+  margin-top: 0;
+}
+.em-tile-name {
   font-family: var(--mk-display);
   font-weight: 500;
-  font-size: 1.2em;
-  line-height: 1.1;
+  font-size: 1.18em;
+  line-height: 1.08;
   overflow-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
-.em-cover-orig {
-  font-size: 0.74em;
-  color: var(--mk-muted);
-}
-.em-cover-count {
-  font-family: var(--em-sans);
-  font-size: 0.66em;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--mk-muted);
-}
-
-/* --- pinned bar (shared, restyled) ------------------------------------------ */
-.em-root .mk-pin {
-  margin-top: 0.8em;
-}
-.em-root .mk-pin-bar {
-  background: var(--mk-glass);
-  -webkit-backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
-  border-top: 1px solid var(--em-edge);
-  border-bottom: 1px solid var(--em-brass);
-}
-.em-root .mk-tab {
-  font-family: var(--em-sans);
-  font-weight: 400;
-  font-size: 0.74em;
-  letter-spacing: 0.22em;
-  padding: 1.15em 1em 1.05em;
-}
-.em-root .mk-tab-active {
-  color: var(--em-ink);
-  text-shadow: 0 0 0.8em var(--em-glow);
-}
-.em-root .mk-tab-active::after {
-  left: 1em;
-  right: 1em;
-  bottom: 0.55em;
-  height: 1px;
-  box-shadow: 0 0 0.6em var(--em-glow);
-}
-.em-root .mk-burger {
-  border-left: 1px solid var(--em-edge);
-}
-.em-root .mk-chips {
-  border-top: 1px solid var(--em-edge);
-}
-.em-root .mk-chip {
-  border: 1px solid var(--em-brass);
-  font-family: var(--em-sans);
-  font-weight: 400;
-  font-size: 0.74em;
-  letter-spacing: 0.06em;
-}
-.em-root .mk-chip-active {
-  background: var(--em-ink);
-  border-color: var(--em-ink);
-  color: var(--em-on-ink);
-}
-.em-root .mk-chips-note {
-  font-family: var(--em-sans);
-  font-weight: 400;
-}
-
-/* --- sections --------------------------------------------------------------- */
-.em-board {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 1.2em 1em;
-}
-.em-category {
-  padding-top: 3.2em;
-  scroll-margin-top: var(--mk-pin-h, 0px);
-}
-.em-cat-head {
-  position: relative;
-  margin-bottom: 1.4em;
-  padding-bottom: 0.9em;
-  border-bottom: 1px solid var(--em-brass);
-}
-.em-cat-no {
-  font-family: var(--em-sans);
-  font-size: 0.7em;
-  letter-spacing: 0.3em;
-  color: var(--mk-muted);
-}
-.em-cat-title {
+.em-tile-orig {
   margin-top: 0.15em;
-  font-family: var(--mk-display);
-  font-weight: 400;
-  font-size: clamp(2.1em, 4vw + 1em, 3.3em);
-  line-height: 1.02;
-  overflow-wrap: break-word;
+  font-size: 0.72em;
+  color: var(--mk-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-.em-cat-count {
-  margin-top: 0.5em;
+.em-tile-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 0.6em;
+}
+.em-count {
+  min-width: 2.2em;
+  padding: 0.15em 0.6em;
+  border: 1px solid var(--em-brass);
+  border-radius: 999px;
   font-family: var(--em-sans);
   font-size: 0.66em;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-align: center;
+}
+.em-go {
+  font-size: 0.9em;
   color: var(--mk-muted);
+  transition: transform 0.25s ease, color 0.25s ease;
 }
-.em-orig {
-  font-size: 0.8em;
-  color: var(--mk-muted);
+.em-tile:hover .em-go,
+.em-tile:focus-visible .em-go {
+  color: var(--em-ink);
+  transform: translateX(0.25em);
 }
-.em-orig-head {
-  margin-top: 0.2em;
-  font-family: var(--mk-display);
-  font-style: italic;
-  font-size: 1em;
-}
-.em-sub {
-  padding-top: 2em;
-  scroll-margin-top: var(--mk-pin-h, 0px);
-}
-.em-sub-title {
-  display: flex;
-  align-items: baseline;
-  gap: 0.6em;
-  font-family: var(--mk-display);
-  font-weight: 500;
-  font-style: italic;
-  font-size: 1.55em;
-  line-height: 1.1;
-}
-.em-sub-title > span:first-child {
-  min-width: 0;
-  overflow-wrap: break-word;
-}
-.em-sub-count {
-  font-family: var(--em-sans);
-  font-style: normal;
-  font-weight: 400;
-  font-size: 0.42em;
-  letter-spacing: 0.2em;
-  color: var(--mk-muted);
-}
-.em-sub-2 > .em-sub-title {
-  font-size: 1.3em;
-}
-.em-sub-3 > .em-sub-title {
-  font-size: 1.12em;
-}
-.em-sub > .em-cards,
-.em-sub > .em-lines,
-.em-sub > .em-flavours {
-  margin-top: 0.9em;
-}
-
-/* Shared bits */
 .em-price {
   font-family: var(--mk-display);
   font-weight: 600;
@@ -424,262 +547,35 @@
   white-space: nowrap;
   font-variant-numeric: lining-nums tabular-nums;
 }
-.em-weight {
-  font-family: var(--em-sans);
-  font-size: 0.72em;
-  letter-spacing: 0.12em;
-  color: var(--mk-muted);
-}
-
-/* --- shisha flavour tiles ----------------------------------------------------- */
-.em-flavours {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.75em;
-}
-@media (min-width: 760px) {
-  .em-flavours {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1em;
-  }
-}
-@media (min-width: 1040px) {
-  .em-flavours {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-}
-.em-flavour {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  padding: 1em 0.95em 0.9em;
-  border: 1px solid var(--em-edge);
-  border-radius: 1em;
-  background: var(--em-glass);
-  -webkit-backdrop-filter: blur(14px);
-  backdrop-filter: blur(14px);
-  cursor: pointer;
-  opacity: 0;
-  transition: opacity 0.6s ease, border-color 0.3s ease, box-shadow 0.4s ease, transform 0.3s ease;
-}
-.em-flavour.em-in {
-  opacity: 1;
-}
-/* The tile "lights up" like a coal when touched. */
-.em-flavour:hover,
-.em-flavour:focus-visible,
-.em-flavour:active {
-  border-color: var(--em-brass-strong);
-  box-shadow: 0 0 0 1px var(--em-brass), 0 0.8em 2.4em var(--em-glow);
-}
-.em-flavour:active {
-  transform: scale(0.98);
-}
-.em-flavour-icon {
-  color: var(--mk-muted);
-}
-.em-flavour-name {
-  margin-top: 0.45em;
-  font-family: var(--mk-display);
-  font-weight: 500;
-  font-size: 1.3em;
-  line-height: 1.05;
-  overflow-wrap: break-word;
-}
 .em-notes {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.3em;
-  margin-top: 0.55em;
+  gap: 0.25em;
+  margin-top: 0.45em;
 }
 .em-notes > span {
-  padding: 0.12em 0.6em;
+  padding: 0.08em 0.55em;
   border: 1px solid var(--em-brass);
   border-radius: 999px;
   font-family: var(--em-sans);
-  font-size: 0.68em;
-  letter-spacing: 0.04em;
-  color: var(--mk-muted);
-}
-.em-flavour-text {
-  margin-top: 0.5em;
-  font-size: 0.82em;
-  line-height: 1.4;
-  color: var(--mk-muted);
-}
-.em-flavour-foot {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 0.5em;
-  margin-top: auto;
-  padding-top: 0.8em;
-}
-
-/* --- photo dishes: glass cards -------------------------------------------------- */
-.em-cards {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 0.8em;
-}
-@media (min-width: 760px) {
-  .em-cards {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1em;
-  }
-}
-.em-card {
-  display: flex;
-  gap: 0.9em;
-  min-width: 0;
-  padding: 0.7em;
-  border: 1px solid var(--em-edge);
-  border-radius: 1em;
-  background: var(--em-glass);
-  -webkit-backdrop-filter: blur(14px);
-  backdrop-filter: blur(14px);
-  cursor: pointer;
-  opacity: 0;
-  transition: opacity 0.6s ease, border-color 0.3s ease, box-shadow 0.4s ease;
-}
-.em-card.em-in {
-  opacity: 1;
-}
-.em-card:hover,
-.em-card:focus-visible {
-  border-color: var(--em-brass);
-  box-shadow: 0 0.6em 2em var(--em-glow-soft);
-}
-.em-card-photo {
-  position: relative;
-  flex: none;
-  width: 38%;
-  max-width: 10em;
-  aspect-ratio: 4 / 3;
-  border-radius: 0.65em;
-  background: radial-gradient(closest-side, var(--em-glow-soft), transparent);
-}
-.em-card-photo img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  border-radius: 0.65em;
-}
-.em-card-body {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-}
-.em-card-name {
-  font-family: var(--mk-display);
-  font-weight: 500;
-  font-size: 1.22em;
-  line-height: 1.1;
-  overflow-wrap: break-word;
-}
-.em-card-desc {
-  margin-top: 0.3em;
-  font-size: 0.82em;
-  line-height: 1.4;
-  color: var(--mk-muted);
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-.em-card-foot {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 0.5em;
-  margin-top: auto;
-  padding-top: 0.5em;
-}
-
-/* --- quiet lines ------------------------------------------------------------------ */
-.em-lines {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  column-gap: 3em;
-}
-@media (min-width: 900px) {
-  .em-lines {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-.em-line {
-  min-width: 0;
-  padding: 0.8em 0.1em;
-  border-bottom: 1px solid var(--em-edge);
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-.em-line:hover {
-  background: linear-gradient(90deg, transparent, var(--em-glow-soft), transparent);
-}
-.em-line-main {
-  display: flex;
-  align-items: baseline;
-  gap: 0.6em;
-}
-.em-line-name {
-  min-width: 0;
-  font-family: var(--mk-display);
-  font-weight: 500;
-  font-size: 1.15em;
-  line-height: 1.15;
-  overflow-wrap: break-word;
-}
-.em-line-rule {
-  flex: 1;
-  min-width: 1em;
-  height: 1px;
-  background: linear-gradient(90deg, var(--em-brass), transparent);
-  transform: translateY(-0.3em);
-}
-.em-line-sub {
-  display: flex;
-  align-items: baseline;
-  gap: 0.6em;
-  margin-top: 0.15em;
-  font-size: 0.82em;
-  color: var(--mk-muted);
-}
-.em-line-sub .em-weight {
-  flex: none;
-}
-.em-line-desc {
-  min-width: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.em-allergens {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.3em;
-  margin-top: 0.3em;
-}
-.em-allergens > span {
-  font-family: var(--em-sans);
   font-size: 0.64em;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--mk-faint);
+  color: var(--mk-muted);
 }
-.em-allergens > span + span::before {
-  content: "· ";
+/* Photo-less dish tiles are compact: a small icon, not a 4:3 frame. */
+.em-item .em-tile-media:not(.em-has-photo) {
+  aspect-ratio: auto;
+  height: 2.6em;
+  justify-items: start;
+  margin-bottom: 0.4em;
+  background: none;
+  color: var(--mk-muted);
 }
 
 /* --- footer -------------------------------------------------------------------------- */
 .em-footer {
   max-width: 900px;
   margin: 3.5em auto 0;
-  padding: 0 1.2em 8em;
+  padding: 0 0 6em;
   text-align: center;
 }
 .em-footer-panel {
@@ -774,8 +670,8 @@
   .em-smoke {
     opacity: 0.6;
   }
-  .em-flavour,
-  .em-card {
-    opacity: 1;
+  .em-stage,
+  .em-tile {
+    animation: none;
   }
 }

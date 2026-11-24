@@ -2,8 +2,6 @@ import React, { useCallback, useMemo } from "react";
 import {
   CategoryIcon,
   MenuChrome,
-  collectItems,
-  PinnedNav,
   StatusScreen,
   makeStrings,
   useMenuKit,
@@ -11,26 +9,43 @@ import {
 } from "../shared/menuKit";
 import "./ember-theme.css";
 import { EMBER_FALLBACK_BG, EMBER_FALLBACK_INK, emberVars } from "./palette";
+import useLevels, { parentPath } from "./hooks/useLevels";
 import Ambience from "./components/Ambience";
+import Hud from "./components/Hud";
 import Header from "./components/Header";
-import Covers from "./components/Covers";
-import Board from "./components/Board";
+import Level, { isShishaPath, shishaItemSet } from "./components/Level";
 import Footer from "./components/Footer";
 
 const getStrings = makeStrings({
-  bg: { lounge: "Лаунж" },
-  en: { lounge: "Lounge" },
+  bg: {
+    lounge: "Лаунж",
+    select: "Изберете",
+    here: "Предложения",
+    back: "Назад",
+    explored: "Разгледано",
+  },
+  en: {
+    lounge: "Lounge",
+    select: "Select",
+    here: "On the menu",
+    back: "Back",
+    explored: "Explored",
+  },
 });
 
-// "Ember": a modern shisha-lounge menu in Noir's editorial spirit. A
-// near-dark page lit by a slowly breathing ember glow and faint smoke,
-// a light serif masthead, a rail of numbered smoked-glass category
-// "books", sections with brass hairlines, shisha flavours as glowing
-// tiles with flavour-note chips, photo dishes as glass cards, drinks as
-// quiet lines. Navigation, translated-menu fixes, dish sheet, drawer and
-// widgets come from the shared menuKit; every colour from the owner's two.
+// "Ember": a shisha-lounge menu in Noir's spirit, played like a game's
+// level select. One level of the menu per screen: home -> category ->
+// sub-category -> … -> dishes, with a HUD (◀ up, level code + name,
+// ☰ map), zoom transitions between levels, glowing tiles and "explored"
+// marks. Very little text on screen: dishes show picture, name and price;
+// the rest is in the detail sheet.
+//
+// From menuKit: the category tree + translated-menu fixes, the dish
+// sheet, the map (drawer), back-gesture closing, analytics and the
+// widgets. The long-page navigation is off (sections: false); levels,
+// history and the hash are handled by hooks/useLevels.js.
 export default function EmberTheme(props) {
-  const { owner, config } = props;
+  const { owner, config, urlname } = props;
   const { vars, accent } = useOwnerTheme(config, {
     name: "Ember",
     fallbackBg: EMBER_FALLBACK_BG,
@@ -38,48 +53,50 @@ export default function EmberTheme(props) {
     makeVars: emberVars,
   });
 
-  const kit = useMenuKit(props, { getStrings });
-  const { nodes, itemsByLabel, originalLabelOf, iconKeyOf, strings, selectItem, selectPath, rootRef } = kit;
+  const kit = useMenuKit(props, { getStrings, sections: false });
+  const { nodes, itemsByLabel, originalLabelOf, iconKeyOf, strings, selectItem, pathMap, rootRef, ready } = kit;
+  const { trackCategory, closeDrawerForNav } = kit;
 
-  // Re-render only when the menu changes, never on scroll.
-  const board = useMemo(
-    () => <Board data={{ nodes, itemsByLabel, originalLabelOf, iconKeyOf, strings, selectItem }} />,
-    [nodes, itemsByLabel, originalLabelOf, iconKeyOf, strings, selectItem]
-  );
-  const covers = useMemo(
-    () => (
-      <Covers
-        nodes={nodes}
-        itemsByLabel={itemsByLabel}
-        iconKeyOf={iconKeyOf}
-        originalLabelOf={originalLabelOf}
-        strings={strings}
-        onSelect={selectPath}
-      />
-    ),
-    [nodes, itemsByLabel, iconKeyOf, originalLabelOf, strings, selectPath]
+  const { path, dir, explored, go, up } = useLevels({ ready, pathMap, urlname, onEnter: trackCategory });
+  const entry = path != null ? pathMap.get(path) : null;
+  const node = entry ? entry.node : null;
+  const parent = path != null ? pathMap.get(parentPath(path)) : null;
+
+  const openLevel = useCallback((p) => go(p), [go]);
+  // From the map (drawer): its history entry is replaced by the level.
+  const openFromMap = useCallback(
+    (p) => {
+      trackCategory(p);
+      closeDrawerForNav();
+      go(p, { replace: true });
+    },
+    [trackCategory, closeDrawerForNav, go]
   );
 
-  // Shisha dishes (anything under a category whose ORIGINAL title is a
-  // shisha word) show the hookah icon in the detail sheet when they have
-  // no photo.
-  const shishaItems = useMemo(() => {
-    const set = new Set();
-    nodes.forEach((node) => {
-      (function walk(n, inShisha) {
-        const here = inShisha || iconKeyOf[n.label] === "hookah";
-        if (here) collectItems(n, itemsByLabel).forEach((i) => set.add(i));
-        else n.children.forEach((c) => walk(c, false));
-      })(node, false);
-    });
-    return set;
+  // Photo-less dishes show their category's icon in the detail sheet
+  // (hookah for anything under a shisha category).
+  const iconOfItem = useMemo(() => {
+    const shisha = shishaItemSet(nodes, itemsByLabel, iconKeyOf);
+    const m = new Map();
+    Object.entries(itemsByLabel).forEach(([label, list]) =>
+      list.forEach((i) => m.set(i, shisha.has(i) ? "hookah" : iconKeyOf[label] || "cloche"))
+    );
+    return m;
   }, [nodes, itemsByLabel, iconKeyOf]);
   const placeholder = useCallback(
-    (item) => <CategoryIcon iconKey={shishaItems.has(item) ? "hookah" : "cloche"} size={56} />,
-    [shishaItems]
+    (item) => <CategoryIcon iconKey={iconOfItem.get(item) || "cloche"} size={56} />,
+    [iconOfItem]
+  );
+  const data = useMemo(
+    () => ({ itemsByLabel, originalLabelOf, iconKeyOf, strings, selectItem }),
+    [itemsByLabel, originalLabelOf, iconKeyOf, strings, selectItem]
   );
 
-  if (!kit.ready) {
+  // Where the map (drawer) should show "you are here".
+  const activeTop = path != null ? Number(path.split("-")[0]) : -1;
+  const activeSub = path != null && path.includes("-") ? path : null;
+
+  if (!ready) {
     return (
       <div className="mk-root em-root" style={vars} ref={rootRef}>
         <Ambience />
@@ -95,24 +112,37 @@ export default function EmberTheme(props) {
   return (
     <div className="mk-root em-root" style={vars} ref={rootRef}>
       <Ambience />
-      <Header owner={owner} strings={strings} itemCount={kit.itemCount} />
-      {covers}
-      {nodes.length ? (
-        <PinnedNav
-          rootRef={rootRef}
+      <Hud
+        path={path}
+        title={node ? node.label : ""}
+        parentTitle={parent ? parent.node.label : ""}
+        owner={owner}
+        strings={strings}
+        onUp={up}
+        onMap={kit.openMenu}
+      />
+      <main className={`em-stage em-stage-${dir}`} key={path == null ? "home" : path}>
+        {path == null ? <Header owner={owner} strings={strings} itemCount={kit.itemCount} /> : null}
+        <Level
+          path={path}
+          node={node}
           nodes={nodes}
-          itemsByLabel={itemsByLabel}
-          activeTop={kit.activeTop}
-          activeSub={kit.activeSub}
-          strings={strings}
-          onSelectTop={selectPath}
-          onSelectSub={selectPath}
-          onMenu={kit.openMenu}
+          data={data}
+          explored={explored}
+          shisha={isShishaPath(path, pathMap, iconKeyOf)}
+          onOpenLevel={openLevel}
         />
-      ) : null}
-      <main className="em-board">{board}</main>
-      <Footer owner={owner} strings={strings} />
-      <MenuChrome kit={kit} owner={owner} accent={accent} placeholder={placeholder} />
+        {path == null ? <Footer owner={owner} strings={strings} /> : null}
+      </main>
+      <MenuChrome
+        kit={kit}
+        owner={owner}
+        accent={accent}
+        placeholder={placeholder}
+        onDrawerOpen={openFromMap}
+        activeTop={activeTop}
+        activeSub={activeSub}
+      />
     </div>
   );
 }

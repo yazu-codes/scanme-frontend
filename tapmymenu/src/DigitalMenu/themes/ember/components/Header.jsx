@@ -1,8 +1,9 @@
 import React from "react";
 import { CategoryIcon } from "../../shared/menuKit";
 
-// Quiet editorial masthead in Noir's spirit: a tracked small-caps line,
-// the name in a large light serif, an italic slogan, a brass hairline.
+// Title screen: emblem in a brass ring, tracked small caps, the name in
+// a large light serif, the slogan, a brass hairline. Shown on the home
+// level only.
 export default function Header({ owner, strings, itemCount }) {
   const name = owner.menu_owner_name || strings.menu;
   return (

@@ -10,7 +10,9 @@ import ScrollToTopButton from "./ScrollToTopButton";
 // navigation drawer, scroll-to-top (bottom-LEFT) and the three shared
 // widgets (YummGPT, QR, language; bottom-right, unchanged). Mounted right
 // away: no theme has an intro, so the widgets' 2 s hints are seen.
-export default function MenuChrome({ kit, owner, accent, placeholder }) {
+// onDrawerOpen / activeTop / activeSub override the kit's long-page
+// navigation for screen-based themes.
+export default function MenuChrome({ kit, owner, accent, placeholder, onDrawerOpen, activeTop, activeSub }) {
   return (
     <>
       <DishModal
@@ -26,11 +28,11 @@ export default function MenuChrome({ kit, owner, accent, placeholder }) {
         owner={owner}
         nodes={kit.nodes}
         itemsByLabel={kit.itemsByLabel}
-        activeTop={kit.activeTop}
-        activeSub={kit.activeSub}
+        activeTop={activeTop ?? kit.activeTop}
+        activeSub={activeSub !== undefined ? activeSub : kit.activeSub}
         strings={kit.strings}
         onClose={kit.closeDrawer}
-        onOpen={kit.selectFromDrawer}
+        onOpen={onDrawerOpen || kit.selectFromDrawer}
       />
       <ScrollToTopButton visible={kit.pastHero} onClick={kit.scrollTop} label={kit.strings.backToTop} />
       <MenuChatWidget restaurantName={kit.urlname} accentColor={accent} itemSelect={kit.selectItem} />

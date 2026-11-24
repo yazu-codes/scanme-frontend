@@ -27,7 +27,10 @@ function prefersReducedMotion() {
   );
 }
 
-export default function useHashNavigation({ ready, pathMap, rootRef, onLand }) {
+// enabled=false: the hook only provides goTo/scrollToPath and doesn't
+// react to back/forward or a shared link (for themes with their own
+// screen navigation).
+export default function useHashNavigation({ ready, pathMap, rootRef, onLand, enabled = true }) {
   const lastHash = useRef(typeof window !== "undefined" ? window.location.hash : "");
   const onLandRef = useRef(onLand);
   useEffect(() => {
@@ -76,6 +79,7 @@ export default function useHashNavigation({ ready, pathMap, rootRef, onLand }) {
   // Back / forward. Entries pushed by an open modal or drawer keep the
   // same hash, so they are ignored here (useBackToClose handles them).
   useEffect(() => {
+    if (!enabled) return undefined;
     function onPop() {
       const hash = window.location.hash;
       if (hash === lastHash.current) return;
@@ -87,30 +91,47 @@ export default function useHashNavigation({ ready, pathMap, rootRef, onLand }) {
     }
     window.addEventListener("popstate", onPop);
     return () => window.removeEventListener("popstate", onPop);
-  }, [pathMap, scrollToPath]);
+  }, [pathMap, scrollToPath, enabled]);
 
   // Shared link: land on the section once the menu (and its fonts) have
-  // laid out, so the position doesn't drift.
+  // laid out, so the position doesn't drift. Waits for the category tree:
+  // status turns "ready" one render before the tree exists. Runs once;
+  // later tree updates (originals arriving) must not yank the guest back.
+  const booted = useRef(false);
+  const unmounted = useRef(false);
+  useEffect(() => () => {
+    unmounted.current = true;
+  }, []);
   useEffect(() => {
-    if (!ready) return undefined;
+    if (!ready || !enabled || booted.current || pathMap.size === 0) return;
+    booted.current = true;
     const path = readHashPath();
-    if (path == null || !pathMap.has(path)) return undefined;
-    let cancelled = false;
+    if (path == null || !pathMap.has(path)) return;
+    // Content above the target can still grow after landing (fonts, and
+    // in translated menus the original names arriving a moment later), so
+    // keep re-landing on every layout change until the guest takes over
+    // (touch, wheel, key) or 4 s pass.
+    let settled = false;
+    let ro = null;
+    const stop = () => {
+      settled = true;
+      if (ro) ro.disconnect();
+      ["wheel", "touchstart", "keydown", "pointerdown"].forEach((t) => window.removeEventListener(t, stop, true));
+    };
     const land = () => {
-      if (cancelled) return;
+      if (unmounted.current || settled) return;
       if (onLandRef.current) onLandRef.current(path);
       scrollToPath(path, false);
     };
-    const frame = requestAnimationFrame(() => requestAnimationFrame(land));
+    ["wheel", "touchstart", "keydown", "pointerdown"].forEach((t) => window.addEventListener(t, stop, true));
+    setTimeout(stop, 4000);
+    if (typeof ResizeObserver !== "undefined" && rootRef.current) {
+      ro = new ResizeObserver(() => requestAnimationFrame(land));
+      ro.observe(rootRef.current);
+    }
+    requestAnimationFrame(() => requestAnimationFrame(land));
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(land);
-    return () => {
-      cancelled = true;
-      cancelAnimationFrame(frame);
-    };
-    // Only on the first ready render: later tree changes must not yank
-    // the guest back to the hash section.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ready]);
+  }, [ready, enabled, pathMap, scrollToPath, rootRef]);
 
   return { goTo, scrollToPath };
 }

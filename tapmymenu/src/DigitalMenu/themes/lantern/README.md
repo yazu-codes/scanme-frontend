@@ -86,6 +86,8 @@ Changes from Noir:
 
 - **Tapping one dish could open another.** Dishes were looked up by `pairKey` (position + price), which two dishes can share; in English, tapping "Crème caramel" opened "Troyan apricot rakia". A dish tapped in the menu is now used as is; only YummGPT items are looked up, by key AND cleaned name (`makeDishResolver` in `utils.js`).
 
+- **Shared links didn't land on a fresh load** (`#c-3` opened at the top), and in English drifted once the originals arrived. Now the link waits for the category tree and re-lands until the guest takes over (`hooks/useHashNavigation.js`).
+
 ## Fonts
 
 - **Rubik 900** for the restaurant name, and **Oswald 500–700** for tabs, headings and labels. Both support Cyrillic and load from Google Fonts in `lantern-theme.css`.

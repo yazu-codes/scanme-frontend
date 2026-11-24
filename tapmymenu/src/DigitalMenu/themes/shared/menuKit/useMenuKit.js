@@ -16,9 +16,13 @@ import { buildCategoryTree, countItems, makeDishResolver, nodePathMap } from "./
 // A theme calls this once with its props and renders however it likes.
 // Section anchors must carry data-mk-path={path} (see menuData
 // nodePathMap) and the theme root must get ref={kit.rootRef}.
+//
+// sections: false turns off the long-page navigation (hash scrolling and
+// scroll-spy) for themes that show one screen per category instead; they
+// use closeDrawerForNav() + their own history entries.
 export default function useMenuKit(
   { urlname, status, config, categories, itemsByCategory },
-  { getStrings }
+  { getStrings, sections = true }
 ) {
   const track = useAnalytics();
   const locale = useMemo(() => getLocaleCookie(), []);
@@ -57,7 +61,7 @@ export default function useMenuKit(
   // --- navigation -------------------------------------------------------
   const spy = useScrollSpy({ rootRef, nodes, enabled: ready });
   const { lock } = spy;
-  const { goTo, scrollToPath } = useHashNavigation({ ready, pathMap, rootRef, onLand: lock });
+  const { goTo, scrollToPath } = useHashNavigation({ ready, pathMap, rootRef, onLand: lock, enabled: sections });
 
   const trackCategory = useCallback(
     (path) => {
@@ -88,6 +92,14 @@ export default function useMenuKit(
     },
     [goTo, trackCategory]
   );
+
+  // For screen-based themes: close the drawer WITHOUT stepping back over
+  // its history entry, because the theme is about to replace that entry
+  // with the screen the guest picked.
+  const closeDrawerForNav = useCallback(() => {
+    drawerSkipBack.current = true;
+    setDrawerOpen(false);
+  }, []);
 
   const openMenu = useCallback(() => {
     setFocusContacts(false);
@@ -138,6 +150,7 @@ export default function useMenuKit(
     pastHero: spy.pastHero,
     selectPath,
     selectFromDrawer,
+    closeDrawerForNav,
     trackItem,
     trackCategory,
     openMenu,

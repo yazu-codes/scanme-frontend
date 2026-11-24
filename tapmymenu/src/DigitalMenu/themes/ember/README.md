@@ -1,58 +1,72 @@
 # Ember theme
 
-A modern shisha-lounge menu in the spirit of **Noir**: dark, quiet and
-editorial, lit like a Western lounge (one warm glow, brass lines, smoked
-glass, a little smoke). Enable with `"theme": "ember"`.
+A modern shisha-lounge menu in the spirit of **Noir**, played like a
+**video game's level select**. Enable with `"theme": "ember"`.
 
-Built on the shared **menuKit** (`themes/shared/menuKit/`): category tree,
-translated-menu fixes, hash navigation, pinned tabs + chips, scroll-spy,
-dish sheet, drawer, back-gesture closing, analytics, YummGPT / QR /
-language widgets. This folder holds only the look.
+## The idea
 
-## Design
+Like Noir, each part of the menu is its own screen, but at **every** depth:
 
-- **Light, not ornament.** No arabesques or clip-art hookahs. An **ember glow** low in the room breathes slowly (7 s), a fainter one sits up top, three soft **smoke wisps** drift upward, and a fine film grain keeps the dark from looking flat. All are fixed behind the menu, transform/opacity only, and static for reduced motion.
-- **Masthead** (Noir's spirit): a hookah emblem (or the owner logo) in a thin brass ring, a tracked "LOUNGE · 109 ITEMS", the name in light **Cormorant Garamond**, an italic slogan, a brass hairline with a diamond.
-- **Category rail:** numbered smoked-glass "books" (01, 02 …), each with a photo or icon, serif title, original title and count. Tap to jump.
-- **Pinned bar:** frosted glass, tracked **Jost** small caps, and the active tab glows.
-- **Sections:** number, big serif title, italic original, item count, brass hairline. Sub-categories get italic serif headings.
-- **Shisha flavours** (any category whose ORIGINAL title is a shisha word; see below): smoked-glass **tiles** (2 / 3 / 4 columns) that light up like a coal when touched. Each shows the flavour name and its **flavour notes as chips, taken from the owner's description** ("мента, лимон и лед" → мента · лимон · лед). A longer free-text description is shown as text instead.
-- **Dishes with photos:** glass cards with the whole photo (4:3, never cropped) on the left.
-- **Drinks and everything else:** quiet lines (serif name, fading brass rule, price).
-- **Footer:** a glass panel with contacts, reviews, name.
+```
+home (level select)  ->  category  ->  sub-category  ->  …  ->  dishes
+```
 
-**Honest by design:** the API has no strength, popularity or "trending" data, so Ember shows none.
+- **Home / title screen:** emblem, name, slogan, then **SELECT** and one tile per top-level category: code (`01`), picture (first dish photo, or the category icon), name, number of dishes, ▸. Contacts at the bottom.
+- **A category:** big code (`05·01`) + name + count, then its sub-categories as **level tiles**, and/or its own dishes as **dish tiles**.
+- **Dish tiles:** picture (whole photo, never cropped, or the category icon), name, price. **Nothing else.** Description, portion, allergens and the "show this to our staff" block live in the detail sheet.
+- **Shisha** (categories titled Наргиле / Шиша / Кальян / Тютюн / Shisha / Hookah…): everything inside wears the hookah icon, and flavour tiles add up to 3 flavour-note chips taken from the description ("мента, лимон, лед").
 
-## Shisha detection
+**Game feel:**
+- **HUD** always on top: ◀ one level up, the level code + name (+ parent), ☰ the **map** (the full tree with counts; "you are here" expanded).
+- **Zoom-in** when entering a level, **zoom-out** going back (0.42 s, blur-to-sharp).
+- Tiles drop in on a short stagger; the selected tile gets a brass edge, a glow and a light sweep. Pressing squeezes it.
+- **Explored marks:** a level's diamond fills in once visited (remembered for the visit).
+- A blinking **SELECT** prompt on the title screen.
+- Lounge ambience behind everything: a slowly breathing ember glow, faint smoke, film grain.
 
-The kit now has a **hookah** category icon and rule. Original titles starting with
-`наргиле`, `шиша`, `кальян`, `тютюн`, `shisha`, `hookah`, `nargile`,
-`narghile` or `tobacco` get it, and their whole subtree becomes flavour
-tiles. Other themes simply show the new hookah icon for such categories.
+Reduced motion: no zooms, staggers, glow breathing or smoke drift.
 
-## How owner colours map
+## Navigation & links
 
-Only `background_color` (bg) and `font_color` (ink):
+- Every level is mirrored to the hash: `#c-4-0-1-0` = 5th category → 1st sub → 2nd sub → 1st sub. Each step is a history entry, so the **phone's back gesture goes up one level**. ◀ in the HUD does the same.
+- A shared link opens that level directly.
+- Picking a level on the **map** replaces the map's own history entry, so back returns to where the guest was.
+- The dish sheet and the map close with back, ✕, Escape or a backdrop tap, without leaving the level.
+- Analytics: `category_click` on every level entered, `item_click` on every dish opened.
 
-| Variable | From |
-|---|---|
-| text, prices | ink |
-| `--em-brass` / `--em-brass-strong` (hairlines, chip outlines) | ink at 35 % / 70 % |
-| `--em-glow` (ember light, hover glow) | ink at 26 % |
-| `--em-smoke` | ink at 6 % |
-| `--em-glass` (smoked glass) | bg lifted 8 % toward white (dark bg) / black (light bg), 55 % opaque + blur |
+Built on menuKit with `sections: false`: the kit's long-page scrolling
+navigation is off, and `hooks/useLevels.js` handles levels and history.
 
-Designed for a dark owner background. On a light one it still works and
-becomes a soft, daylight version. Fallback (nothing set): near-black
-`#0D0B0A` + brass `#E3B778`. Contrast below 3:1 logs a `console.warn`.
+**Intentional difference from the guide:** inside a category, the guide asks
+for sub-category chips with "All" plus scroll-spy. In Ember, sub-categories
+are reached as level tiles instead (one level per screen), as requested.
+Everything stays reachable: the test crawls every level and finds all
+dishes in bg and en.
+
+## Colours & fonts
+
+Only the owner's `background_color` + `font_color`. Brass lines, glow,
+smoke and glass are the owner's text colour at low alpha. Designed for a
+dark background with a warm text colour:
+
+| Look | `background_color` | `font_color` |
+|---|---|---|
+| Near-black + brass (fallback) | `#0D0B0A` | `#E3B778` |
+| Deep green + gold | `#0F1A16` | `#D9C08A` |
+
+Fonts: **Cormorant Garamond** (names, titles, prices) and **Jost** (small
+tracked labels) are built in, as in Noir. Body text uses the owner's
+`font_family`. **Montserrat** (or Inter) is the closest whitelisted match.
 
 ## Files
 
 ```
 ember/
-  Theme.jsx          root: owner colours + menuKit + layout
-  palette.js         OWNER colours -> CSS variables
-  ember-theme.css    styles (em-), shared pieces restyled as .em-root .mk-*
-  components/        Ambience (glow, smoke, grain), Header, Covers (rail),
-                     Board (flavour tiles, glass cards, lines), Footer
+  Theme.jsx              root: owner colours + menuKit (sections: false) + levels
+  palette.js             OWNER colours -> CSS variables
+  ember-theme.css        styles (em-), shared pieces restyled as .em-root .mk-*
+  utils.js               flavour notes, level codes
+  hooks/useLevels.js     one level per screen, hash, history, explored marks
+  components/            Hud, Header (title screen), Level (screen),
+                         Tiles (LevelTile, ItemTile), Ambience, Footer
 ```
