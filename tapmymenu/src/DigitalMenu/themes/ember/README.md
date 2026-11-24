@@ -43,6 +43,27 @@ are reached as level tiles instead (one level per screen), as requested.
 Everything stays reachable: the test crawls every level and finds all
 dishes in bg and en.
 
+## The dish sheet
+
+Mobile first:
+- A bottom sheet with a grab handle. The ✕ stays reachable while it scrolls, and the photo is capped in height so the dish name shows straight away.
+- Spacing: 1.5em sides, 1.25em between blocks.
+- The category is a coloured pill, and the name uses the serif with the original in italic.
+- "Show this to our staff" is a tinted panel with a brass edge.
+- Portion and allergens sit in two small "stat" tiles.
+- The price is pinned to the bottom, clear of the phone's home bar.
+- On desktop it becomes a centred card.
+
+**Colour from the background:** three richer tones are derived from the
+owner's `background_color` hue (the hue itself, +35°, −35°, with more
+saturation) and used for the sheet's gradient, panels and price bar:
+`--em-c1..3`. Each is darkened (dark page) or lightened (light page) until the
+owner's text reads at least 4.5:1 on it. A near-grey background has no
+hue, so it borrows the text colour's hue. Examples:
+- near-black → burgundy / amber
+- deep green → emerald / teal
+- cream → soft pastels
+
 ## Colours & fonts
 
 Only the owner's `background_color` + `font_color`. Brass lines, glow,

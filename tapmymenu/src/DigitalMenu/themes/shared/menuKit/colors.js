@@ -134,3 +134,54 @@ export function useContrastReport(themeName, rawBg, rawInk, palette) {
     }
   }, [themeName, rawBg, rawInk, bg, ink, contrast]);
 }
+
+// --- HSL helpers ----------------------------------------------------------
+
+export function toHsl(hex) {
+  const { r, g, b } = hexToRgb(hex);
+  const R = r / 255;
+  const G = g / 255;
+  const B = b / 255;
+  const max = Math.max(R, G, B);
+  const min = Math.min(R, G, B);
+  const l = (max + min) / 2;
+  let h = 0;
+  let s = 0;
+  if (max !== min) {
+    const d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    if (max === R) h = (G - B) / d + (G < B ? 6 : 0);
+    else if (max === G) h = (B - R) / d + 2;
+    else h = (R - G) / d + 4;
+    h *= 60;
+  }
+  return { h, s, l };
+}
+
+export function fromHsl({ h, s, l }) {
+  const hh = ((h % 360) + 360) % 360;
+  const c = (1 - Math.abs(2 * l - 1)) * s;
+  const x = c * (1 - Math.abs(((hh / 60) % 2) - 1));
+  const m = l - c / 2;
+  let rgb;
+  if (hh < 60) rgb = [c, x, 0];
+  else if (hh < 120) rgb = [x, c, 0];
+  else if (hh < 180) rgb = [0, c, x];
+  else if (hh < 240) rgb = [0, x, c];
+  else if (hh < 300) rgb = [x, 0, c];
+  else rgb = [c, 0, x];
+  return `#${rgb.map((v) => Math.round((v + m) * 255).toString(16).padStart(2, "0")).join("")}`.toUpperCase();
+}
+
+// A colour at the given hue/saturation/lightness, walked darker (dark
+// pages) or lighter (light pages) until `text` reads at least minRatio
+// on it.
+export function readableTint({ h, s, l }, text, darkPage, minRatio = 4.5) {
+  let light = l;
+  let color = fromHsl({ h, s, l: light });
+  for (let i = 0; i < 20 && contrastRatio(color, text) < minRatio; i += 1) {
+    light = Math.min(0.97, Math.max(0.03, light + (darkPage ? -0.02 : 0.02)));
+    color = fromHsl({ h, s, l: light });
+  }
+  return color;
+}

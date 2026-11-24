@@ -615,41 +615,252 @@
 }
 
 /* --- shared pieces in lounge dress ------------------------------------------------- */
-.em-root .mk-sheet,
 .em-root .mk-drawer {
   background: var(--em-glass-solid);
   border-color: var(--em-brass);
   border-width: 1px;
 }
-.em-root .mk-sheet {
-  box-shadow: 0 -1em 3em var(--em-glow-soft);
-}
-.em-root .mk-sheet-media {
-  background: radial-gradient(closest-side, var(--em-glow-soft), transparent);
-}
-.em-root .mk-sheet-name,
 .em-root .mk-drawer-name,
 .em-root .mk-tree-top > .mk-tree-row .mk-tree-label {
   font-weight: 500;
   text-transform: none;
 }
-.em-root .mk-kicker,
-.em-root .mk-staff-label,
-.em-root .mk-facts dt,
 .em-root .mk-drawer-heading {
   font-family: var(--em-sans);
   font-weight: 400;
   letter-spacing: 0.28em;
 }
-.em-root .mk-staff,
-.em-root .mk-sheet-price,
-.em-root .mk-close,
 .em-root .mk-drawer-top {
   border-color: var(--em-brass);
   border-width: 1px;
 }
-.em-root .mk-sheet-price-value {
+
+/* --- dish sheet ------------------------------------------------------------------
+   Mobile first: a bottom sheet with a grab handle, the ✕ always within
+   reach (sticky), the photo capped so the name is visible straight away,
+   one spacing rhythm (1.5em sides, 1.25em between blocks), and the price
+   pinned to the bottom. Colour comes from three tones derived from the
+   owner's BACKGROUND (--em-c1..3, palette.js), each readable under the
+   owner's text colour. */
+.em-root .mk-modal {
+  background: var(--mk-scrim);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+.em-root .mk-sheet {
+  display: flex;
+  flex-direction: column;
+  max-height: 92vh;
+  max-height: 92dvh;
+  border: 0;
+  border-top: 1px solid var(--em-brass);
+  border-radius: 1.6em 1.6em 0 0;
+  background: linear-gradient(180deg, var(--em-c1) 0%, var(--em-c3) 42%, var(--em-bg) 100%);
+  box-shadow: 0 -1.2em 3em var(--em-glow-soft);
+  -webkit-overflow-scrolling: touch;
+}
+/* Grab handle */
+.em-root .mk-sheet::before {
+  content: "";
+  flex: none;
+  align-self: center;
+  width: 2.6em;
+  height: 0.3em;
+  margin: 0.6em 0 0;
+  border-radius: 999px;
+  background: var(--em-brass-strong);
+  opacity: 0.6;
+}
+/* ✕ stays reachable while the sheet scrolls. */
+.em-root .mk-close {
+  position: sticky;
+  top: 0.6em;
+  z-index: 3;
+  align-self: flex-end;
+  flex: none;
+  width: 2.75em;
+  height: 2.75em;
+  margin: -0.3em 0.8em -2.45em 0;
+  border: 1px solid var(--em-brass-strong);
+  background: var(--em-c1-soft);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  color: var(--em-ink);
+}
+/* Photo: whole picture, capped height, on a coloured glow. */
+.em-root .mk-sheet-media {
+  flex: none;
+  width: auto;
+  height: min(58vw, 34vh, 17em);
+  aspect-ratio: auto;
+  margin: 0.4em 1.25em 0;
+  border-radius: 1.1em;
+  background: radial-gradient(ellipse at 50% 60%, var(--em-c2) 0%, var(--em-c2-soft) 45%, transparent 75%);
+}
+.em-root .mk-sheet-media img {
+  inset: 0.6em;
+  width: calc(100% - 1.2em);
+  height: calc(100% - 1.2em);
+  border-radius: 0.6em;
+}
+/* No photo: the category icon on a round coloured badge. */
+.em-root .mk-sheet-media-empty {
+  height: auto;
+  margin: 0.6em 1.5em 0;
+  padding: 0;
+  justify-items: start;
+  background: none;
+}
+.em-root .mk-sheet-media-empty .mk-placeholder {
+  width: 5em;
+  height: 5em;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, var(--em-c2), var(--em-c1));
+  border: 1px solid var(--em-brass);
+  box-shadow: 0 0.6em 1.6em var(--em-glow-soft);
+  color: var(--em-ink);
+}
+.em-root .mk-sheet-media-empty .mk-placeholder svg {
+  width: 2.6em;
+  height: 2.6em;
+}
+.em-root .mk-sheet-body {
+  display: flex;
+  flex-direction: column;
+  padding: 1.25em 1.5em 0;
+}
+/* Category as a coloured pill */
+.em-root .mk-kicker {
+  align-self: flex-start;
+  padding: 0.35em 0.85em;
+  border-radius: 999px;
+  background: var(--em-c2);
+  font-family: var(--em-sans);
+  font-weight: 400;
+  font-size: 0.66em;
+  letter-spacing: 0.22em;
+  color: var(--em-ink);
+}
+.em-root .mk-sheet-name {
+  margin-top: 0.45em;
+  font-family: var(--mk-display);
+  font-weight: 500;
+  font-size: clamp(1.75em, 6vw + 0.6em, 2.3em);
+  line-height: 1.08;
+  letter-spacing: 0.005em;
+  text-transform: none;
+  text-wrap: balance;
+}
+.em-root .mk-sheet-body > .mk-orig {
+  margin-top: 0.3em;
+  font-family: var(--mk-display);
+  font-style: italic;
+  font-size: 1.05em;
+  color: var(--mk-muted);
+}
+.em-root .mk-sheet-desc {
+  margin-top: 1em;
+  max-width: 34em;
+  font-size: 1em;
+  line-height: 1.6;
+  color: var(--em-ink);
+}
+/* "Show this to our staff": a solid tinted panel with a brass edge. */
+.em-root .mk-staff {
+  margin-top: 1.25em;
+  padding: 0.95em 1.1em 1em;
+  border: 0;
+  border-left: 3px solid var(--em-brass-strong);
+  border-radius: 0.4em 0.9em 0.9em 0.4em;
+  background: var(--em-c2-soft);
+}
+.em-root .mk-staff-label {
+  font-family: var(--em-sans);
+  font-weight: 400;
+  font-size: 0.64em;
+  letter-spacing: 0.24em;
+  color: var(--mk-muted);
+}
+.em-root .mk-staff-name {
+  margin-top: 0.35em;
+  font-family: var(--mk-display);
   font-weight: 600;
+  font-size: 1.3em;
+  line-height: 1.15;
+}
+.em-root .mk-staff-desc {
+  margin-top: 0.3em;
+  font-size: 0.86em;
+  line-height: 1.5;
+}
+/* Portion / allergens as two "stat" tiles. */
+.em-root .mk-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8.5em, 1fr));
+  gap: 0.6em;
+  margin-top: 1.25em;
+}
+.em-root .mk-facts > div {
+  padding: 0.7em 0.9em 0.75em;
+  border: 1px solid var(--em-edge);
+  border-radius: 0.8em;
+  background: var(--em-c3-soft);
+}
+.em-root .mk-facts dt {
+  font-family: var(--em-sans);
+  font-weight: 400;
+  font-size: 0.62em;
+  letter-spacing: 0.24em;
+  color: var(--mk-muted);
+}
+.em-root .mk-facts dd {
+  margin-top: 0.3em;
+  font-size: 0.95em;
+  line-height: 1.35;
+}
+/* Price pinned to the bottom of the sheet, clear of the phone's home bar. */
+.em-root .mk-sheet-price {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  margin: 1.5em -1.5em 0;
+  padding: 0.95em 1.5em calc(0.95em + env(safe-area-inset-bottom, 0px));
+  border-top: 1px solid var(--em-brass);
+  background: linear-gradient(90deg, var(--em-c1), var(--em-c2));
+}
+.em-root .mk-sheet-price .mk-kicker {
+  padding: 0;
+  background: none;
+  letter-spacing: 0.3em;
+}
+.em-root .mk-sheet-price-value {
+  font-family: var(--mk-display);
+  font-weight: 600;
+  font-size: 2em;
+  line-height: 1;
+  text-shadow: 0 0 0.6em var(--em-glow);
+}
+@media (min-width: 640px) {
+  .em-root .mk-sheet {
+    max-width: 500px;
+    max-height: 86vh;
+    border: 1px solid var(--em-brass);
+    border-radius: 1.4em;
+    box-shadow: 0 1.5em 4em var(--em-glow-soft);
+  }
+  .em-root .mk-sheet::before {
+    display: none;
+  }
+  .em-root .mk-close {
+    margin-top: 0.4em;
+  }
+  .em-root .mk-sheet-media {
+    height: 15em;
+    margin-top: 0.8em;
+  }
+  .em-root .mk-sheet-price {
+    padding-bottom: 0.95em;
+  }
 }
 .em-root .mk-top {
   background: var(--em-glass-solid);

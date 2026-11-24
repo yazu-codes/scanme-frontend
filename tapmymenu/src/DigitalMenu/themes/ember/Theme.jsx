@@ -18,7 +18,7 @@ import Footer from "./components/Footer";
 
 const getStrings = makeStrings({
   bg: {
-    lounge: "Лаунж",
+    lounge: "Lounge",
     select: "Изберете",
     here: "Предложения",
     back: "Назад",
